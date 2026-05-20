@@ -37,6 +37,15 @@ locked this direction.
 displays as a secondary option for customers via Shopify Markets
 auto-conversion; checkout still settles in RON. No real EUR checkout.
 
+**EUR display is gated on Shopify Payments setup** (M6 — Friend's
+responsibility). Shopify Markets' multi-currency display feature
+requires Shopify Payments to be configured first, which requires
+Friend's business legal entity, bank account, and tax ID — none of
+which exist until M6. Until then the storefront displays RON only;
+attempting to add EUR as a display currency from Settings → Markets
+returns a "Complete account setup" prompt that goes nowhere without
+those Friend-side prerequisites. Discovered 2026-05-20.
+
 **Stack:** Dawn theme (forked, not rebuilt) on Online Store 2.0 · Liquid +
 vanilla JS · Shopify Dev MCP server mandatory for Liquid/GraphQL work ·
 v0 by Vercel for UI ideation · Photoroom + Flux 1.1 Pro for imagery ·
@@ -97,21 +106,48 @@ rather than guessing.
 - `upstream`: `https://github.com/Shopify/dawn.git` (for periodic Dawn updates — see `docs/GIT_CONVENTIONS.md`)
 - GitHub auth on this machine: SSH (ed25519)
 
-**Dev store:**
+**Dev store (active):**
 
-- URL: `stefan-dev-lens-store.myshopify.com`
-- Plan: Shopify development store (free, Partner-owned)
-- Storefront password: `bahmah`
+- URL: `lens-store-romanian.myshopify.com`
+- Plan: Shopify development store (free, owned via the Dev dashboard)
+- Storefront password: not set (dev store accessible without password
+  during build; enable at Online Store → Preferences → Password
+  protection if/when needed)
 - Store currency: RON (settlement currency, do not change)
+- Store address: Brașov, Romania
+- Time zone: Europe/Bucharest (GMT+02:00)
+- Unit system: Metric · Default weight unit: grams
+- Business entity: Romania (auto-set when store address country flipped)
 - Local preview: `shopify theme dev` → `http://127.0.0.1:9292` with hot reload
+
+**Dev store (deprecated, pending deletion):**
+
+- URL: `stefan-dev-lens-store.myshopify.com` — created 2026-05-18, was
+  US-defaulted across every regional setting. Replaced 2026-05-20 by
+  the Romania-defaulted store above. Scheduled for deletion in the
+  next session (task #13). **Do not push or test against this URL.**
+
+**Dev store dashboards (clarification):**
+
+- Dev stores live at `dev.shopify.com/dashboard/<org-id>/stores` — the
+  Dev dashboard. Partners dashboard at `partners.shopify.com` is a
+  separate but related surface (for referrals, payouts, app
+  distribution) and does **not** list dev stores. An earlier note in
+  this file flagged "dev store does not appear in Partners dashboard"
+  as an open issue — that was a mental-model error, not an actual
+  problem. Resolved 2026-05-20.
+- Shopify's `dev.shopify.com` Create-store flow does **not** ask for
+  country during creation. Every new dev store defaults to United
+  States and needs a Settings → General regional fix afterward
+  (store address, backup region, unit system, weight unit, time zone).
+  Changing the store address country to Romania cascades to most of
+  the other settings automatically — but not all (backup region stays
+  US on dev stores; time zone autoguesses Budapest instead of
+  Bucharest).
 
 **Environment variables (in `~/.bashrc`):**
 
 - `OPT_OUT_INSTRUMENTATION=true` — disables Shopify AI Toolkit telemetry. Keep set. Every validated GraphQL/Liquid snippet would otherwise be sent to Shopify's servers; opt-out is the right default for client work.
-
-**Known open issue:**
-
-- Dev store does not appear in the Partners dashboard. Ownership/access path to resolve before M6 transfer to Friend's account. Non-blocking for M1–M5.
 
 **Do not modify** any of the above without updating this section and committing the change with `docs: update environment`.
 

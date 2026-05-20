@@ -38,17 +38,17 @@ Defined in admin → Settings → Custom data → Products. Applied to
 products of type `Ramă`. Definitions exist *before* products are
 created so every frame lands schema-correct from day one.
 
-| Key                          | Type                     | Required | Example                              |
-|------------------------------|--------------------------|----------|--------------------------------------|
-| `custom.frame_material`      | single_line_text_field   | yes      | `acetat`                             |
-| `custom.frame_shape`         | single_line_text_field   | yes      | `rotund`                             |
-| `custom.frame_colour_finish` | single_line_text_field   | yes      | `tortoise`                           |
-| `custom.frame_gender_fit`    | single_line_text_field   | yes      | `unisex`                             |
-| `custom.frame_lens_width`    | dimension (mm)           | yes      | `50 mm`                              |
-| `custom.frame_bridge_width`  | dimension (mm)           | yes      | `20 mm`                              |
-| `custom.frame_temple_length` | dimension (mm)           | yes      | `145 mm`                             |
-| `custom.frame_total_width`   | dimension (mm)           | no       | `138 mm`                             |
-| `custom.frame_country_origin`| single_line_text_field   | no       | `Italia`                             |
+| Key                          | Type                                          | Required | Example      |
+|------------------------------|-----------------------------------------------|----------|--------------|
+| `custom.frame_material`      | Choice list (single_line_text_field)          | yes      | `acetat`     |
+| `custom.frame_shape`         | Choice list (single_line_text_field)          | yes      | `rotund`     |
+| `custom.frame_colour_finish` | Choice list (single_line_text_field)          | yes      | `tortoise`   |
+| `custom.frame_gender_fit`    | Choice list (single_line_text_field)          | yes      | `unisex`     |
+| `custom.frame_lens_width`    | dimension (mm)                                | yes      | `50 mm`      |
+| `custom.frame_bridge_width`  | dimension (mm)                                | yes      | `20 mm`      |
+| `custom.frame_temple_length` | dimension (mm)                                | yes      | `145 mm`     |
+| `custom.frame_total_width`   | dimension (mm)                                | no       | `138 mm`     |
+| `custom.frame_country_origin`| single_line_text_field                        | no       | `Italia`     |
 
 Frame weight uses Shopify's built-in `variant.weight` (the shipping
 field). Don't duplicate it as a metafield.
@@ -70,10 +70,13 @@ value.
 
 **`frame_gender_fit`:** `bărbați`, `femei`, `unisex`
 
-These are stored as plain text. To strictly enforce the vocabulary
-later we'd promote to metaobjects (Shopify's typed-enum equivalent).
-Deferred — the discipline of typing the value correctly is on us
-during product entry, not on the schema, until volume justifies it.
+These are stored as **Choice list metafields** — single_line_text_field
+under the hood, with a Shopify-native enum constraint enforced in the
+admin UI. Adding or removing a value means editing both the metafield
+definition in admin **and** the vocabulary list here in this doc.
+(Earlier draft of this section deferred enum enforcement to metaobjects;
+that's not necessary — Choice list gives the same typed-enum guarantee
+with less complexity. Locked in admin 2026-05-20.)
 
 ---
 
@@ -134,6 +137,17 @@ products land with metafields filled.
 Smart-collection rules-by-metafield require the metafield to be
 flagged as **storefront filter / available in collection rules** in
 admin. Check this box on every `custom.frame_*` definition.
+
+**Shopify limitation discovered 2026-05-20:** Dimension-type metafields
+(the `frame_*_width` and `frame_temple_length` set) **cannot** be used
+in smart collection rules. The "Use as a condition in smart collections"
+toggle isn't even exposed on Dimension definitions — Shopify's
+collection engine doesn't support dimension-range filtering as a rule.
+Non-blocking for the five starter collections above (none of them
+filter on dimensions). But any future dimension-driven collection
+("Rame înguste" for narrow frames, "Rame late" for wide) needs either
+manual curation or a tag-based approach (e.g., tag products with
+`dim:ingust` / `dim:lat` and have the smart rule filter on tag).
 
 ---
 

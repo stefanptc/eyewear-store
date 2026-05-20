@@ -1,8 +1,8 @@
 # PLAN.md
 
 **Project:** Premium Shopify Store Build — Romanian Prescription Eyewear
-**Last updated:** May 20, 2026
-**Current milestone:** M3 — Information architecture & sample content (starting)
+**Last updated:** May 20, 2026 (session 5)
+**Current milestone:** M3 — Information architecture & sample content (mid-flight)
 
 ---
 
@@ -54,20 +54,23 @@
 ---
 
 ## M3 — Information architecture & sample content
-*Size: ~4 sessions · Status: 🟡 starting*
+*Size: ~4 sessions · Status: 🟡 mid-flight (session 5 in progress)*
 
 **Goal:** Store has structure, even with placeholder products.
 
 - ⏸️ [Friend] Send 5–10 real product samples — **DEFERRED** per session-4 decision. Building with theatre (Unsplash stock + AI-generated generic eyewear) through M5 so design comes alive. Real product photography swaps in pre-M6 launch.
-- ⬜ [Me] Apply locked design tokens to Dawn's `base.css` (full `:root` block from `CLAUDE.md` section 5) — first thing in Claude Code
-- ⬜ [Me] Set up collections (frames, lenses, combos), product templates, navigation
-- ⬜ [Me] Configure metafields for lens parameters (sphere, cylinder, axis, PD, lens type, coatings) — namespace `custom.lens_*`
-- ⬜ [Me] Build out core pages: home, collection, product, about, contact (Romanian content first; English deferred to M5)
-- ⬜ [Me] Source 8–10 Unsplash placeholder product shots — generic eyewear, neutral backgrounds
-- ⬜ [Me] Configure Shopify Markets: RON as store/settlement currency, EUR as display-only secondary currency (auto-conversion, customer still settles in RON)
-- ⬜ [Me] Install Translate & Adapt (free, official Shopify app); add English as secondary locale, leave content empty until M5 copy pass
+- ✅ [Me] Apply locked design tokens to Dawn's `base.css` (commit c62b917, session 5)
+- ✅ [Me] **Recreate dev store as Romania-defaulted** — `lens-store-romanian.myshopify.com` (session 5). Old US-defaulted store `stefan-dev-lens-store` flagged for deletion next session. Learned: Shopify Create-store flow doesn't ask for country; every dev store needs a manual Settings → General regional fix afterward. Cascade from store-address country change handles most of it; backup region and time zone need manual correction.
+- ✅ [Me] **Define frame product schema** — `docs/m3-data-model.md` drafted and committed (commit fb691cd, session 5). Captures lens-led IA (`/pages/lentile` primary, Rame secondary), product type vocabulary, frame metafields, tag conventions, collection rules, navigation skeleton, stub pages, Markets/locale config, and open M4 lens-product-modeling questions.
+- ✅ [Me] **Create 9 frame metafield definitions in admin** — `custom.frame_*` namespace, all with Romanian display names + full diacritics. 4 Choice list (material, shape, colour_finish, gender_fit), 1 plain Single line text (country_origin), 4 Dimension/mm (lens_width, bridge_width, temple_length, total_width). Two doc updates after this session: Choice list is the right Shopify-native enum (replaces "deferred to metaobjects" language); Dimension fields cannot be used in smart collection rules.
+- 🟡 [Me] Set up collections, product templates, navigation — collections (5 automated), stub pages (`lentile`, `despre`, `contact`), main + footer nav still pending (next session, tasks #6/#7/#8).
+- ⏸️ [Me] ~~Configure metafields for lens parameters (sphere, cylinder, axis, PD, lens type, coatings) — namespace `custom.lens_*`~~ — **moved to M4.** Discovered during session 5 that these are *customer-prescription* data (sphere/cylinder/axis/PD), not product attributes — they live on customer/cart/order, not products. Architecture decided in M4 (see `docs/m3-data-model.md` §10 open question 1). The `custom.lens_*` namespace stays reserved; no fields created yet.
+- ⬜ [Me] Build out core pages: home, collection, product (Romanian content first; English deferred to M5). Stub pages (`lentile`/`despre`/`contact`) created next session; rich content lands later.
+- ⬜ [Me] Source 8–10 Unsplash placeholder product shots — generic eyewear, neutral backgrounds. Deferred until first batch of placeholder products is created (post-collections, so we can verify smart-collection auto-population).
+- 🟡 [Me] Configure Shopify Markets — RON as store/settlement currency ✅ (session 5). **EUR display deferred to M6** — Shopify Markets multi-currency requires Shopify Payments setup, which requires Friend's business entity. See CLAUDE.md §1.
+- ✅ [Me] Install Translate & Adapt + add EN locale empty (session 5) — both auto-handled by Shopify when store address country was set to Romania. Romanian primary/published, English added with no translations (content lands M5).
 
-**Exit criterion:** Click-through prototype on dev store. Stefan can browse it like a customer and find anything. RON↔EUR display toggle works. EN locale present but empty (no content yet). Design tokens applied across every page.
+**Exit criterion:** Click-through prototype on dev store. Stefan can browse it like a customer and find anything. EN locale present but empty (no content yet). Design tokens applied across every page. (EUR display toggle is M6, not M3.)
 
 ---
 
@@ -130,6 +133,7 @@
 
 ## Change log
 
+- **May 20, 2026 (session 5)** — **Heavy M3 admin execution.** Shipped: design tokens applied to Dawn `base.css` + fixed a pre-existing `featured-product.liquid` schema-translation error (commit c62b917); `docs/m3-data-model.md` drafted and committed as the schema of record (commit fb691cd); dev store recreated as `lens-store-romanian.myshopify.com` after discovering the original was US-defaulted; Settings → General fully Romanian (business entity, address Brașov, currency RON, metric, grams, Europe/Bucharest); Markets configured Romania-only with RON; Romanian set as primary published language with English added empty; Translate & Adapt installed; **9 frame metafields created** (`custom.frame_*` namespace, 4 Choice list + 1 plain text + 4 Dimension/mm, all with diacritics). **Two big constraints discovered:** (a) EUR display via Shopify Markets requires Shopify Payments configured, which requires Friend's business entity — deferred to M6, captured in CLAUDE.md §1. (b) Dimension-type metafields can't be used in smart collection rules — non-blocking for our 5 starter collections but captured in `docs/m3-data-model.md` §5 so future "narrow frames"-style collections take the tag-based path. **Process learnings:** Shopify Create-store flow ignores country (every new dev store starts US-defaulted, needs Settings → General fix); dev stores live at `dev.shopify.com`, not `partners.shopify.com` — the old "open issue" about Partners visibility was a mental-model error, now resolved in CLAUDE.md §3. **Next session:** automated collections (#6, 5 rules using the Choice list metafields), stub pages (#7 — `lentile`/`despre`/`contact`), navigation (#8 — Lentile in primary slot per lens-led IA), then delete the old US dev store (#13). After M3 admin closes, source Unsplash placeholders and create the first batch of placeholder frame products to verify smart collections auto-populate.
 - **May 20, 2026 (session 4)** — **M1 closed, M2 closed in a single session, M3 opened.** Working model clarified: Stefan owns design + product decisions, Friend approves at M5 polish gate (not every milestone). M2 collapsed from 5 sessions to 1 because the joint mood board step became unnecessary. Built four artifacts in `docs/`: reference grid (6 sites scored), typography exploration (3 pairings on Romanian copy), accent exploration (7 warm candidates), kit page (full homepage mock + token reference). **Locked design direction: A/A/D** — serif-led editorial + monochrome with one accent + type-led hero (provisional). **Locked stack:** Source Serif 4 × IBM Plex Sans × IBM Plex Mono, mushroom taupe #8C7A5C accent, 88px display down to 11px mono-xs, 8px spacing base. Closest reference: Cubitts. Full token set committed to `CLAUDE.md` section 5. **Imagery policy clarified:** Unsplash + AI placeholders fine through M5, real product photography required pre-M6 launch; updated section 10 accordingly. Brand name + domain pushed to M5 — building under placeholder "Optic Mărășești." Next: switch from chat to Claude Code, apply `:root` block to Dawn's `base.css`, start configuring collections and metafields.
 - **May 19, 2026 (session 3)** — Started M1 step 7 (`CLAUDE.md`). Drafted and committed `docs/GIT_CONVENTIONS.md` first so `CLAUDE.md` can reference it (`docs: add git conventions`). Solo-on-main + Conventional Commits + `--no-ff` for feature branches. **Scope clarification:** site is RO + EN (EN as UX courtesy for tourists/expats physically in Romania, not international storefront) and RON + EUR (RON store/settlement, EUR display-only via Shopify Markets auto-conversion). No EU-wide shipping, no real EUR checkout, no multi-country VAT. M3 picks up Markets config + Translate & Adapt locale setup; M5 copy pass becomes RO primary then EN secondary; M6 SEO adds `hreflang ro-RO` + `en-RO`. `CLAUDE.md` section 1 (Project summary) drafted, awaiting sign-off. Next: section 2 (Repository conventions, points at `docs/GIT_CONVENTIONS.md`).
 - **May 18, 2026 (session 2)** — M1 steps 4, 5, 6 done. Local dev env fully wired (Node 20, npm 10, Shopify CLI 3.94.3, Git 2.43), Claude Code 2.1.143 with Shopify AI Toolkit plugin enabled (chose plugin path over raw Dev MCP — auto-updates, bundles skills), telemetry opted out. GitHub auth on this machine via SSH (ed25519). Dawn forked to `stefanptc/eyewear-store` (public), cloned, `shopify theme dev` confirmed working against dev store. **M1 exit criterion met.** Switched from "Claude Code in Cursor terminal" to "Claude Code in standalone terminal" — Cursor optional. Open question for M6: dev store doesn't appear in Partners dashboard, need to resolve ownership before transfer to Friend's account. Next session: M1 step 7 (`CLAUDE.md` in repo root).
