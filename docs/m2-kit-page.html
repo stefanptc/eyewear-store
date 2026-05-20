@@ -1,0 +1,1079 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Type scale & spacing kit · M2/04</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet">
+<style>
+
+  /* ============================
+     DESIGN TOKENS
+     Locked May 19, 2026
+     ============================ */
+
+  :root {
+    /* Colour — mushroom system */
+    --bg:          #faf8f3;  /* page */
+    --bg-shaded:   #f3efe5;  /* surfaces */
+    --bg-card:     #ffffff;
+    --ink:         #1a1a17;  /* body text */
+    --ink-soft:    #3a3833;  /* secondary text */
+    --ink-muted:   #6a665a;  /* tertiary, labels */
+    --rule:        #d4cfc2;  /* hairlines */
+    --rule-faint:  #e8e3d6;  /* internal dividers */
+    --accent:      #8c7a5c;  /* mushroom taupe */
+    --accent-soft: #b8aa8a;  /* hover surfaces */
+
+    /* Type families */
+    --serif: 'Source Serif 4', serif;
+    --sans:  'IBM Plex Sans', system-ui, sans-serif;
+    --mono:  'IBM Plex Mono', ui-monospace, monospace;
+
+    /* Type scale */
+    --t-mono-xs:   11px;
+    --t-mono-sm:   12.5px;
+    --t-ui-sm:     13.5px;
+    --t-body-sm:   14.5px;
+    --t-body:      16px;
+    --t-body-lg:   18px;
+    --t-h4:        22px;
+    --t-h3:        28px;
+    --t-h2:        40px;
+    --t-h1:        56px;
+    --t-display:   88px;
+
+    /* Spacing scale (8px base, expanding) */
+    --s-1:   4px;
+    --s-2:   8px;
+    --s-3:   12px;
+    --s-4:   16px;
+    --s-5:   24px;
+    --s-6:   32px;
+    --s-7:   48px;
+    --s-8:   64px;
+    --s-9:   96px;
+    --s-10:  128px;
+    --s-11:  160px;
+
+    /* Layout */
+    --max:   1200px;
+    --pad-x: 48px;
+
+    /* Borders */
+    --border-thin: 1px;
+    --radius:      0;          /* no rounded corners — editorial */
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: var(--t-body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ============================
+     UTILITIES
+     ============================ */
+
+  .container {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--pad-x);
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: var(--t-mono-xs);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .small-mono {
+    font-family: var(--mono);
+    font-size: var(--t-mono-sm);
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ============================
+     PAGE BANNER (kit meta)
+     ============================ */
+
+  .page-banner {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 14px var(--pad-x);
+    font-family: var(--mono);
+    font-size: var(--t-mono-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .page-banner span:nth-child(2) { color: var(--accent-soft); }
+
+  /* ============================
+     HEADER NAV
+     ============================ */
+
+  .site-header {
+    border-bottom: var(--border-thin) solid var(--rule);
+    padding: var(--s-5) 0;
+  }
+
+  .nav-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--s-7);
+    align-items: center;
+  }
+
+  .brand {
+    font-family: var(--serif);
+    font-size: var(--t-h4);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    font-variation-settings: "opsz" 22;
+  }
+
+  .brand em { font-style: italic; }
+
+  .nav-links {
+    display: flex;
+    gap: var(--s-6);
+    justify-content: center;
+  }
+
+  .nav-link {
+    font-family: var(--mono);
+    font-size: var(--t-mono-sm);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    transition: color 120ms ease;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+  }
+
+  .nav-link:hover, .nav-link.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .nav-meta {
+    display: flex;
+    gap: var(--s-5);
+    font-family: var(--mono);
+    font-size: var(--t-mono-sm);
+    color: var(--ink-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .nav-meta a { transition: color 120ms ease; }
+  .nav-meta a:hover { color: var(--accent); }
+
+  /* ============================
+     HERO — type-led
+     ============================ */
+
+  .hero {
+    padding: var(--s-10) 0 var(--s-10);
+    border-bottom: var(--border-thin) solid var(--rule);
+  }
+
+  .hero-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--s-7);
+    align-items: end;
+    margin-bottom: var(--s-7);
+  }
+
+  .hero-display {
+    font-family: var(--serif);
+    font-size: var(--t-display);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    font-weight: 300;
+    margin: 0;
+    max-width: 900px;
+    color: var(--ink);
+    font-variation-settings: "opsz" 60;
+  }
+
+  .hero-display em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .hero-lede {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: var(--t-h3);
+    line-height: 1.3;
+    color: var(--ink-soft);
+    margin: var(--s-7) 0 var(--s-7);
+    max-width: 640px;
+    font-weight: 400;
+    font-variation-settings: "opsz" 28;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: var(--s-7);
+    align-items: baseline;
+  }
+
+  .text-link {
+    font-family: var(--mono);
+    font-size: var(--t-mono-sm);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 4px;
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+
+  .text-link:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .hero-meta {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: var(--t-mono-xs);
+    color: var(--ink-muted);
+    letter-spacing: 0.06em;
+    line-height: 1.8;
+  }
+
+  .hero-meta span { display: block; }
+
+  /* ============================
+     EDITORIAL INTRO
+     ============================ */
+
+  .editorial {
+    padding: var(--s-10) 0;
+    border-bottom: var(--border-thin) solid var(--rule);
+  }
+
+  .editorial-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--s-9);
+    align-items: start;
+  }
+
+  .editorial h2 {
+    font-family: var(--serif);
+    font-size: var(--t-h2);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    font-weight: 400;
+    margin: var(--s-4) 0 0;
+    font-variation-settings: "opsz" 60;
+  }
+
+  .editorial h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .editorial-body p {
+    font-family: var(--serif);
+    font-size: var(--t-body-lg);
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0 0 var(--s-5);
+    font-variation-settings: "opsz" 18;
+  }
+
+  .editorial-body p:first-child {
+    font-size: var(--t-h4);
+    line-height: 1.45;
+    color: var(--ink);
+    margin-bottom: var(--s-6);
+    font-variation-settings: "opsz" 22;
+  }
+
+  .editorial-body p:last-child { margin-bottom: 0; }
+
+  /* ============================
+     PRODUCT GRID
+     ============================ */
+
+  .products {
+    padding: var(--s-10) 0;
+    border-bottom: var(--border-thin) solid var(--rule);
+  }
+
+  .products-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--s-7);
+    align-items: end;
+    margin-bottom: var(--s-8);
+  }
+
+  .products h2 {
+    font-family: var(--serif);
+    font-size: var(--t-h2);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    font-weight: 300;
+    margin: var(--s-4) 0 0;
+    font-variation-settings: "opsz" 60;
+  }
+
+  .products h2 em { font-style: italic; }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--s-6);
+  }
+
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+  }
+
+  .product-image {
+    aspect-ratio: 5 / 4;
+    background: var(--bg-shaded);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--s-3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-image svg {
+    width: 60%;
+    height: auto;
+    color: var(--ink-muted);
+    opacity: 0.45;
+  }
+
+  .product-image .placeholder-label {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    opacity: 0.6;
+  }
+
+  .product-name {
+    font-family: var(--serif);
+    font-size: var(--t-h4);
+    line-height: 1.1;
+    letter-spacing: -0.005em;
+    font-weight: 400;
+    margin: 0;
+    font-variation-settings: "opsz" 22;
+  }
+
+  .product-name em { font-style: italic; }
+
+  .product-spec {
+    font-family: var(--mono);
+    font-size: var(--t-mono-sm);
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+    margin: 0;
+  }
+
+  .product-price {
+    font-family: var(--serif);
+    font-size: var(--t-body-lg);
+    color: var(--accent);
+    font-weight: 500;
+    margin: var(--s-2) 0 0;
+    letter-spacing: -0.005em;
+    font-variation-settings: "opsz" 18;
+  }
+
+  .product-price .currency {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ink-muted);
+    font-size: var(--t-body-sm);
+    margin-left: 2px;
+  }
+
+  /* ============================
+     VALUES BLOCK
+     ============================ */
+
+  .values {
+    padding: var(--s-10) 0 var(--s-10);
+  }
+
+  .values h2 {
+    font-family: var(--serif);
+    font-size: var(--t-h2);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    font-weight: 300;
+    margin: var(--s-4) 0 var(--s-8);
+    max-width: 720px;
+    font-variation-settings: "opsz" 60;
+  }
+
+  .values h2 em { font-style: italic; color: var(--accent); }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--s-7);
+    border-top: var(--border-thin) solid var(--ink);
+    padding-top: var(--s-6);
+  }
+
+  .value {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+  }
+
+  .value-num {
+    font-family: var(--mono);
+    font-size: var(--t-mono-xs);
+    letter-spacing: 0.16em;
+    color: var(--accent);
+  }
+
+  .value-title {
+    font-family: var(--serif);
+    font-size: var(--t-h4);
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+    font-weight: 400;
+    margin: 0 0 var(--s-2);
+    font-variation-settings: "opsz" 22;
+  }
+
+  .value-title em { font-style: italic; }
+
+  .value-body {
+    font-size: var(--t-body-sm);
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ============================
+     SITE FOOTER
+     ============================ */
+
+  .site-footer {
+    background: var(--bg-shaded);
+    padding: var(--s-8) 0 var(--s-6);
+    border-top: var(--border-thin) solid var(--rule);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--s-7);
+    padding-bottom: var(--s-7);
+    border-bottom: var(--border-thin) solid var(--rule);
+  }
+
+  .footer-brand {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: var(--t-h4);
+    color: var(--ink);
+    margin: 0 0 var(--s-3);
+    font-variation-settings: "opsz" 22;
+  }
+
+  .footer-tag {
+    font-size: var(--t-body-sm);
+    color: var(--ink-muted);
+    max-width: 320px;
+    line-height: 1.6;
+  }
+
+  .footer-col h4 {
+    font-family: var(--mono);
+    font-size: var(--t-mono-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 var(--s-4);
+    font-weight: 500;
+  }
+
+  .footer-col a {
+    display: block;
+    font-size: var(--t-body-sm);
+    color: var(--ink-soft);
+    padding: 3px 0;
+    transition: color 120ms ease;
+  }
+
+  .footer-col a:hover { color: var(--accent); }
+
+  .footer-meta {
+    padding-top: var(--s-5);
+    font-family: var(--mono);
+    font-size: var(--t-mono-xs);
+    color: var(--ink-muted);
+    letter-spacing: 0.06em;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ============================
+     TOKEN REFERENCE PANEL
+     ============================ */
+
+  .tokens {
+    background: var(--ink);
+    color: var(--bg);
+    padding: var(--s-10) 0 var(--s-10);
+  }
+
+  .tokens .container > .eyebrow { color: var(--accent-soft); }
+
+  .tokens h2 {
+    font-family: var(--serif);
+    font-size: var(--t-h1);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    font-weight: 300;
+    margin: var(--s-3) 0 var(--s-8);
+    color: var(--bg);
+    font-variation-settings: "opsz" 60;
+  }
+
+  .tokens h2 em { font-style: italic; color: var(--accent-soft); }
+
+  .tokens h3 {
+    font-family: var(--mono);
+    font-size: var(--t-mono-xs);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin: var(--s-7) 0 var(--s-4);
+    font-weight: 500;
+  }
+
+  .tokens h3:first-of-type { margin-top: 0; }
+
+  /* Token table */
+  .tok-table {
+    display: grid;
+    gap: 0;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .tok-row {
+    display: grid;
+    grid-template-columns: 160px 80px 1fr;
+    gap: var(--s-5);
+    padding: var(--s-3) 0;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    align-items: baseline;
+  }
+
+  .tok-key {
+    font-family: var(--mono);
+    font-size: var(--t-mono-sm);
+    color: var(--accent-soft);
+    letter-spacing: 0.02em;
+  }
+
+  .tok-val {
+    font-family: var(--mono);
+    font-size: var(--t-mono-sm);
+    color: var(--bg);
+    text-align: right;
+  }
+
+  .tok-demo {
+    color: rgba(255,255,255,0.5);
+    font-size: var(--t-body-sm);
+  }
+
+  .tok-demo .swatch-inline {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  /* Type ladder visual */
+  .type-ladder {
+    display: grid;
+    gap: var(--s-2);
+    margin-top: var(--s-4);
+  }
+
+  .type-step {
+    display: grid;
+    grid-template-columns: 100px 80px 1fr;
+    gap: var(--s-5);
+    align-items: baseline;
+    padding: var(--s-2) 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .type-step .label {
+    font-family: var(--mono);
+    font-size: var(--t-mono-xs);
+    color: var(--accent-soft);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .type-step .size {
+    font-family: var(--mono);
+    font-size: var(--t-mono-sm);
+    color: rgba(255,255,255,0.5);
+  }
+
+  .type-step .sample {
+    color: var(--bg);
+    line-height: 1.05;
+  }
+
+  .type-step.serif .sample { font-family: var(--serif); }
+  .type-step.sans .sample  { font-family: var(--sans); }
+  .type-step.mono .sample  { font-family: var(--mono); letter-spacing: 0.06em; }
+
+  /* Spacing ruler visual */
+  .space-ruler {
+    display: grid;
+    gap: var(--s-2);
+    margin-top: var(--s-4);
+  }
+
+  .space-row {
+    display: grid;
+    grid-template-columns: 80px 80px 1fr;
+    gap: var(--s-5);
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .space-row .label {
+    font-family: var(--mono);
+    font-size: var(--t-mono-xs);
+    color: var(--accent-soft);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .space-row .value {
+    font-family: var(--mono);
+    font-size: var(--t-mono-sm);
+    color: rgba(255,255,255,0.5);
+  }
+
+  .space-row .bar {
+    background: var(--accent-soft);
+    height: 6px;
+  }
+
+  /* Two-column token layout */
+  .tokens-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-9);
+  }
+
+  /* ============================
+     RESPONSIVE
+     ============================ */
+
+  @media (max-width: 1024px) {
+    :root {
+      --t-display: 64px;
+      --t-h1: 44px;
+      --t-h2: 32px;
+      --pad-x: 32px;
+    }
+    .editorial-grid { grid-template-columns: 1fr; gap: var(--s-6); }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: var(--s-7); }
+    .values-grid { grid-template-columns: 1fr; gap: var(--s-7); }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: var(--s-6); }
+    .tokens-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    :root {
+      --t-display: 44px;
+      --t-h1: 36px;
+      --t-h2: 26px;
+      --pad-x: 24px;
+    }
+    .hero-head, .products-head { grid-template-columns: 1fr; }
+    .hero-meta { text-align: left; }
+    .nav-row { grid-template-columns: 1fr; gap: var(--s-4); }
+    .nav-links { justify-content: flex-start; flex-wrap: wrap; gap: var(--s-4); }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+
+</style>
+</head>
+<body>
+
+  <!-- Kit meta banner -->
+  <div class="page-banner">
+    <span>M2 / 04 — type scale & spacing kit</span>
+    <span>locked: Source Serif 4 · IBM Plex Sans · #8C7A5C</span>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-row">
+      <a href="#" class="brand"><em>Optic</em> Mărășești</a>
+      <nav class="nav-links">
+        <a href="#" class="nav-link active">Ochelari</a>
+        <a href="#" class="nav-link">Lentile</a>
+        <a href="#" class="nav-link">Acasă</a>
+        <a href="#" class="nav-link">Despre</a>
+      </nav>
+      <div class="nav-meta">
+        <a href="#">Cont</a>
+        <a href="#">Coș · 0</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-head">
+        <div>
+          <p class="eyebrow">Primăvară · 2026</p>
+        </div>
+        <div class="hero-meta">
+          <span>14 modele</span>
+          <span>Asamblate în Cluj</span>
+        </div>
+      </div>
+      <h1 class="hero-display">
+        Ochelari de vedere, <em>făcuți cu atenție.</em>
+      </h1>
+      <p class="hero-lede">
+        Rame din acetat italian, lentile cu indice de la 1.50 până la 1.74, asamblate manual într-un atelier mic.
+      </p>
+      <div class="hero-ctas">
+        <a href="#" class="text-link">Vezi ramele →</a>
+        <a href="#" class="text-link">Probează acasă →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Editorial intro -->
+  <section class="editorial">
+    <div class="container editorial-grid">
+      <div>
+        <p class="eyebrow">Despre noi</p>
+        <h2>Un atelier <em>mic</em>, mai degrabă decât un brand mare.</h2>
+      </div>
+      <div class="editorial-body">
+        <p>Am început pentru că nu găseam ochelari care să arate bine fără să coste cât un salariu pe lună. Așa că am făcut câteva, apoi mai multe, apoi am deschis un magazin.</p>
+        <p>Lucrăm cu acetat italian Mazzucchelli, balansor german și lentile turnate în România. Tăiem fiecare ramă la mână, șlefuim, lustruim, asamblăm. Nu există linie de producție — există o masă lungă și două scaune.</p>
+        <p>Comenzile pleacă în două săptămâni. Dacă ceva nu se potrivește, le iei înapoi gratuit timp de paisprezece zile. Asta e tot. Nimic complicat.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product grid -->
+  <section class="products">
+    <div class="container">
+      <div class="products-head">
+        <div>
+          <p class="eyebrow">Colecția primăvară</p>
+          <h2>Cele patru rame <em>noi</em>.</h2>
+        </div>
+        <a href="#" class="text-link">Toate ramele →</a>
+      </div>
+      <div class="product-grid">
+
+        <!-- Card 1: Mărășești -->
+        <article class="product-card">
+          <div class="product-image">
+            <svg viewBox="0 0 240 100" fill="none" stroke="currentColor" stroke-width="1.2">
+              <circle cx="65" cy="50" r="38"/>
+              <circle cx="175" cy="50" r="38"/>
+              <line x1="103" y1="50" x2="137" y2="50"/>
+              <line x1="27" y1="48" x2="6" y2="42"/>
+              <line x1="213" y1="48" x2="234" y2="42"/>
+            </svg>
+            <span class="placeholder-label">MRS-048 · acetat</span>
+          </div>
+          <h3 class="product-name"><em>Mărășești</em></h3>
+          <p class="product-spec">Acetat italian · 48 mm · negru</p>
+          <p class="product-price">490,00<span class="currency">lei</span></p>
+        </article>
+
+        <!-- Card 2: Brâncuși -->
+        <article class="product-card">
+          <div class="product-image">
+            <svg viewBox="0 0 240 100" fill="none" stroke="currentColor" stroke-width="1.2">
+              <path d="M27 32 L 105 32 L 105 72 L 27 72 Z" rx="4"/>
+              <path d="M135 32 L 213 32 L 213 72 L 135 72 Z"/>
+              <line x1="105" y1="50" x2="135" y2="50"/>
+              <line x1="27" y1="40" x2="6" y2="34"/>
+              <line x1="213" y1="40" x2="234" y2="34"/>
+            </svg>
+            <span class="placeholder-label">BRN-052 · titan</span>
+          </div>
+          <h3 class="product-name"><em>Brâncuși</em></h3>
+          <p class="product-spec">Titan periat · 52 mm · brun</p>
+          <p class="product-price">680,00<span class="currency">lei</span></p>
+        </article>
+
+        <!-- Card 3: Dunărea -->
+        <article class="product-card">
+          <div class="product-image">
+            <svg viewBox="0 0 240 100" fill="none" stroke="currentColor" stroke-width="1.2">
+              <path d="M28 30 Q 28 70 65 72 L 100 72 Q 105 72 105 65 L 105 35 Q 105 30 100 30 Z"/>
+              <path d="M140 30 L 207 30 Q 212 30 212 35 L 212 65 Q 212 72 207 72 L 175 72 Q 140 70 140 30 Z"/>
+              <line x1="105" y1="50" x2="140" y2="50"/>
+              <line x1="28" y1="38" x2="6" y2="32"/>
+              <line x1="212" y1="38" x2="234" y2="32"/>
+            </svg>
+            <span class="placeholder-label">DNR-050 · acetat</span>
+          </div>
+          <h3 class="product-name"><em>Dunărea</em></h3>
+          <p class="product-spec">Acetat italian · 50 mm · havana</p>
+          <p class="product-price">490,00<span class="currency">lei</span></p>
+        </article>
+
+        <!-- Card 4: Sibiu -->
+        <article class="product-card">
+          <div class="product-image">
+            <svg viewBox="0 0 240 100" fill="none" stroke="currentColor" stroke-width="1.2">
+              <ellipse cx="65" cy="50" rx="40" ry="28"/>
+              <ellipse cx="175" cy="50" rx="40" ry="28"/>
+              <line x1="105" y1="50" x2="135" y2="50"/>
+              <line x1="25" y1="44" x2="6" y2="38"/>
+              <line x1="215" y1="44" x2="234" y2="38"/>
+            </svg>
+            <span class="placeholder-label">SBU-046 · acetat</span>
+          </div>
+          <h3 class="product-name"><em>Sibiu</em></h3>
+          <p class="product-spec">Acetat italian · 46 mm · transparent</p>
+          <p class="product-price">490,00<span class="currency">lei</span></p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Values block -->
+  <section class="values">
+    <div class="container">
+      <p class="eyebrow">Cum lucrăm</p>
+      <h2>Trei lucruri care nu se <em>schimbă</em>.</h2>
+      <div class="values-grid">
+        <div class="value">
+          <span class="value-num">01</span>
+          <h3 class="value-title"><em>Acetat italian.</em></h3>
+          <p class="value-body">Lucrăm doar cu acetat Mazzucchelli din Castiglione Olona — același furnizor folosit de marile case italiene. Plăcile vin în straturi colorate care se taie și se șlefuiesc la mână.</p>
+        </div>
+        <div class="value">
+          <span class="value-num">02</span>
+          <h3 class="value-title"><em>Asamblat la Cluj.</em></h3>
+          <p class="value-body">Atelierul este la Cluj-Napoca, pe strada Memorandumului. Două scaune, două lămpi, două persoane care fac ochelari. Putem trece pe acolo, dacă vrei să vezi.</p>
+        </div>
+        <div class="value">
+          <span class="value-num">03</span>
+          <h3 class="value-title"><em>Întoarcere în 14 zile.</em></h3>
+          <p class="value-body">Dacă nu se potrivesc, le returnezi gratuit. Fără explicații, fără formulare lungi. Singura excepție sunt lentilele tăiate după prescripție personalizată.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Site footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <p class="footer-brand">Optic Mărășești</p>
+          <p class="footer-tag">Un atelier de ochelari din Cluj. Acetat italian, lentile românești, asamblare manuală.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Magazin</h4>
+          <a href="#">Toate ramele</a>
+          <a href="#">Lentile</a>
+          <a href="#">Card cadou</a>
+        </div>
+        <div class="footer-col">
+          <h4>Ajutor</h4>
+          <a href="#">Probează acasă</a>
+          <a href="#">Cum se citește o rețetă</a>
+          <a href="#">Returnare</a>
+        </div>
+        <div class="footer-col">
+          <h4>Atelier</h4>
+          <a href="#">Despre noi</a>
+          <a href="#">Contact</a>
+          <a href="#">Cluj-Napoca</a>
+        </div>
+      </div>
+      <div class="footer-meta">
+        <span>© 2026 Optic Mărășești · cui RO00000000</span>
+        <span>RON · TVA inclus · livrare gratuită</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Token reference panel -->
+  <section class="tokens">
+    <div class="container">
+      <p class="eyebrow">Design tokens · reference</p>
+      <h2>The <em>system</em> behind<br>the page above.</h2>
+
+      <div class="tokens-grid">
+
+        <!-- Left column: Colour + Type scale -->
+        <div>
+          <h3>Colour</h3>
+          <div class="tok-table">
+            <div class="tok-row">
+              <span class="tok-key">--bg</span>
+              <span class="tok-val">#faf8f3</span>
+              <span class="tok-demo"><span class="swatch-inline" style="background:#faf8f3"></span>page background</span>
+            </div>
+            <div class="tok-row">
+              <span class="tok-key">--bg-shaded</span>
+              <span class="tok-val">#f3efe5</span>
+              <span class="tok-demo"><span class="swatch-inline" style="background:#f3efe5"></span>surfaces, footers</span>
+            </div>
+            <div class="tok-row">
+              <span class="tok-key">--ink</span>
+              <span class="tok-val">#1a1a17</span>
+              <span class="tok-demo"><span class="swatch-inline" style="background:#1a1a17"></span>body, headlines</span>
+            </div>
+            <div class="tok-row">
+              <span class="tok-key">--ink-soft</span>
+              <span class="tok-val">#3a3833</span>
+              <span class="tok-demo"><span class="swatch-inline" style="background:#3a3833"></span>secondary copy</span>
+            </div>
+            <div class="tok-row">
+              <span class="tok-key">--ink-muted</span>
+              <span class="tok-val">#6a665a</span>
+              <span class="tok-demo"><span class="swatch-inline" style="background:#6a665a"></span>labels, specs</span>
+            </div>
+            <div class="tok-row">
+              <span class="tok-key">--rule</span>
+              <span class="tok-val">#d4cfc2</span>
+              <span class="tok-demo"><span class="swatch-inline" style="background:#d4cfc2"></span>hairlines</span>
+            </div>
+            <div class="tok-row">
+              <span class="tok-key">--accent</span>
+              <span class="tok-val">#8c7a5c</span>
+              <span class="tok-demo"><span class="swatch-inline" style="background:#8c7a5c"></span>mushroom — prices, italics, active states</span>
+            </div>
+            <div class="tok-row">
+              <span class="tok-key">--accent-soft</span>
+              <span class="tok-val">#b8aa8a</span>
+              <span class="tok-demo"><span class="swatch-inline" style="background:#b8aa8a"></span>hover surfaces, dark-mode tokens</span>
+            </div>
+          </div>
+
+          <h3>Type scale</h3>
+          <div class="type-ladder">
+            <div class="type-step serif"><span class="label">Display</span><span class="size">88 / 1.02</span><span class="sample" style="font-size:32px">Mărășești</span></div>
+            <div class="type-step serif"><span class="label">H1</span><span class="size">56 / 1.05</span><span class="sample" style="font-size:28px">Mărășești</span></div>
+            <div class="type-step serif"><span class="label">H2</span><span class="size">40 / 1.08</span><span class="sample" style="font-size:24px">Mărășești</span></div>
+            <div class="type-step serif"><span class="label">H3</span><span class="size">28 / 1.15</span><span class="sample" style="font-size:20px">Mărășești</span></div>
+            <div class="type-step serif"><span class="label">H4</span><span class="size">22 / 1.2</span><span class="sample" style="font-size:18px">Mărășești</span></div>
+            <div class="type-step serif"><span class="label">Body-lg</span><span class="size">18 / 1.55</span><span class="sample" style="font-size:16px">Body large (serif intro)</span></div>
+            <div class="type-step sans"><span class="label">Body</span><span class="size">16 / 1.55</span><span class="sample" style="font-size:15px">Body — IBM Plex Sans</span></div>
+            <div class="type-step sans"><span class="label">Body-sm</span><span class="size">14.5 / 1.6</span><span class="sample" style="font-size:14px">Body small</span></div>
+            <div class="type-step sans"><span class="label">UI-sm</span><span class="size">13.5 / 1.5</span><span class="sample" style="font-size:13px">UI small</span></div>
+            <div class="type-step mono"><span class="label">Mono-sm</span><span class="size">12.5 / 1.5</span><span class="sample" style="font-size:12px">MONO SMALL</span></div>
+            <div class="type-step mono"><span class="label">Mono-xs</span><span class="size">11 / 1.5</span><span class="sample" style="font-size:11px">MONO EYEBROW</span></div>
+          </div>
+        </div>
+
+        <!-- Right column: Spacing + Misc -->
+        <div>
+          <h3>Spacing scale · 8px base</h3>
+          <div class="space-ruler">
+            <div class="space-row"><span class="label">--s-1</span><span class="value">4px</span><span class="bar" style="width:4px"></span></div>
+            <div class="space-row"><span class="label">--s-2</span><span class="value">8px</span><span class="bar" style="width:8px"></span></div>
+            <div class="space-row"><span class="label">--s-3</span><span class="value">12px</span><span class="bar" style="width:12px"></span></div>
+            <div class="space-row"><span class="label">--s-4</span><span class="value">16px</span><span class="bar" style="width:16px"></span></div>
+            <div class="space-row"><span class="label">--s-5</span><span class="value">24px</span><span class="bar" style="width:24px"></span></div>
+            <div class="space-row"><span class="label">--s-6</span><span class="value">32px</span><span class="bar" style="width:32px"></span></div>
+            <div class="space-row"><span class="label">--s-7</span><span class="value">48px</span><span class="bar" style="width:48px"></span></div>
+            <div class="space-row"><span class="label">--s-8</span><span class="value">64px</span><span class="bar" style="width:64px"></span></div>
+            <div class="space-row"><span class="label">--s-9</span><span class="value">96px</span><span class="bar" style="width:96px"></span></div>
+            <div class="space-row"><span class="label">--s-10</span><span class="value">128px</span><span class="bar" style="width:128px"></span></div>
+            <div class="space-row"><span class="label">--s-11</span><span class="value">160px</span><span class="bar" style="width:160px"></span></div>
+          </div>
+
+          <h3>Where each step is used</h3>
+          <div class="tok-table">
+            <div class="tok-row"><span class="tok-key">s-3 / s-4</span><span class="tok-val">12 / 16</span><span class="tok-demo">inside cards, label-to-content</span></div>
+            <div class="tok-row"><span class="tok-key">s-5 / s-6</span><span class="tok-val">24 / 32</span><span class="tok-demo">card padding, paragraph margins</span></div>
+            <div class="tok-row"><span class="tok-key">s-7 / s-8</span><span class="tok-val">48 / 64</span><span class="tok-demo">between content blocks, header padding</span></div>
+            <div class="tok-row"><span class="tok-key">s-9 / s-10</span><span class="tok-val">96 / 128</span><span class="tok-demo">between major page sections</span></div>
+            <div class="tok-row"><span class="tok-key">s-11</span><span class="tok-val">160</span><span class="tok-demo">rare — hero internal, marquee spacing</span></div>
+          </div>
+
+          <h3>Layout</h3>
+          <div class="tok-table">
+            <div class="tok-row"><span class="tok-key">--max</span><span class="tok-val">1200px</span><span class="tok-demo">max content width</span></div>
+            <div class="tok-row"><span class="tok-key">--pad-x</span><span class="tok-val">48px</span><span class="tok-demo">page side padding (24px mobile)</span></div>
+            <div class="tok-row"><span class="tok-key">--radius</span><span class="tok-val">0</span><span class="tok-demo">no rounded corners — editorial</span></div>
+            <div class="tok-row"><span class="tok-key">--border-thin</span><span class="tok-val">1px</span><span class="tok-demo">all hairlines</span></div>
+          </div>
+
+          <h3>Motion</h3>
+          <div class="tok-table">
+            <div class="tok-row"><span class="tok-key">duration</span><span class="tok-val">120ms</span><span class="tok-demo">hover state changes</span></div>
+            <div class="tok-row"><span class="tok-key">easing</span><span class="tok-val">ease</span><span class="tok-demo">default — no custom curves yet</span></div>
+            <div class="tok-row"><span class="tok-key">properties</span><span class="tok-val">color, opacity</span><span class="tok-demo">no transform animations — restraint</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

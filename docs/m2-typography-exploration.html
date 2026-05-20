@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Typography exploration — three pairings · M2/02</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&family=Inter+Tight:wght@300;400;500;600&family=Public+Sans:wght@300;400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f3;
+    --bg-card: #ffffff;
+    --bg-shaded: #f3efe5;
+    --ink: #1a1a17;
+    --ink-soft: #3a3833;
+    --ink-muted: #6a665a;
+    --rule: #d4cfc2;
+    --rule-faint: #e8e3d6;
+    --accent: #7a3e2f;        /* deep oxblood — placeholder; we'll pick the real accent later */
+    --accent-soft: #b87a5e;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Outer page chrome — uses mono everywhere so the test specimens stand out */
+  .page-head {
+    border-bottom: 1px solid var(--rule);
+    padding: 32px 40px 24px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: end;
+  }
+
+  .page-head .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 8px;
+  }
+
+  .page-head h1 {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 18px;
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+
+  .page-head h1 span {
+    color: var(--ink-muted);
+    font-weight: 400;
+  }
+
+  .page-head .meta {
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-align: right;
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+  }
+
+  .page-head .meta span { display: block; }
+
+  .brief {
+    padding: 24px 40px 32px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    max-width: 820px;
+    line-height: 1.6;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .brief strong { color: var(--ink); font-weight: 500; }
+  .brief em { font-style: italic; }
+
+  /* Three-up grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    align-items: stretch;
+  }
+
+  .col {
+    border-right: 1px solid var(--rule);
+    padding: 32px 28px 40px;
+    background: var(--bg);
+    position: relative;
+  }
+
+  .col:last-child { border-right: none; }
+
+  .col-head {
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+  }
+
+  .col-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--ink-muted);
+    margin: 0 0 8px;
+  }
+
+  .col-pair {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .col-pair .x { color: var(--accent); margin: 0 4px; }
+
+  .col-character {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin: 8px 0 0;
+    font-style: italic;
+  }
+
+  /* Specimen card — the actual product mock */
+  .specimen {
+    background: var(--bg-card);
+    padding: 36px 32px 32px;
+    border: 1px solid var(--rule);
+    min-height: 580px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .specimen .label-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 28px;
+  }
+
+  /* These three classes get the actual test typography */
+
+  /* Pairing 01: Fraunces + Inter Tight */
+  .p01 .display { font-family: 'Fraunces', serif; font-variation-settings: "opsz" 144, "SOFT" 50; }
+  .p01 .body    { font-family: 'Inter Tight', sans-serif; }
+
+  /* Pairing 02: Source Serif 4 + IBM Plex Sans */
+  .p02 .display { font-family: 'Source Serif 4', serif; font-variation-settings: "opsz" 60; }
+  .p02 .body    { font-family: 'IBM Plex Sans', sans-serif; }
+
+  /* Pairing 03: EB Garamond + Public Sans */
+  .p03 .display { font-family: 'EB Garamond', serif; }
+  .p03 .body    { font-family: 'Public Sans', sans-serif; }
+
+  /* Specimen shared styles */
+  .product-name {
+    font-size: 38px;
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    font-weight: 400;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+
+  .product-name em { font-style: italic; }
+
+  .product-subtitle {
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.35;
+    color: var(--ink-soft);
+    margin: 0 0 28px;
+    font-weight: 400;
+  }
+
+  .product-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 0 28px;
+    font-weight: 400;
+  }
+
+  /* Tweak per-pairing — Garamond runs small, so bump it */
+  .p03 .product-desc { font-size: 15.5px; line-height: 1.55; }
+  .p03 .product-name { font-size: 44px; letter-spacing: -0.01em; }
+  .p03 .product-subtitle { font-size: 18.5px; }
+
+  /* Inter Tight runs slightly large for its weight — tighten */
+  .p01 .product-desc { font-size: 13.5px; letter-spacing: -0.005em; }
+
+  /* Specs */
+  .specs {
+    border-top: 1px solid var(--rule-faint);
+    padding-top: 20px;
+    margin-bottom: 28px;
+  }
+
+  .spec-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    padding: 6px 0;
+    align-items: baseline;
+  }
+
+  .spec-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .spec-value {
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  /* Price + CTA */
+  .price-row {
+    border-top: 1px solid var(--ink);
+    padding-top: 20px;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .price {
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 400;
+    color: var(--accent);
+    letter-spacing: -0.01em;
+  }
+
+  .price .currency {
+    font-size: 16px;
+    letter-spacing: 0.02em;
+    margin-left: 4px;
+    color: var(--ink-muted);
+    font-style: italic;
+  }
+
+  .tva {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .cta-row {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+  }
+
+  .cta {
+    flex: 1;
+    padding: 14px 20px;
+    background: var(--ink);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid var(--ink);
+    transition: background 120ms ease;
+  }
+
+  .cta.secondary {
+    background: transparent;
+    color: var(--ink);
+  }
+
+  /* Notes below specimen */
+  .notes {
+    margin-top: 24px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+
+  .notes strong {
+    color: var(--ink);
+    font-weight: 500;
+    display: block;
+    margin: 12px 0 4px;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .notes ul {
+    margin: 0 0 0 4px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .notes li {
+    padding: 3px 0;
+    position: relative;
+    padding-left: 14px;
+  }
+
+  .notes li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 14px;
+  }
+
+  /* Diacritic test row — render a big string of just diacritics */
+  .diacritic-test {
+    margin-top: 24px;
+    padding: 16px 18px;
+    background: var(--bg-shaded);
+    border-left: 2px solid var(--accent);
+  }
+
+  .diacritic-test .lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 8px;
+  }
+
+  .diacritic-test .glyphs {
+    font-size: 24px;
+    line-height: 1.3;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+  }
+
+  .diacritic-test .glyphs em { font-style: italic; }
+
+  /* Bottom — decision row */
+  .decision {
+    border-top: 4px double var(--ink);
+    padding: 48px 40px;
+    background: var(--bg-shaded);
+  }
+
+  .decision h2 {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 16px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .decision p {
+    max-width: 760px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    margin: 0 0 16px;
+  }
+
+  .decision .picks {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  .pick {
+    flex: 1;
+    padding: 20px 24px;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+  }
+
+  .pick .num {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--ink-muted);
+    margin: 0 0 6px;
+  }
+
+  .pick .verdict {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-muted);
+    line-height: 1.4;
+    margin: 0;
+    font-variation-settings: "opsz" 60;
+  }
+
+  .pick .verdict::before { content: '— '; opacity: 0.4; }
+
+  footer {
+    padding: 24px 40px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 0.06em;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 1000px) {
+    .grid { grid-template-columns: 1fr; }
+    .col { border-right: none; border-bottom: 1px solid var(--rule); }
+    .page-head { grid-template-columns: 1fr; }
+    .page-head .meta { text-align: left; }
+    .decision .picks { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <div>
+    <p class="eyebrow">M2 / 02 — Typography</p>
+    <h1>Three pairings, one product. <span>Pick by gut.</span></h1>
+  </div>
+  <div class="meta">
+    <span>Direction locked: A / A / D</span>
+    <span>Serif-led · Mono+accent · Type-led</span>
+  </div>
+</header>
+
+<section class="brief">
+  <strong>Brief.</strong> Same product, same copy, same layout — only the typeface pair changes. Read each column slowly. Notice <em>how the page feels</em>, not just how it looks. The serif carries 60% of the brand; if it's wrong, nothing else saves it. Romanian diacritics (ă â î ș ț) are stressed throughout — watch how each serif handles them. The accent colour (deep oxblood) is a placeholder; we lock the real one with the typeface, not before.
+</section>
+
+<div class="grid">
+
+  <!-- PAIRING 01: Fraunces + Inter Tight -->
+  <div class="col p01">
+    <div class="col-head">
+      <p class="col-num">01</p>
+      <h2 class="col-pair">Fraunces<span class="x">×</span>Inter Tight</h2>
+      <p class="col-character">Most contemporary · variable · strong personality</p>
+    </div>
+
+    <div class="specimen">
+      <div class="label-row">
+        <span>Acetat italian</span>
+        <span>Cod · MRS-048</span>
+      </div>
+
+      <h3 class="product-name display">Ochelari <em>Mărășești</em></h3>
+      <p class="product-subtitle display">Ramă din acetat, asamblată manual la Cluj.</p>
+
+      <p class="product-desc body">Inspirați de arhivele optice românești din anii '60, ochelarii Mărășești îmbină simplitatea liniei vintage cu un acetat italian turnat în straturi. Rama are 48 mm lățime, lentile circulare ușor bombate. Sunt asamblați manual într-un atelier mic din Cluj, cu atenție. Livrare în două săptămâni, retur fără întrebări în 14 zile.</p>
+
+      <div class="specs body">
+        <div class="spec-row"><span class="spec-label">Material</span><span class="spec-value">Acetat Mazzucchelli</span></div>
+        <div class="spec-row"><span class="spec-label">Lățime lentilă</span><span class="spec-value">48 mm</span></div>
+        <div class="spec-row"><span class="spec-label">Punte</span><span class="spec-value">19 mm</span></div>
+        <div class="spec-row"><span class="spec-label">Braț</span><span class="spec-value">145 mm</span></div>
+      </div>
+
+      <div class="price-row">
+        <span class="price display">490,00<span class="currency">lei</span></span>
+        <span class="tva">TVA inclus</span>
+      </div>
+
+      <div class="cta-row">
+        <button class="cta">Probează acasă</button>
+        <button class="cta secondary">Adaugă</button>
+      </div>
+    </div>
+
+    <div class="diacritic-test p01">
+      <p class="lbl">Diacritic stress · 32px</p>
+      <p class="glyphs display">Ă ă · Â â · Î î · Ș ș · Ț ț<br><em>Ăță înțepător câștigă șansa</em></p>
+    </div>
+
+    <div class="notes">
+      <strong>Fraunces — display</strong>
+      <ul>
+        <li>Variable font, optical sizing axis (opsz)</li>
+        <li>"SOFT" axis can warm letterforms without losing structure</li>
+        <li>Strong italics with distinct character</li>
+        <li>Risk: can read slightly "cute" if SOFT is too high</li>
+      </ul>
+      <strong>Inter Tight — body</strong>
+      <ul>
+        <li>Condensed cousin of Inter — same DNA, more editorial bearing</li>
+        <li>Excellent Romanian support, broad weight range</li>
+        <li>Risk: still recognisably "Inter family," very common online</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PAIRING 02: Source Serif 4 + IBM Plex Sans -->
+  <div class="col p02">
+    <div class="col-head">
+      <p class="col-num">02</p>
+      <h2 class="col-pair">Source Serif 4<span class="x">×</span>IBM Plex Sans</h2>
+      <p class="col-character">Most editorial-bookish · refined · low personality</p>
+    </div>
+
+    <div class="specimen">
+      <div class="label-row">
+        <span>Acetat italian</span>
+        <span>Cod · MRS-048</span>
+      </div>
+
+      <h3 class="product-name display">Ochelari <em>Mărășești</em></h3>
+      <p class="product-subtitle display">Ramă din acetat, asamblată manual la Cluj.</p>
+
+      <p class="product-desc body">Inspirați de arhivele optice românești din anii '60, ochelarii Mărășești îmbină simplitatea liniei vintage cu un acetat italian turnat în straturi. Rama are 48 mm lățime, lentile circulare ușor bombate. Sunt asamblați manual într-un atelier mic din Cluj, cu atenție. Livrare în două săptămâni, retur fără întrebări în 14 zile.</p>
+
+      <div class="specs body">
+        <div class="spec-row"><span class="spec-label">Material</span><span class="spec-value">Acetat Mazzucchelli</span></div>
+        <div class="spec-row"><span class="spec-label">Lățime lentilă</span><span class="spec-value">48 mm</span></div>
+        <div class="spec-row"><span class="spec-label">Punte</span><span class="spec-value">19 mm</span></div>
+        <div class="spec-row"><span class="spec-label">Braț</span><span class="spec-value">145 mm</span></div>
+      </div>
+
+      <div class="price-row">
+        <span class="price display">490,00<span class="currency">lei</span></span>
+        <span class="tva">TVA inclus</span>
+      </div>
+
+      <div class="cta-row">
+        <button class="cta">Probează acasă</button>
+        <button class="cta secondary">Adaugă</button>
+      </div>
+    </div>
+
+    <div class="diacritic-test p02">
+      <p class="lbl">Diacritic stress · 32px</p>
+      <p class="glyphs display">Ă ă · Â â · Î î · Ș ș · Ț ț<br><em>Ăță înțepător câștigă șansa</em></p>
+    </div>
+
+    <div class="notes">
+      <strong>Source Serif 4 — display</strong>
+      <ul>
+        <li>Variable font with optical sizing</li>
+        <li>Adobe-designed, refined for editorial use</li>
+        <li>Less personality than Fraunces — more "transparent"</li>
+        <li>Risk: can read as quiet to the point of forgettable at small scales</li>
+      </ul>
+      <strong>IBM Plex Sans — body</strong>
+      <ul>
+        <li>IBM's corporate workhorse — broad weights, excellent diacritics</li>
+        <li>Slight technical/architectural character in the letterforms</li>
+        <li>Risk: more associated with "tech brands" than eyewear</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PAIRING 03: EB Garamond + Public Sans -->
+  <div class="col p03">
+    <div class="col-head">
+      <p class="col-num">03</p>
+      <h2 class="col-pair">EB Garamond<span class="x">×</span>Public Sans</h2>
+      <p class="col-character">Most classical · old-style · most archival</p>
+    </div>
+
+    <div class="specimen">
+      <div class="label-row">
+        <span>Acetat italian</span>
+        <span>Cod · MRS-048</span>
+      </div>
+
+      <h3 class="product-name display">Ochelari <em>Mărășești</em></h3>
+      <p class="product-subtitle display">Ramă din acetat, asamblată manual la Cluj.</p>
+
+      <p class="product-desc body">Inspirați de arhivele optice românești din anii '60, ochelarii Mărășești îmbină simplitatea liniei vintage cu un acetat italian turnat în straturi. Rama are 48 mm lățime, lentile circulare ușor bombate. Sunt asamblați manual într-un atelier mic din Cluj, cu atenție. Livrare în două săptămâni, retur fără întrebări în 14 zile.</p>
+
+      <div class="specs body">
+        <div class="spec-row"><span class="spec-label">Material</span><span class="spec-value">Acetat Mazzucchelli</span></div>
+        <div class="spec-row"><span class="spec-label">Lățime lentilă</span><span class="spec-value">48 mm</span></div>
+        <div class="spec-row"><span class="spec-label">Punte</span><span class="spec-value">19 mm</span></div>
+        <div class="spec-row"><span class="spec-label">Braț</span><span class="spec-value">145 mm</span></div>
+      </div>
+
+      <div class="price-row">
+        <span class="price display">490,00<span class="currency">lei</span></span>
+        <span class="tva">TVA inclus</span>
+      </div>
+
+      <div class="cta-row">
+        <button class="cta">Probează acasă</button>
+        <button class="cta secondary">Adaugă</button>
+      </div>
+    </div>
+
+    <div class="diacritic-test p03">
+      <p class="lbl">Diacritic stress · 32px</p>
+      <p class="glyphs display">Ă ă · Â â · Î î · Ș ș · Ț ț<br><em>Ăță înțepător câștigă șansa</em></p>
+    </div>
+
+    <div class="notes">
+      <strong>EB Garamond — display</strong>
+      <ul>
+        <li>Garamond revival by Georg Duffner, excellent extended-language support</li>
+        <li>Old-style, classical, most "archival" of the three</li>
+        <li>Runs small — needs +15% size to balance the others</li>
+        <li>Risk: closest to "book" not "shop" — can feel academic</li>
+      </ul>
+      <strong>Public Sans — body</strong>
+      <ul>
+        <li>USWDS government typeface — neutral, broad language support</li>
+        <li>Most "transparent" of the three sans — least character</li>
+        <li>Risk: <em>too</em> neutral; can feel anonymous next to the classical serif</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<section class="decision">
+  <h2>What to look at — and what to ignore</h2>
+  <p><strong>Look at:</strong> how the product name "Ochelari <em>Mărășești</em>" feels in italic. How the diacritics sit on top of the letters (ă, â, î) — do they look balanced, or stuck on like afterthoughts? Whether the body copy reads <em>quietly</em> next to the display (you want body to recede, display to lead).</p>
+  <p><strong>Ignore:</strong> the oxblood accent, the layout, the button styles, the photography (there is none). All of those are still TBD. The only variable here is type.</p>
+  <p><strong>My bias, for transparency:</strong> 01 is the safe bet, 03 is the boldest bet, 02 is the diplomatic middle. Cubitts itself uses something closer to 03 than 01 — but Cubitts has decades of brand equity to carry an "academic" feel. We don't. 01 with a careful SOFT axis pull might be where this lands.</p>
+  <div class="picks">
+    <div class="pick">
+      <p class="num">01 — Fraunces × Inter Tight</p>
+      <p class="verdict">contemporary, flexible, slight risk of personality bleed</p>
+    </div>
+    <div class="pick">
+      <p class="num">02 — Source Serif 4 × IBM Plex Sans</p>
+      <p class="verdict">editorial calm, possibly forgettable, tech-sans tension</p>
+    </div>
+    <div class="pick">
+      <p class="num">03 — EB Garamond × Public Sans</p>
+      <p class="verdict">most cubitts-like, most classical, risks academic</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>M2 / 02 — typography exploration</span>
+  <span>eyewear-store · 2026</span>
+</footer>
+
+</body>
+</html>

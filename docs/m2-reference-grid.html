@@ -1,0 +1,966 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eyewear reference grid — direction selector</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f3;
+    --bg-shaded: #f3efe5;
+    --ink: #1a1a17;
+    --ink-muted: #6a665a;
+    --rule: #d4cfc2;
+    --rule-faint: #e8e3d6;
+    --accent: #7a3e2f;
+    --accent-soft: #b87a5e;
+    --serif: 'Fraunces', 'Times New Roman', serif;
+    --sans: 'IBM Plex Sans', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 80px 40px 120px;
+  }
+
+  /* Header */
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 48px;
+    margin-bottom: 64px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 48px;
+    align-items: end;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 24px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(40px, 6vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0;
+    font-variation-settings: "opsz" 144;
+  }
+
+  h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  .meta span { display: block; }
+
+  .lede {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--ink);
+    margin: 0 0 16px;
+    max-width: 720px;
+    letter-spacing: -0.005em;
+  }
+
+  .lede em { font-style: italic; }
+
+  .intent {
+    font-size: 15px;
+    color: var(--ink-muted);
+    max-width: 640px;
+    margin: 0;
+  }
+
+  /* Index */
+  .index {
+    margin: 64px 0 80px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 24px 0;
+  }
+
+  .index-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px 48px;
+  }
+
+  .index-row {
+    display: grid;
+    grid-template-columns: 24px 1fr auto;
+    gap: 16px;
+    align-items: baseline;
+    padding: 6px 0;
+    font-family: var(--mono);
+    font-size: 12px;
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 1px dotted transparent;
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+
+  .index-row:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .index-num { color: var(--ink-muted); }
+  .index-tag { color: var(--ink-muted); font-style: italic; font-family: var(--serif); font-size: 13px; }
+
+  /* Site card */
+  .site {
+    margin: 0 0 96px;
+    scroll-margin-top: 40px;
+  }
+
+  .site-head {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 24px;
+    align-items: baseline;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .site-num {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-muted);
+    letter-spacing: 0.06em;
+  }
+
+  .site-name {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 1;
+    letter-spacing: -0.015em;
+    margin: 0;
+    font-variation-settings: "opsz" 96;
+  }
+
+  .site-name em { font-style: italic; font-weight: 400; }
+
+  .site-url {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+
+  .site-url:hover { color: var(--accent); }
+
+  .site-tagline {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink);
+    margin: 0 0 32px;
+    max-width: 680px;
+    line-height: 1.4;
+  }
+
+  /* Dimension table */
+  .dims {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 0;
+  }
+
+  .dim-row {
+    display: contents;
+  }
+
+  .dim-label, .dim-value {
+    padding: 14px 0;
+    border-top: 1px solid var(--rule-faint);
+  }
+
+  .dim-row:last-child .dim-label,
+  .dim-row:last-child .dim-value {
+    border-bottom: 1px solid var(--rule-faint);
+  }
+
+  .dim-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding-right: 24px;
+    padding-top: 18px;
+  }
+
+  .dim-value {
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+
+  .dim-value strong {
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .dim-value em {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--accent);
+  }
+
+  /* Color swatches */
+  .swatches {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  .swatch {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    display: inline-block;
+  }
+
+  .swatch-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-muted);
+    margin-left: 4px;
+  }
+
+  /* Vibe pill */
+  .vibe {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--bg-shaded);
+    padding: 4px 10px;
+    border-radius: 2px;
+    margin-top: 8px;
+  }
+
+  /* Synthesis section */
+  .synth {
+    margin-top: 96px;
+    padding-top: 64px;
+    border-top: 4px double var(--ink);
+  }
+
+  .synth h2 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+    font-variation-settings: "opsz" 144;
+  }
+
+  .synth h2 em { font-style: italic; color: var(--accent); }
+
+  .synth-lede {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 19px;
+    color: var(--ink-muted);
+    margin: 0 0 48px;
+    max-width: 640px;
+  }
+
+  .axis {
+    margin: 0 0 48px;
+    padding: 32px;
+    background: var(--bg-shaded);
+    border-left: 3px solid var(--accent);
+  }
+
+  .axis-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 4px;
+  }
+
+  .axis-name {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.15;
+    margin: 0 0 24px;
+    letter-spacing: -0.01em;
+  }
+
+  .axis-name em { font-style: italic; }
+
+  .options {
+    display: grid;
+    gap: 16px;
+  }
+
+  .opt {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 16px;
+    align-items: start;
+    padding: 16px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .opt-key {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--accent);
+    line-height: 1;
+    padding-top: 2px;
+  }
+
+  .opt-body strong {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 4px;
+    font-size: 15px;
+  }
+
+  .opt-body span {
+    color: var(--ink-muted);
+    font-size: 13.5px;
+  }
+
+  .opt-refs {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-muted);
+    margin-top: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Recommendation block */
+  .recommend {
+    margin-top: 64px;
+    padding: 40px;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 2px;
+  }
+
+  .recommend h3 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin: 0 0 16px;
+    font-weight: 500;
+  }
+
+  .recommend p {
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.5;
+    margin: 0 0 16px;
+    color: var(--bg);
+  }
+
+  .recommend p em { font-style: italic; color: var(--accent-soft); }
+
+  .recommend p:last-child { margin-bottom: 0; font-size: 14px; color: var(--rule); font-family: var(--sans); }
+
+  /* Decisions row */
+  .decisions {
+    margin-top: 64px;
+    padding: 32px;
+    border: 1px solid var(--ink);
+  }
+
+  .decisions h3 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin: 0 0 24px;
+    color: var(--ink);
+  }
+
+  .decision-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    padding: 16px 0;
+    border-top: 1px dotted var(--rule);
+    align-items: baseline;
+  }
+
+  .decision-row:first-of-type { border-top: none; padding-top: 0; }
+
+  .decision-row .lbl {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .decision-row .val {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-muted);
+  }
+
+  .decision-row .val::before { content: '— '; opacity: 0.4; }
+
+  /* Footer */
+  footer {
+    margin-top: 96px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 0.06em;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 720px) {
+    .wrap { padding: 48px 24px 80px; }
+    .masthead { grid-template-columns: 1fr; gap: 32px; }
+    .meta { text-align: left; }
+    .index-grid { grid-template-columns: 1fr; }
+    .dims { grid-template-columns: 1fr; gap: 0; }
+    .dim-label { padding-bottom: 0; border-top: 1px solid var(--rule-faint); border-bottom: none; }
+    .dim-value { padding-top: 8px; border-top: none; }
+    .site-head { grid-template-columns: 1fr; }
+    .site-name { font-size: 28px; }
+    .decision-row { grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  @media print {
+    body { background: white; }
+    .site { break-inside: avoid; }
+    .axis { break-inside: avoid; }
+    .recommend { background: #1a1a17 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div>
+      <p class="eyebrow">M2 / Reference grid — 01</p>
+      <h1>Six ways to <em>sell glasses</em><br>on the internet.</h1>
+    </div>
+    <div class="meta">
+      <span>For: Stefan</span>
+      <span>Re: design direction</span>
+      <span>May 2026</span>
+    </div>
+  </header>
+
+  <p class="lede">
+    A side-by-side read of six premium eyewear sites, scored on the five axes that decide what our store looks like. <em>Use this to commit a direction</em> — type, colour, hero, card, motion — before any pixel of the actual store gets pushed.
+  </p>
+  <p class="intent">
+    Each site is grouped by a one-line characterisation, then broken into five dimensions. After all six, the synthesis section turns the comparison into three explicit decisions to make. Mark your picks at the bottom.
+  </p>
+
+  <nav class="index">
+    <div class="index-grid">
+      <a class="index-row" href="#warby"><span class="index-num">01</span><span>Warby Parker</span><span class="index-tag">friendly premium</span></a>
+      <a class="index-row" href="#ace"><span class="index-num">02</span><span>Ace &amp; Tate</span><span class="index-tag">european playful</span></a>
+      <a class="index-row" href="#cubitts"><span class="index-num">03</span><span>Cubitts</span><span class="index-tag">heritage british</span></a>
+      <a class="index-row" href="#moscot"><span class="index-num">04</span><span>MOSCOT</span><span class="index-tag">nyc since 1915</span></a>
+      <a class="index-row" href="#bailey"><span class="index-num">05</span><span>Bailey Nelson</span><span class="index-tag">australian warm</span></a>
+      <a class="index-row" href="#dresden"><span class="index-num">06</span><span>Dresden Vision</span><span class="index-tag">utilitarian swiss</span></a>
+    </div>
+  </nav>
+
+  <!-- WARBY PARKER -->
+  <article class="site" id="warby">
+    <header class="site-head">
+      <span class="site-num">01</span>
+      <h2 class="site-name">Warby <em>Parker</em></h2>
+      <a class="site-url" href="https://warbyparker.com" target="_blank">warbyparker.com →</a>
+    </header>
+    <p class="site-tagline">The North Star of D2C eyewear. Built the playbook everyone else copies: home try-on, transparent pricing, lifestyle photography. Premium-accessible — not luxury, not cheap.</p>
+    <div class="dims">
+
+      <div class="dim-row">
+        <div class="dim-label">Type</div>
+        <div class="dim-value"><strong>Sans-serif, geometric, modest weight contrast.</strong> Proxima Nova-family. Hierarchy by size, not weight — most type at one or two weights. Reads as <em>quiet confidence</em>. No serifs, no decorative type.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Colour</div>
+        <div class="dim-value">
+          <strong>White base, warm neutrals, occasional saturated category colour.</strong> Cream, soft pink, deep navy used as section dividers. No single ownable accent. Seasonal campaigns shift the palette without breaking the system.
+          <div class="swatches">
+            <span class="swatch" style="background:#ffffff;border-color:#ddd"></span>
+            <span class="swatch" style="background:#f5efe6"></span>
+            <span class="swatch" style="background:#e8dcc8"></span>
+            <span class="swatch" style="background:#2c4a5e"></span>
+            <span class="swatch-label">white / warm neutrals / navy</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Hero</div>
+        <div class="dim-value"><strong>Lifestyle photography led.</strong> Models wearing frames, often editorial portraits, occasional product hero for new launches. Frequently rotates by campaign. Faces sell trust in this category.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Card</div>
+        <div class="dim-value"><strong>Clean grid, 4-up desktop, 2-up mobile.</strong> Frame on flat ground, name + price below, colour swatches as dots, "Staff pick" stickers. Card itself is unframed — image bleeds to whitespace. Quick-view + try-on add directly from grid.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Motion</div>
+        <div class="dim-value"><strong>Restrained.</strong> Subtle scroll reveals, smooth nav transitions, no parallax theatre. Interactivity is functional (the famous face that follows your cursor on PDPs), not decorative.</div>
+      </div>
+
+    </div>
+    <span class="vibe">Friendly premium · accessible · trust-by-warmth</span>
+  </article>
+
+  <!-- ACE & TATE -->
+  <article class="site" id="ace">
+    <header class="site-head">
+      <span class="site-num">02</span>
+      <h2 class="site-name">Ace &amp; <em>Tate</em></h2>
+      <a class="site-url" href="https://aceandtate.com" target="_blank">aceandtate.com →</a>
+    </header>
+    <p class="site-tagline">The European answer to Warby. Amsterdam-headquartered, slightly more design-forward, more willing to use bold colour blocking and editorial typography. Closest reference to where you should land tonally.</p>
+    <div class="dims">
+
+      <div class="dim-row">
+        <div class="dim-label">Type</div>
+        <div class="dim-value"><strong>Modern geometric sans, sharper than Warby.</strong> Custom sans for display, paired with a refined body sans. Editorial use of all-caps section labels. Confident weight contrast on collection pages.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Colour</div>
+        <div class="dim-value">
+          <strong>Off-white base, collection-driven colour blocking.</strong> Often pairs a saturated background (mustard, terracotta, deep teal) with a neutral product shot. Palette shifts seasonally — same design system, different colours.
+          <div class="swatches">
+            <span class="swatch" style="background:#f4f1ec"></span>
+            <span class="swatch" style="background:#d4a747"></span>
+            <span class="swatch" style="background:#c66848"></span>
+            <span class="swatch" style="background:#2a4d4a"></span>
+            <span class="swatch-label">off-white + rotating accents</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Hero</div>
+        <div class="dim-value"><strong>Editorial split between lifestyle and product-as-still-life.</strong> Big full-bleed image, type overlaid bottom-left. Frequently shoots frames on coloured surfaces (almost still-life painterly). More art direction than Warby.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Card</div>
+        <div class="dim-value"><strong>Generous, 3-up desktop, image-dominant.</strong> Frame floats over coloured background that often matches the collection. Colour name (e.g., "Inkblot") sits next to colour dot. Hover swaps to lifestyle shot.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Motion</div>
+        <div class="dim-value"><strong>Moderate, considered.</strong> Hover state on cards swaps imagery. Smooth carousels on collection pages. Page transitions feel "designed." Doesn't tip into theatrics.</div>
+      </div>
+
+    </div>
+    <span class="vibe">European playful premium · trust-by-craft</span>
+  </article>
+
+  <!-- CUBITTS -->
+  <article class="site" id="cubitts">
+    <header class="site-head">
+      <span class="site-num">03</span>
+      <h2 class="site-name">Cubi<em>tts</em></h2>
+      <a class="site-url" href="https://cubitts.com" target="_blank">cubitts.com →</a>
+    </header>
+    <p class="site-tagline">King's Cross London, hand-built frames, museum-grade product photography. The most editorial of the six. Reads like a craft journal more than a shop — long-form provenance copy, archive-feeling type.</p>
+    <div class="dims">
+
+      <div class="dim-row">
+        <div class="dim-label">Type</div>
+        <div class="dim-value"><strong>Serif-led, distinctly British.</strong> Old-style serif for display (Caslon-feel), refined sans for UI/body. Heavy use of italic for emphasis and section labels. Type is the design — does most of the heavy lifting on premium signal.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Colour</div>
+        <div class="dim-value">
+          <strong>Cream, ink, one warm accent. Restraint as identity.</strong> The whole site lives in maybe four colours. No campaign colour shifts. Palette is the brand.
+          <div class="swatches">
+            <span class="swatch" style="background:#f3eee2"></span>
+            <span class="swatch" style="background:#1f1d1a"></span>
+            <span class="swatch" style="background:#a07840"></span>
+            <span class="swatch-label">cream / ink / brass</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Hero</div>
+        <div class="dim-value"><strong>Product as object.</strong> Frames photographed like museum pieces — on plinths, against neutral seamless, sometimes with provenance objects (acetate blanks, hand tools). Type-led headlines. Rarely a face.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Card</div>
+        <div class="dim-value"><strong>Roomy, low-density, archival.</strong> Frame on cream, name in serif italic, model number in mono, price understated. The card feels like a museum label, not a product tile.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Motion</div>
+        <div class="dim-value"><strong>Almost none.</strong> Type stays still. Images don't ken-burns. Scroll is fast. The restraint is part of the premium signal — anything moving would feel cheap here.</div>
+      </div>
+
+    </div>
+    <span class="vibe">Heritage british craftsmanship · trust-by-archive</span>
+  </article>
+
+  <!-- MOSCOT -->
+  <article class="site" id="moscot">
+    <header class="site-head">
+      <span class="site-num">04</span>
+      <h2 class="site-name">MOS<em>COT</em></h2>
+      <a class="site-url" href="https://moscot.com" target="_blank">moscot.com →</a>
+    </header>
+    <p class="site-tagline">NYC since 1915. Four generations. Yellow is the brand. Heritage signalling without irony — uses its century of history as the primary trust device. Most "brand-led" of the six.</p>
+    <div class="dims">
+
+      <div class="dim-row">
+        <div class="dim-label">Type</div>
+        <div class="dim-value"><strong>Heritage serif display + clean sans body.</strong> Strong New York signage influence. The "M" wordmark is iconic. Display type often set tight and large; body type stays utilitarian.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Colour</div>
+        <div class="dim-value">
+          <strong>Black, white, MOSCOT yellow.</strong> The yellow (#fdc82f-ish) is ownable and unmistakable. No other accent gets close. Everything else is grayscale.
+          <div class="swatches">
+            <span class="swatch" style="background:#1a1a1a"></span>
+            <span class="swatch" style="background:#ffffff;border-color:#ddd"></span>
+            <span class="swatch" style="background:#fdc82f"></span>
+            <span class="swatch-label">ink / white / signature yellow</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Hero</div>
+        <div class="dim-value"><strong>Editorial split — bold image, bold type.</strong> Magazine-cover energy. Often portraits of cultural figures wearing the frames (musicians, actors). Sometimes archival B&amp;W to lean into the heritage.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Card</div>
+        <div class="dim-value"><strong>Tight grid, frame-name-as-character.</strong> Each frame has a Yiddish or Lower East Side name (Lemtosh, Zev, Yenta) treated typographically. Card feels like a catalogue page from an old optician.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Motion</div>
+        <div class="dim-value"><strong>Moderate, theatrical at hero, calm elsewhere.</strong> Hero often has bold reveals or video. Below the fold it stays out of the way.</div>
+      </div>
+
+    </div>
+    <span class="vibe">NYC heritage · trust-by-history</span>
+  </article>
+
+  <!-- BAILEY NELSON -->
+  <article class="site" id="bailey">
+    <header class="site-head">
+      <span class="site-num">05</span>
+      <h2 class="site-name">Bailey <em>Nelson</em></h2>
+      <a class="site-url" href="https://baileynelson.com.au" target="_blank">baileynelson.com.au →</a>
+    </header>
+    <p class="site-tagline">Australian D2C, family-feeling. Same affordability angle as Warby but warmer in tone, sunnier in art direction. Closer to what an "accessible Romanian premium" might feel like if it leaned warm.</p>
+    <div class="dims">
+
+      <div class="dim-row">
+        <div class="dim-label">Type</div>
+        <div class="dim-value"><strong>Friendly sans-serif, slightly humanist.</strong> Less geometric than Warby, more warmth in the letterforms. Pairs with occasional script or handwritten flourishes in editorial moments.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Colour</div>
+        <div class="dim-value">
+          <strong>Warm cream base, soft sage, terracotta accents.</strong> Reads as "californian / coastal." Multiple warm neutrals, no single ownable accent. Sunshine in pixel form.
+          <div class="swatches">
+            <span class="swatch" style="background:#f7f1e8"></span>
+            <span class="swatch" style="background:#c8b89e"></span>
+            <span class="swatch" style="background:#8a9c7a"></span>
+            <span class="swatch" style="background:#b8694a"></span>
+            <span class="swatch-label">cream / sage / terracotta</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Hero</div>
+        <div class="dim-value"><strong>Lifestyle photography, outdoor and casual.</strong> Often models laughing, near water, in natural light. Less editorial polish than A&amp;T, more "real people in real moments."</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Card</div>
+        <div class="dim-value"><strong>3-up, warm-toned backgrounds.</strong> Frame on cream or sage. Name + price + colour dot. Often pairs the product with a small lifestyle inset on hover.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Motion</div>
+        <div class="dim-value"><strong>Smooth, modern, friendly.</strong> Soft fades, gentle reveals, nothing aggressive. The motion language matches the colour language — warm, slow, unhurried.</div>
+      </div>
+
+    </div>
+    <span class="vibe">Australian casual premium · trust-by-warmth</span>
+  </article>
+
+  <!-- DRESDEN -->
+  <article class="site" id="dresden">
+    <header class="site-head">
+      <span class="site-num">06</span>
+      <h2 class="site-name">Dresden <em>Vision</em></h2>
+      <a class="site-url" href="https://dresden.vision" target="_blank">dresden.vision →</a>
+    </header>
+    <p class="site-tagline">Their pitch: modular frames where lenses and arms are interchangeable. The visual system mirrors the product — Swiss, functional, near-IKEA. The most aesthetically opinionated of the six.</p>
+    <div class="dims">
+
+      <div class="dim-row">
+        <div class="dim-label">Type</div>
+        <div class="dim-value"><strong>Utilitarian sans, near-Helvetica.</strong> Strict hierarchy, modest sizes, no serifs anywhere. Type does its job and gets out of the way — product is the hero.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Colour</div>
+        <div class="dim-value">
+          <strong>White + bold primary colour blocks.</strong> Each frame colour gets its own swatch hero — green, red, blue, yellow. The colour <em>is</em> the product, so the site treats colour as the index.
+          <div class="swatches">
+            <span class="swatch" style="background:#ffffff;border-color:#ddd"></span>
+            <span class="swatch" style="background:#1a1a1a"></span>
+            <span class="swatch" style="background:#e63946"></span>
+            <span class="swatch" style="background:#2a9d8f"></span>
+            <span class="swatch" style="background:#f4a261"></span>
+            <span class="swatch-label">white / ink / many product colours</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Hero</div>
+        <div class="dim-value"><strong>Product-led, Swiss design.</strong> Frames photographed flat, often exploded-view to show the modular system. Faces appear, but the product configuration is what's selling.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Card</div>
+        <div class="dim-value"><strong>Modular, configurable, almost shopping a system.</strong> Cards emphasise interchangeability — pick frame colour, pick arms, pick lens. Closer to a furniture configurator than a glasses page.</div>
+      </div>
+
+      <div class="dim-row">
+        <div class="dim-label">Motion</div>
+        <div class="dim-value"><strong>Minimal, functional.</strong> Configurator moves; everything else doesn't. Premium-via-restraint, like Cubitts, but cooler and more industrial.</div>
+      </div>
+
+    </div>
+    <span class="vibe">Utilitarian swiss · trust-by-system</span>
+  </article>
+
+  <!-- SYNTHESIS -->
+  <section class="synth">
+    <h2>Three <em>decisions</em>,<br>before any pixel.</h2>
+    <p class="synth-lede">Every later choice flows from these three. Pick one option per axis — gut, not committee. We can reverse later, but the cost compounds.</p>
+
+    <!-- Axis 1 -->
+    <div class="axis">
+      <p class="axis-label">Axis 01</p>
+      <h3 class="axis-name"><em>Typography</em> direction</h3>
+      <div class="options">
+        <div class="opt">
+          <span class="opt-key">A</span>
+          <div class="opt-body">
+            <strong>Serif-led editorial</strong>
+            <span>Heritage trust signal. The serif does the premium work. Best when product is the hero and the brand wants to feel established.</span>
+            <p class="opt-refs">→ Cubitts, MOSCOT</p>
+          </div>
+        </div>
+        <div class="opt">
+          <span class="opt-key">B</span>
+          <div class="opt-body">
+            <strong>Modern sans-only</strong>
+            <span>Clean, accessible, contemporary. Premium-via-restraint. Lighter cognitive load. Closest to the Warby playbook.</span>
+            <p class="opt-refs">→ Warby Parker, Bailey Nelson, Dresden</p>
+          </div>
+        </div>
+        <div class="opt">
+          <span class="opt-key">C</span>
+          <div class="opt-body">
+            <strong>Mixed — serif display + sans body</strong>
+            <span>Best of both. Serif headlines carry heritage / trust, sans body stays modern and readable. The most flexible direction, the hardest to execute (typeface pairing has to land).</span>
+            <p class="opt-refs">→ Ace &amp; Tate</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Axis 2 -->
+    <div class="axis">
+      <p class="axis-label">Axis 02</p>
+      <h3 class="axis-name"><em>Colour</em> direction</h3>
+      <div class="options">
+        <div class="opt">
+          <span class="opt-key">A</span>
+          <div class="opt-body">
+            <strong>Monochrome + one ownable accent</strong>
+            <span>Disciplined. Black/cream + a single signature colour the brand owns. Strongest brand recognition. Hardest to keep interesting across many pages.</span>
+            <p class="opt-refs">→ MOSCOT (yellow), Cubitts (brass)</p>
+          </div>
+        </div>
+        <div class="opt">
+          <span class="opt-key">B</span>
+          <div class="opt-body">
+            <strong>Warm neutral palette, no single accent</strong>
+            <span>Cream, sage, terracotta, navy as section dividers. Forgiving — easy to extend to new collections. Slightly less ownable as identity.</span>
+            <p class="opt-refs">→ Warby, Bailey Nelson</p>
+          </div>
+        </div>
+        <div class="opt">
+          <span class="opt-key">C</span>
+          <div class="opt-body">
+            <strong>Collection-driven colour blocking</strong>
+            <span>Off-white base, palette shifts per collection. Most editorial. Demands ongoing art direction (someone curating each new launch).</span>
+            <p class="opt-refs">→ Ace &amp; Tate</p>
+          </div>
+        </div>
+        <div class="opt">
+          <span class="opt-key">D</span>
+          <div class="opt-body">
+            <strong>Product-colour-as-index</strong>
+            <span>The frame colours <em>are</em> the palette. Best when the product range is itself colourful. Probably wrong for affordable Rx where most frames are black/tortoise/clear.</span>
+            <p class="opt-refs">→ Dresden Vision</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Axis 3 -->
+    <div class="axis">
+      <p class="axis-label">Axis 03</p>
+      <h3 class="axis-name"><em>Hero</em> treatment</h3>
+      <div class="options">
+        <div class="opt">
+          <span class="opt-key">A</span>
+          <div class="opt-body">
+            <strong>Lifestyle photography led</strong>
+            <span>Models wearing frames. Sells trust by showing the product on real faces. Demands real photography — Flux/AI can do <em>moods</em>, not catalogue.</span>
+            <p class="opt-refs">→ Warby Parker, Bailey Nelson, A&amp;T</p>
+          </div>
+        </div>
+        <div class="opt">
+          <span class="opt-key">B</span>
+          <div class="opt-body">
+            <strong>Product as object</strong>
+            <span>Frames photographed like museum pieces. Editorial restraint. Works if product photography is exceptional. Cold-feeling if executed badly.</span>
+            <p class="opt-refs">→ Cubitts</p>
+          </div>
+        </div>
+        <div class="opt">
+          <span class="opt-key">C</span>
+          <div class="opt-body">
+            <strong>Editorial split — bold image + bold type</strong>
+            <span>Magazine-cover energy. Photo on left, type on right (or overlaid). Hardest to keep fresh — every campaign needs new art direction.</span>
+            <p class="opt-refs">→ MOSCOT, A&amp;T variants</p>
+          </div>
+        </div>
+        <div class="opt">
+          <span class="opt-key">D</span>
+          <div class="opt-body">
+            <strong>Type-led / Swiss</strong>
+            <span>Typography <em>is</em> the hero. Minimal imagery, big confident statements. Easiest to execute solo. Risks feeling cold for a face-product category.</span>
+            <p class="opt-refs">→ Dresden, Cubitts variants</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- My take -->
+    <div class="recommend">
+      <h3>My read — not your decision, just my prior</h3>
+      <p>For an <em>affordable Romanian Rx eyewear store</em> where trust is the primary conversion lever and there's no shot budget for endless campaigns: <strong>C / B / A</strong> — mixed serif+sans, warm neutral palette, lifestyle-led hero.</p>
+      <p>Why: the serif buys you heritage signal cheaply (Cubitts-style trust). The warm palette is forgiving across many products without per-collection art direction. Lifestyle leads because Romanian customers buying prescription glasses online need to see them on a face before they hand over a card. <em>Closest single reference: Ace &amp; Tate.</em></p>
+      <p>Push back if your gut says otherwise. You're the harder critic.</p>
+    </div>
+
+    <!-- Decisions row -->
+    <div class="decisions">
+      <h3>Lock your picks</h3>
+      <div class="decision-row">
+        <span class="lbl">Typography</span>
+        <span class="val">A / B / C</span>
+      </div>
+      <div class="decision-row">
+        <span class="lbl">Colour</span>
+        <span class="val">A / B / C / D</span>
+      </div>
+      <div class="decision-row">
+        <span class="lbl">Hero</span>
+        <span class="val">A / B / C / D</span>
+      </div>
+    </div>
+
+  </section>
+
+  <footer>
+    <span>M2 / direction selector</span>
+    <span>eyewear-store · 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
