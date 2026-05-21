@@ -43,7 +43,7 @@ created so every frame lands schema-correct from day one.
 | `custom.frame_material`      | Choice list (single_line_text_field)          | yes      | `acetat`     |
 | `custom.frame_shape`         | Choice list (single_line_text_field)          | yes      | `rotund`     |
 | `custom.frame_colour_finish` | Choice list (single_line_text_field)          | yes      | `tortoise`   |
-| `custom.frame_gender_fit`    | Choice list (single_line_text_field)          | yes      | `unisex`     |
+| `custom.frame_gender_fit`    | List of choices (list.single_line_text_field) | yes      | `bărbați, femei` (both = unisex) |
 | `custom.frame_lens_width`    | dimension (mm)                                | yes      | `50 mm`      |
 | `custom.frame_bridge_width`  | dimension (mm)                                | yes      | `20 mm`      |
 | `custom.frame_temple_length` | dimension (mm)                                | yes      | `145 mm`     |
@@ -68,7 +68,9 @@ value.
 **`frame_colour_finish`:** `mat`, `lucios`, `transparent`, `tortoise`,
 `două-tonuri`, `metalic`
 
-**`frame_gender_fit`:** `bărbați`, `femei`, `unisex`
+**`frame_gender_fit`:** `bărbați`, `femei`
+(a frame that fits both is tagged with both values — replaces the
+former `unisex` single-value)
 
 These are stored as **Choice list metafields** — single_line_text_field
 under the hood, with a Shopify-native enum constraint enforced in the
@@ -77,6 +79,15 @@ definition in admin **and** the vocabulary list here in this doc.
 (Earlier draft of this section deferred enum enforcement to metaobjects;
 that's not necessary — Choice list gives the same typed-enum guarantee
 with less complexity. Locked in admin 2026-05-20.)
+
+**`frame_gender_fit` is the exception** — it's a *list-of-choices*
+metafield (multiple values from the same enum), not a single Choice
+list. A unisex frame carries both `bărbați` and `femei` in its list,
+which is the literal truth (it fits both) and lets the `rame-barbati`
+and `rame-femei` smart collections use a clean single-condition
+`contains` rule. Switched from single-value Choice list to list on
+2026-05-21 when smart-collection rule design hit Shopify's
+no-mixed-AND/OR limitation. See §5 for the resulting collection rules.
 
 ---
 
@@ -126,8 +137,8 @@ accessories don't leak in.
 | Handle              | Title (RO)        | Rules (all required)                                                                |
 |---------------------|-------------------|-------------------------------------------------------------------------------------|
 | `rame`              | Toate ramele      | `product_type = Ramă`                                                               |
-| `rame-barbati`      | Rame bărbați      | `product_type = Ramă` AND `frame_gender_fit ∈ {bărbați, unisex}`                    |
-| `rame-femei`        | Rame femei        | `product_type = Ramă` AND `frame_gender_fit ∈ {femei, unisex}`                      |
+| `rame-barbati`      | Rame bărbați      | `product_type = Ramă` AND `frame_gender_fit contains bărbați`                       |
+| `rame-femei`        | Rame femei        | `product_type = Ramă` AND `frame_gender_fit contains femei`                         |
 | `rame-rotunde`      | Rame rotunde      | `product_type = Ramă` AND `frame_shape = rotund`                                    |
 | `rame-acetat`       | Rame din acetat   | `product_type = Ramă` AND `frame_material = acetat`                                 |
 
@@ -148,6 +159,17 @@ filter on dimensions). But any future dimension-driven collection
 ("Rame înguste" for narrow frames, "Rame late" for wide) needs either
 manual curation or a tag-based approach (e.g., tag products with
 `dim:ingust` / `dim:lat` and have the smart rule filter on tag).
+
+**Shopify limitation discovered 2026-05-21:** Smart-collection rules
+support either "all conditions" (AND) or "any condition" (OR) across
+*all* rules in the collection — no mixed AND/OR, no nesting. This is
+why `frame_gender_fit` had to switch from Choice list to *list of
+choices* (§2): the original rule shape `product_type = Ramă AND
+gender_fit ∈ {bărbați, unisex}` is not expressible as a single smart
+collection. With a list metafield, the rule simplifies to
+`product_type = Ramă AND gender_fit contains bărbați` — pure AND,
+clean fit for Shopify's engine, and a unisex frame is naturally
+included because its list contains both values.
 
 ---
 
