@@ -175,21 +175,34 @@ included because its list contains both values.
 
 ## 6. Navigation skeleton
 
-Main menu (admin → Online Store → Navigation → Main menu).
+Main menu (admin → Content → Menus → Main menu).
 Lens-led hierarchy — `Lentile` is the headline business product
 and lives at the top of the menu.
 
 ```
 Acasă             →  /
 Lentile           →  /pages/lentile          ← calculator + Rx upload lives here (M4)
-Rame              →  /collections/rame
+Rame              →  (dropdown trigger — see Dawn quirk below)
+  ├ Vezi toate     →  /collections/rame
   ├ Pentru bărbați →  /collections/rame-barbati
   └ Pentru femei   →  /collections/rame-femei
 Despre            →  /pages/despre
 Contact           →  /pages/contact
 ```
 
-Footer menu (admin → Online Store → Navigation → Footer menu):
+**Dawn parent-menu-link quirk** (discovered 2026-05-22, session 7):
+Dawn ignores the `Link` field on a menu item when that item has
+children — the parent renders as a `<summary>` dropdown trigger,
+not a link. Even with `Link = Toate ramele` configured in the
+Shopify menu editor, clicking the `Rame` parent on desktop just
+opens the dropdown. The standard premium-theme fix is to add a
+`Vezi toate` first child that links to `/collections/rame`
+explicitly — Cubitts, Moscot, and most editorial eyewear sites
+use this pattern. A proper `header.liquid` modification to make
+parents both navigable and expandable is M5 polish work; the
+`Vezi toate` workaround ships in 30 seconds with zero theme code.
+
+Footer menu (admin → Content → Menus → Footer menu):
 
 ```
 Returnări          →  /policies/refund-policy
