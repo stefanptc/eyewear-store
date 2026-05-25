@@ -110,15 +110,22 @@ rather than guessing.
 
 - URL: `lens-store-romanian.myshopify.com`
 - Plan: Shopify development store (free, owned via the Dev dashboard)
-- Storefront password: not set (dev store accessible without password
-  during build; enable at Online Store → Preferences → Password
-  protection if/when needed)
+- Storefront password: **enabled** (mandatory on dev stores until paid
+  plan — cannot be fully disabled until M6 when Friend's business plan
+  goes live; current value at Online Store → Preferences → Password
+  protection). `shopify theme dev` prompts for this on each boot, and
+  the prompt is interactive (can't be satisfied from a Claude Code
+  subprocess or `!` prefix — Stefan runs the CLI in his own terminal
+  window). Discovered session 6, confirmed session 8.
 - Store currency: RON (settlement currency, do not change)
 - Store address: Brașov, Romania
 - Time zone: Europe/Bucharest (GMT+02:00)
 - Unit system: Metric · Default weight unit: grams
 - Business entity: Romania (auto-set when store address country flipped)
-- Local preview: `shopify theme dev` → `http://127.0.0.1:9292` with hot reload
+- Local preview: `shopify theme dev` → `http://127.0.0.1:9292`. Hot
+  reload works for `.liquid` and `.css` edits, but **does not** propagate
+  changes to `templates/*.json`, `config/settings_data.json`, or
+  `locales/*.json` — those require a CLI restart (`Ctrl+C` then re-run).
 
 **Dev store (deprecated, pending deletion):**
 
