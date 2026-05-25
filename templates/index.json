@@ -1,49 +1,49 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "hero": {
+      "type": "rich-text",
       "blocks": {
+        "caption": {
+          "type": "caption",
+          "settings": {
+            "caption": "OPTIC MĂRĂȘEȘTI",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Image banner",
-            "heading_size": "h0"
+            "heading": "<em>Rame pentru vedere.</em>",
+            "heading_size": "hxxl"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
+            "text": "<p>Cinci modele alese cu grijă. Lentile pe rețetă, montate corect.</p>"
           }
         },
         "button": {
-          "type": "buttons",
+          "type": "button",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "button_label": "Vezi ramele",
+            "button_link": "shopify://collections/rame",
+            "button_style_secondary": false
           }
         }
       },
       "block_order": [
+        "caption",
         "heading",
         "text",
         "button"
       ],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 100,
+        "padding_bottom": 100
       }
     },
     "rich_text": {
@@ -200,7 +200,7 @@
     }
   },
   "order": [
-    "image_banner",
+    "hero",
     "rich_text",
     "featured_collection",
     "collage",

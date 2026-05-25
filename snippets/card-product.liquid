@@ -157,9 +157,31 @@
               class="full-unstyled-link"
               aria-labelledby="CardLink-{{ section_id }}-{{ card_product.id }} Badge-{{ section_id }}-{{ card_product.id }}"
             >
-              {{ card_product.title | escape }}
+              <em>{{ card_product.title | escape }}</em>
             </a>
           </h3>
+          {%- liquid
+            assign frame_mat = card_product.metafields.custom.frame_material
+            assign frame_w = card_product.metafields.custom.frame_lens_width
+            assign frame_col = card_product.metafields.custom.frame_colour_finish
+            assign show_spec = false
+            if frame_mat != blank or frame_w != blank or frame_col != blank
+              assign show_spec = true
+            endif
+          -%}
+          {%- if show_spec -%}
+            <p class="product-spec">
+              {%- if frame_mat != blank -%}{{ frame_mat | metafield_text }}{%- endif -%}
+              {%- if frame_w != blank -%}
+                {%- if frame_mat != blank %} · {% endif -%}
+                {{ frame_w | metafield_text }}
+              {%- endif -%}
+              {%- if frame_col != blank -%}
+                {%- if frame_mat != blank or frame_w != blank %} · {% endif -%}
+                {{ frame_col | metafield_text }}
+              {%- endif -%}
+            </p>
+          {%- endif -%}
           <div class="card-information">
             {%- if show_vendor -%}
               <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>

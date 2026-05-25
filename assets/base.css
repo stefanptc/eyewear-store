@@ -3674,3 +3674,84 @@ details-disclosure > details {
     --pad-x:     24px;
   }
 }
+
+/* M2 typography wiring — redirect Dawn's font variables to our M2 families.
+   base.css loads after theme.liquid's inline <style>, so these win the cascade.
+   Body = IBM Plex Sans, headings = Source Serif 4. Mono token stays available
+   via --mono for prices/eyebrows when sections opt in. */
+:root {
+  --font-body-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-body-style: normal;
+  --font-body-weight: 400;
+  --font-body-weight-bold: 600;
+
+  --font-heading-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-heading-style: normal;
+  --font-heading-weight: 400;
+}
+
+/* M2 product-card polish — match docs/m2-kit-page.html .product-card.
+   Italic Source Serif 4 product names, mushroom-muted IBM Plex Mono spec line
+   (driven by custom.frame_material / frame_lens_width / frame_colour_finish
+   metafields, rendered by snippets/card-product.liquid), and IBM Plex Mono
+   prices. Targets the product card only — generic h-classes elsewhere unaffected. */
+.card-wrapper.product-card-wrapper .card__heading,
+.card-wrapper.product-card-wrapper .card__heading a {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: -0.005em;
+}
+
+.card-wrapper.product-card-wrapper .card__heading em {
+  font-style: italic;
+}
+
+.card-wrapper.product-card-wrapper .product-spec {
+  font-family: var(--mono);
+  font-size: var(--t-mono-sm);
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+  margin: var(--s-2) 0 0;
+  text-transform: lowercase;
+}
+
+.card-wrapper.product-card-wrapper .price,
+.card-wrapper.product-card-wrapper .price .price-item {
+  font-family: var(--mono);
+  font-size: var(--t-body-sm);
+  letter-spacing: 0;
+  color: var(--ink);
+}
+
+/* M2 product page title — same editorial italic Source Serif 4 as the cards,
+   so a product reads consistently across grid and PDP. */
+.product__title,
+.product__title > * {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+}
+
+/* PDP price — mono treatment matches the card. */
+.product .price,
+.product .price .price-item {
+  font-family: var(--mono);
+  letter-spacing: 0;
+}
+
+/* M2 rich-text hero — render Dawn's "caption-with-letter-spacing" block as
+   our mono mushroom eyebrow, and let the heading inherit italic from <em>
+   in the inline_richtext value. Targets all rich-text sections; if any future
+   rich-text section wants a different caption look it can override locally. */
+.rich-text .caption-with-letter-spacing {
+  font-family: var(--mono);
+  color: var(--ink-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rich-text__heading em {
+  font-style: italic;
+}
