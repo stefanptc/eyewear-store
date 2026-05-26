@@ -224,6 +224,55 @@
                     <div class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
                       {{ block.settings.content }}
                       {{ block.settings.page.content }}
+                      {%- if block.settings.frame_specs == 'materials' -%}
+                        <dl class="frame-specs">
+                          {%- if product.metafields.custom.frame_material != blank -%}
+                            <div class="frame-specs__row">
+                              <dt>Material</dt>
+                              <dd>{{ product.metafields.custom.frame_material | metafield_text }}</dd>
+                            </div>
+                          {%- endif -%}
+                          {%- if product.metafields.custom.frame_colour_finish != blank -%}
+                            <div class="frame-specs__row">
+                              <dt>Culoare</dt>
+                              <dd>{{ product.metafields.custom.frame_colour_finish | metafield_text }}</dd>
+                            </div>
+                          {%- endif -%}
+                          {%- if product.metafields.custom.frame_country_origin != blank -%}
+                            <div class="frame-specs__row">
+                              <dt>Țara de origine</dt>
+                              <dd>{{ product.metafields.custom.frame_country_origin | metafield_text }}</dd>
+                            </div>
+                          {%- endif -%}
+                        </dl>
+                      {%- elsif block.settings.frame_specs == 'dimensions' -%}
+                        <dl class="frame-specs">
+                          {%- if product.metafields.custom.frame_lens_width != blank -%}
+                            <div class="frame-specs__row">
+                              <dt>Lățime lentilă</dt>
+                              <dd>{{ product.metafields.custom.frame_lens_width | metafield_text }}</dd>
+                            </div>
+                          {%- endif -%}
+                          {%- if product.metafields.custom.frame_bridge_width != blank -%}
+                            <div class="frame-specs__row">
+                              <dt>Punte</dt>
+                              <dd>{{ product.metafields.custom.frame_bridge_width | metafield_text }}</dd>
+                            </div>
+                          {%- endif -%}
+                          {%- if product.metafields.custom.frame_temple_length != blank -%}
+                            <div class="frame-specs__row">
+                              <dt>Braț</dt>
+                              <dd>{{ product.metafields.custom.frame_temple_length | metafield_text }}</dd>
+                            </div>
+                          {%- endif -%}
+                          {%- if product.metafields.custom.frame_total_width != blank -%}
+                            <div class="frame-specs__row">
+                              <dt>Lățime totală</dt>
+                              <dd>{{ product.metafields.custom.frame_total_width | metafield_text }}</dd>
+                            </div>
+                          {%- endif -%}
+                        </dl>
+                      {%- endif -%}
                     </div>
                   </details>
                 </div>
@@ -1161,6 +1210,27 @@
           "type": "page",
           "id": "page",
           "label": "t:sections.main-product.blocks.collapsible_tab.settings.page.label"
+        },
+        {
+          "type": "select",
+          "id": "frame_specs",
+          "label": "Specificații ramă (metafield)",
+          "info": "Afișează automat valorile custom.frame_* sub conținutul de mai sus.",
+          "options": [
+            {
+              "value": "none",
+              "label": "Niciuna"
+            },
+            {
+              "value": "materials",
+              "label": "Materiale"
+            },
+            {
+              "value": "dimensions",
+              "label": "Dimensiuni"
+            }
+          ],
+          "default": "none"
         }
       ]
     },

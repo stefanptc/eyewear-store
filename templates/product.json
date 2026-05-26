@@ -48,7 +48,8 @@
             "heading": "Materiale",
             "icon": "leather",
             "content": "",
-            "page": ""
+            "page": "",
+            "frame_specs": "materials"
           }
         },
         "collapsible-row-1": {
@@ -66,7 +67,8 @@
             "heading": "Dimensiuni",
             "icon": "ruler",
             "content": "",
-            "page": ""
+            "page": "",
+            "frame_specs": "dimensions"
           }
         },
         "collapsible-row-3": {

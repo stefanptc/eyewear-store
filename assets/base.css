@@ -3755,3 +3755,39 @@ details-disclosure > details {
 .rich-text__heading em {
   font-style: italic;
 }
+
+/* M2 frame spec list — metafield-driven Materiale / Dimensiuni rows rendered
+   inside the PDP collapsible accordions. Mono labels + values with hairline
+   dividers, echoing the card spec line and the kit-page editorial table.
+   margin resets neutralize the surrounding .rte dl/dd defaults. */
+.frame-specs {
+  margin: 0;
+}
+
+.frame-specs__row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-2) 0;
+  border-bottom: var(--border-thin) solid var(--rule-faint);
+}
+
+.frame-specs__row:last-child {
+  border-bottom: 0;
+}
+
+.frame-specs dt {
+  font-family: var(--mono);
+  font-size: var(--t-mono-sm);
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+}
+
+.frame-specs dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: var(--t-mono-sm);
+  letter-spacing: 0;
+  color: var(--ink-soft);
+  text-align: right;
+}
