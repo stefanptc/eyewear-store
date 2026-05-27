@@ -3800,3 +3800,11 @@ details-disclosure > details {
   color: inherit;
   text-decoration: none;
 }
+
+/* Same navigable-parent treatment in the mobile drawer: the parent label is an
+   <a> to its own url, while the rest of the summary row stays the toggle that
+   slides in the submenu panel. */
+.menu-drawer__parent-link {
+  color: inherit;
+  text-decoration: none;
+}

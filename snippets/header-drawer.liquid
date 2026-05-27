@@ -27,9 +27,19 @@
                     <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
                       <summary
                         id="HeaderDrawer-{{ link.handle }}"
-                        class="menu-drawer__menu-item list-menu__item link link--text focus-inset{% if link.child_active %} menu-drawer__menu-item--active{% endif %}"
+                        class="menu-drawer__menu-item list-menu__item link link--text focus-inset{% if link.child_active or link.current %} menu-drawer__menu-item--active{% endif %}"
                       >
-                        {{ link.title | escape }}
+                        {%- comment -%}
+                          Parent label links to its own collection (navigates);
+                          the rest of the row / caret stays the toggle that opens
+                          the submenu panel. Mirrors the desktop dropdown so the
+                          parent is reachable on mobile too, removing the reliance
+                          on a "Vezi toate" child. .menu-drawer__parent-link resets
+                          the default link colour/underline.
+                        {%- endcomment -%}
+                        <a href="{{ link.url }}" class="menu-drawer__parent-link">
+                          {{ link.title | escape }}
+                        </a>
                         <span class="svg-wrapper">
                           {{- 'icon-arrow.svg' | inline_asset_content -}}
                         </span>
