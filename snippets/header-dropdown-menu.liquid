@@ -16,13 +16,27 @@
                 id="HeaderMenu-{{ link.handle }}"
                 class="header__menu-item list-menu__item link focus-inset"
               >
-                <span
-                  {%- if link.child_active %}
-                    class="header__active-menu-item"
-                  {% endif %}
+                {%- comment -%}
+                  Parent label is a real link to link.url (navigates), while the
+                  summary itself stays the disclosure toggle — clicking the caret
+                  opens the submenu. Replaces the "Vezi toate" first-child
+                  workaround on desktop. The span stays inside the anchor so
+                  Dawn's existing hover / active / open underline CSS still
+                  targets it; .header__menu-parent-link resets the default link
+                  colour and underline.
+                {%- endcomment -%}
+                <a
+                  href="{{ link.url }}"
+                  class="header__menu-parent-link"
                 >
-                  {{- link.title | escape -}}
-                </span>
+                  <span
+                    {%- if link.child_active or link.current %}
+                      class="header__active-menu-item"
+                    {% endif %}
+                  >
+                    {{- link.title | escape -}}
+                  </span>
+                </a>
                 {{- 'icon-caret.svg' | inline_asset_content -}}
               </summary>
               <ul

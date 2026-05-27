@@ -3791,3 +3791,12 @@ details-disclosure > details {
   color: var(--ink-soft);
   text-align: right;
 }
+
+/* Navigable dropdown parent — the parent menu label is now an <a> to its own
+   url (e.g. Rame -> /collections/rame) nested in the <summary> toggle. Reset
+   the default link colour/underline so it inherits the summary's styling; the
+   inner <span> still carries Dawn's hover / active / open underline rules. */
+.header__menu-parent-link {
+  color: inherit;
+  text-decoration: none;
+}
