@@ -202,6 +202,16 @@ use this pattern. A proper `header.liquid` modification to make
 parents both navigable and expandable is M5 polish work; the
 `Vezi toate` workaround ships in 30 seconds with zero theme code.
 
+**Resolved 2026-05-27 (session 10):** the proper fix landed. The parent
+label is now an `<a href="{{ link.url }}">` nested inside the `<summary>`
+toggle in both `snippets/header-dropdown-menu.liquid` (desktop) and
+`snippets/header-drawer.liquid` (mobile) — clicking the label navigates,
+the caret/row still opens the submenu. Dawn's desktop dropdown opens on
+click (not hover), so a plain-link parent would have killed the dropdown;
+the nested-anchor "split control" is the working pattern. `Vezi toate` is
+now **optional** — both viewports reach `/collections/rame` via the parent.
+Keep it for an explicit dropdown "view all" or remove it; nothing breaks.
+
 Footer menu (admin → Content → Menus → Footer menu):
 
 ```
