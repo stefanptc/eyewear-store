@@ -94,55 +94,58 @@
         "padding_bottom": 36
       }
     },
-    "collage": {
-      "type": "collage",
+    "lens_callout": {
+      "type": "image-with-text",
       "blocks": {
-        "collection-0": {
-          "type": "collection",
+        "caption": {
+          "type": "caption",
           "settings": {
-            "collection": ""
+            "caption": "LENTILE",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
           }
         },
-        "product": {
-          "type": "product",
+        "heading": {
+          "type": "heading",
           "settings": {
-            "product": "",
-            "second_image": false
+            "heading": "<em>Pe rețetă, montate corect.</em>",
+            "heading_size": "h1"
           }
         },
-        "collection-1": {
-          "type": "collection",
+        "text": {
+          "type": "text",
           "settings": {
-            "collection": ""
+            "text": "<p>Trimiți rețeta. Alegem împreună indicele lentilei și tratamentele. În câteva zile, ochelarii ajung la tine, gata de purtat.<\/p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_label": "Vezi lentilele",
+            "button_link": "shopify://pages/lentile",
+            "button_style_secondary": false
           }
         }
       },
       "block_order": [
-        "collection-0",
-        "product",
-        "collection-1"
+        "caption",
+        "heading",
+        "text",
+        "button"
       ],
       "settings": {
-        "heading": "Din colecție",
-        "heading_size": "h2",
-        "desktop_layout": "left",
-        "mobile_layout": "collage",
+        "height": "large",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-1",
         "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "video": {
-      "type": "video",
-      "settings": {
-        "heading": "",
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "heading_size": "h1",
-        "description": "",
-        "full_width": false,
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 64,
+        "padding_bottom": 64
       }
     },
     "multicolumn": {
@@ -153,8 +156,8 @@
           "settings": {
             "title": "Lentile pe rețetă",
             "text": "<p>Trimiți rețeta de la medic, iar noi montăm lentilele potrivite în rama pe care o alegi.<\/p>",
-            "link_label": "",
-            "link": ""
+            "link_label": "Cum funcționează",
+            "link": "shopify://pages/lentile"
           }
         },
         "column2": {
@@ -162,8 +165,8 @@
           "settings": {
             "title": "Rame alese cu grijă",
             "text": "<p>Câteva modele, nu sute. Fiecare ramă e aleasă cât să reziste purtării zilnice.<\/p>",
-            "link_label": "",
-            "link": ""
+            "link_label": "Vezi colecția",
+            "link": "shopify://collections/rame"
           }
         },
         "column3": {
@@ -171,8 +174,8 @@
           "settings": {
             "title": "Ai întrebări?",
             "text": "<p>Scrie-ne și te ajutăm să alegi rama și lentilele potrivite.<\/p>",
-            "link_label": "",
-            "link": ""
+            "link_label": "Scrie-ne",
+            "link": "shopify://pages/contact"
           }
         }
       },
@@ -203,8 +206,7 @@
     "hero",
     "rich_text",
     "featured_collection",
-    "collage",
-    "video",
+    "lens_callout",
     "multicolumn"
   ]
 }
