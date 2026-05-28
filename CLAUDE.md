@@ -48,8 +48,11 @@ those Friend-side prerequisites. Discovered 2026-05-20.
 
 **Stack:** Dawn theme (forked, not rebuilt) on Online Store 2.0 · Liquid +
 vanilla JS · Shopify Dev MCP server mandatory for Liquid/GraphQL work ·
-v0 by Vercel for UI ideation · Photoroom + Flux 1.1 Pro for imagery ·
-TryOnMe for virtual try-on at launch.
+v0 by Vercel for UI ideation · **Recraft** for brand-controlled
+illustration (heroes, schematics — Brand Kit locks the mushroom palette,
+Style Lock anchors to reference images) · **Flux 1.1 Pro** for photoreal
+(product/lifestyle still-lifes when needed post-M6) · Photoroom for
+cleanup · TryOnMe for virtual try-on at launch.
 
 **Custom features planned:** (1) prescription → lens recipe → price
 calculator, (2) virtual try-on integration. Everything else is
