@@ -1,0 +1,212 @@
+{
+  "sections": {
+    "hero": {
+      "type": "rich-text",
+      "blocks": {
+        "caption": {
+          "type": "caption",
+          "settings": {
+            "caption": "DESPRE",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "<em>Mai puține rame, alese mai bine.</em>",
+            "heading_size": "hxxl"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Suntem un magazin mic de ochelari, cu baza în Brașov. Vindem online, în toată România. Nu avem catalog de sute de modele — alegem câteva rame pe care le-am purta și noi.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "caption",
+        "heading",
+        "text"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 100,
+        "padding_bottom": 60
+      }
+    },
+    "positioning": {
+      "type": "rich-text",
+      "blocks": {
+        "caption": {
+          "type": "caption",
+          "settings": {
+            "caption": "SELECȚIE",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "<em>De ce așa puține modele.</em>",
+            "heading_size": "h1"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Cele mai multe magazine online de ochelari trăiesc din varietate — mii de rame, sortate după marcă, după trend.<\/p><p>Noi am ales altfel. Fiecare ramă din magazin e aleasă să se poarte ani la rând: materiale care țin, dimensiuni care prind mai multe forme de față, un design care nu se demodează repede. Câteva modele, nu sute.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "caption",
+        "heading",
+        "text"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "full_width": false,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "how_we_work": {
+      "type": "multicolumn",
+      "blocks": {
+        "selectie": {
+          "type": "column",
+          "settings": {
+            "title": "01  Selecție",
+            "text": "<p>Câteva rame, alese pentru ce înseamnă să porți ochelari zilnic.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "lentile": {
+          "type": "column",
+          "settings": {
+            "title": "02  Lentile pe rețetă",
+            "text": "<p>Verificate de un optometrist autorizat, tăiate și montate la comandă.<\/p>",
+            "link_label": "Cum funcționează",
+            "link": "shopify://pages/lentile"
+          }
+        },
+        "online": {
+          "type": "column",
+          "settings": {
+            "title": "03  Online",
+            "text": "<p>Comanda se face de acasă; ochelarii ajung la tine în câteva zile lucrătoare.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "selectie",
+        "lentile",
+        "online"
+      ],
+      "settings": {
+        "title": "Cum lucrăm",
+        "heading_size": "h2",
+        "image_width": "third",
+        "image_ratio": "adapt",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "none",
+        "button_label": "",
+        "button_link": "",
+        "swipe_on_mobile": false,
+        "color_scheme": "scheme-1",
+        "columns_mobile": "1",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "place": {
+      "type": "rich-text",
+      "blocks": {
+        "caption": {
+          "type": "caption",
+          "settings": {
+            "caption": "BRAȘOV",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "<em>De aici, în toată țara.</em>",
+            "heading_size": "h1"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Magazinul e online; baza noastră e în Brașov. Dacă vrei să ne scrii — întrebări despre o ramă, despre lentile, despre o comandă — folosește pagina de contact și îți răspundem cât mai repede.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "caption",
+        "heading",
+        "text"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "cta": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "<em>Începe cu o ramă.</em>",
+            "heading_size": "h1"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Câteva modele alese cu grijă. Vezi care ți se potrivește.<\/p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_label": "Vezi ramele",
+            "button_link": "shopify://collections/rame",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text",
+        "button"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 80,
+        "padding_bottom": 100
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "positioning",
+    "how_we_work",
+    "place",
+    "cta"
+  ]
+}
