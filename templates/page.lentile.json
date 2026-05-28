@@ -1,0 +1,295 @@
+{
+  "sections": {
+    "hero": {
+      "type": "rich-text",
+      "blocks": {
+        "caption": {
+          "type": "caption",
+          "settings": {
+            "caption": "LENTILE",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "<em>Pe rețetă, montate corect.</em>",
+            "heading_size": "hxxl"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Lentilele sunt jumătate din ochelarul tău. Le alegem împreună — index, tratamente — și le montăm în rama pe care o alegi. Nu vindem lentile separat.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "caption",
+        "heading",
+        "text"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 100,
+        "padding_bottom": 60
+      }
+    },
+    "process": {
+      "type": "multicolumn",
+      "blocks": {
+        "step1": {
+          "type": "column",
+          "settings": {
+            "title": "01  Trimiți rețeta",
+            "text": "<p>Poză sau scan, urci direct în comandă sau ne-o trimiți prin e-mail.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "step2": {
+          "type": "column",
+          "settings": {
+            "title": "02  Verificăm",
+            "text": "<p>Un optometrist autorizat verifică rețeta înainte să comandăm lentilele.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "step3": {
+          "type": "column",
+          "settings": {
+            "title": "03  Montăm",
+            "text": "<p>Tăiem lentilele după rama ta și le centrăm pe distanța dintre pupile.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "step4": {
+          "type": "column",
+          "settings": {
+            "title": "04  Primești",
+            "text": "<p>Ochelari gata de purtat, livrați în câteva zile lucrătoare.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "step1",
+        "step2",
+        "step3",
+        "step4"
+      ],
+      "settings": {
+        "title": "Cum funcționează",
+        "heading_size": "h2",
+        "image_width": "third",
+        "image_ratio": "adapt",
+        "columns_desktop": 4,
+        "column_alignment": "left",
+        "background_style": "none",
+        "button_label": "",
+        "button_link": "",
+        "swipe_on_mobile": false,
+        "color_scheme": "scheme-1",
+        "columns_mobile": "1",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "index_explainer": {
+      "type": "rich-text",
+      "blocks": {
+        "caption": {
+          "type": "caption",
+          "settings": {
+            "caption": "INDICE",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "<em>Lentile subțiri sau standard?</em>",
+            "heading_size": "h1"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Indicele lentilei spune cât de mult curbează lumina. Cu cât e mai mare, cu atât lentila e mai subțire pentru aceeași dioptrie.<\/p><p>Pentru rețete ușoare (până la ±2,00), indice 1.5 e suficient. Între ±2,00 și ±4,00, te ajută 1.6. Peste ±4,00, 1.67 sau 1.74 pentru lentile vizibil mai subțiri. Îți spunem care se potrivește, după ce vedem rețeta.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "caption",
+        "heading",
+        "text"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "full_width": false,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "treatments": {
+      "type": "multicolumn",
+      "blocks": {
+        "ar": {
+          "type": "column",
+          "settings": {
+            "title": "Antireflex",
+            "text": "<p>Reduce reflexiile pe lentilă, mai ales seara și în fața ecranelor. Implicit pe toate lentilele noastre.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "hydro": {
+          "type": "column",
+          "settings": {
+            "title": "Hidrofob",
+            "text": "<p>Apa, ploaia și urmele de degete se șterg ușor. Recomandat pentru purtare zilnică.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "blue": {
+          "type": "column",
+          "settings": {
+            "title": "Filtru lumină albastră",
+            "text": "<p>Atenuează lumina albastră de la ecrane. Opțional, pentru cine stă mult în fața monitorului.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "ar",
+        "hydro",
+        "blue"
+      ],
+      "settings": {
+        "title": "Tratamente",
+        "heading_size": "h2",
+        "image_width": "third",
+        "image_ratio": "adapt",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "none",
+        "button_label": "",
+        "button_link": "",
+        "swipe_on_mobile": false,
+        "color_scheme": "scheme-1",
+        "columns_mobile": "1",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "faq": {
+      "type": "collapsible_content",
+      "blocks": {
+        "pd": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Ce înseamnă PD?",
+            "icon": "none",
+            "row_content": "<p>Distanța interpupilară — distanța dintre centrele pupilelor, în milimetri. O ai pe rețeta de la optometrist sau ți-o spune medicul.<\/p>"
+          }
+        },
+        "photo": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Pot trimite o poză a rețetei?",
+            "icon": "none",
+            "row_content": "<p>Da, atât timp cât toate valorile (sferă, cilindru, axă, PD) se citesc clar. Format pdf, jpg sau png.<\/p>"
+          }
+        },
+        "timeline": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Cât durează?",
+            "icon": "none",
+            "row_content": "<p>Între 5 și 10 zile lucrătoare de la confirmarea rețetei, în funcție de tratamentele alese.<\/p>"
+          }
+        },
+        "online": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Trebuie să trec pe la magazin?",
+            "icon": "none",
+            "row_content": "<p>Nu, comanda se face complet online. Trimiți rețeta, alegi rama, primești ochelarii acasă.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "pd",
+        "photo",
+        "timeline",
+        "online"
+      ],
+      "settings": {
+        "caption": "",
+        "heading": "Întrebări",
+        "heading_size": "h2",
+        "heading_alignment": "left",
+        "layout": "none",
+        "container_color_scheme": "scheme-2",
+        "color_scheme": "scheme-1",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "cta": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "<em>Începe cu rama.</em>",
+            "heading_size": "h1"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Lentilele se aleg odată cu rama, ca să se potrivească forma și dimensiunile. Alege întâi rama care îți place.<\/p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_label": "Vezi ramele",
+            "button_link": "shopify://collections/rame",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text",
+        "button"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 80,
+        "padding_bottom": 100
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "process",
+    "index_explainer",
+    "treatments",
+    "faq",
+    "cta"
+  ]
+}
