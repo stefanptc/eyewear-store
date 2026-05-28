@@ -191,7 +191,7 @@
       }
     },
     "faq": {
-      "type": "collapsible_content",
+      "type": "collapsible-content",
       "blocks": {
         "pd": {
           "type": "collapsible_row",
