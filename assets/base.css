@@ -3808,3 +3808,49 @@ details-disclosure > details {
   color: inherit;
   text-decoration: none;
 }
+
+/* === M2 motion polish ================================================
+   Restraint over flourish. CLAUDE.md §5: "Only color/opacity
+   transitions — no transforms unless explicit." */
+
+/* Override Dawn's product-card scale-on-hover. Keep the two-image
+   opacity swap (product utility); single-image cards get a quiet
+   opacity dim as the "interactive" affordance. */
+@media screen and (min-width: 990px) {
+  .card .media.media--hover-effect > img:only-child,
+  .card-wrapper .media.media--hover-effect > img:only-child,
+  .card:hover .media.media--hover-effect > img:first-child:only-child,
+  .card-wrapper:hover .media.media--hover-effect > img:first-child:only-child,
+  .card-wrapper:hover .media.media--hover-effect > img + img {
+    transform: none;
+    transition: opacity 200ms ease;
+  }
+
+  .card-wrapper:hover .media.media--hover-effect > img:only-child {
+    opacity: 0.92;
+  }
+}
+
+/* Brand-aligned focus ring: keyboard-only, inherits the scheme's text
+   colour so contrast holds on light + dark schemes alike. Replaces
+   Dawn's variable-driven default for non-specific elements; Dawn's
+   per-component button/field focus styles remain. */
+*:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+/* Universal reduced-motion killswitch — stronger than Dawn's
+   .motion-reduce-class approach. Every transition + animation drops
+   when the OS asks for it. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
