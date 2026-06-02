@@ -3854,3 +3854,51 @@ details-disclosure > details {
     scroll-behavior: auto !important;
   }
 }
+
+/* === M5 microinteractions ===========================================
+   Session 12 tail of the motion baseline (6ba7bd4): add-to-cart
+   loading polish, universal button press feedback, link-hover
+   unification. Colour/opacity only per §5 — the spinner's rotate
+   stays the one explicit functional transform. */
+
+/* Add-to-cart and every button: fade the label to transparent as the
+   loading state engages so the spinner emerges instead of snapping in.
+   Dawn's box-shadow hover transition is redeclared alongside so this
+   later rule doesn't drop it. */
+.button,
+.shopify-challenge__button,
+.customer button {
+  transition: box-shadow var(--duration-short) ease, color var(--duration-short) ease;
+}
+
+/* While the cart request is in flight the label is transparent and the
+   spinner shows — signal the async wait through the cursor. */
+.button.loading {
+  cursor: progress;
+}
+
+/* Quiet tactile press. Dawn's only click feedback is the hover border
+   the cursor already sits on, and its :active dip is gated behind the
+   unused .animate--hover-vertical-lift scale. A 0.9 opacity dip reads
+   as "pressed" across add-to-cart, contact + newsletter submits alike.
+   Opacity only, no transform. */
+.button:not([disabled]):active,
+.shopify-challenge__button:not([disabled]):active,
+.customer button:not([disabled]):active,
+.newsletter-form__button:not([disabled]):active {
+  opacity: 0.9;
+}
+
+/* Link-hover audit: Dawn thickens the underline on hover for
+   .underlined-link / RTE links but leaves bare .link inert, so
+   editorial links rendered as plain .link never responded. Unify on
+   the same craft underline-thickening + shared easing. (link-with-icon
+   carries text-decoration:none, so the thickness change is a no-op
+   there — safe to inherit.) */
+.link {
+  transition: text-decoration-thickness var(--duration-short) ease, color var(--duration-short) ease;
+}
+
+.link:hover {
+  text-decoration-thickness: 0.2rem;
+}
