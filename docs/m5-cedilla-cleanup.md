@@ -98,9 +98,13 @@ Aviatorilor / Victoria / Lipscani — no `ș`/`ț`, clean.
 Admin → Products → (each) → Product organization → Vendor. Vendor is
 per-product free text in Shopify — fix on **all 5**, not once.
 
+**Superseded by the Optivix rename (session 13):** set the vendor to the
+new brand name rather than fixing the old cedilla. `Optivix` has no special
+characters, so this clears the cedilla issue and the brand swap in one edit.
+
 | Field | Value now | Fix to | Status |
 |-------|-----------|--------|--------|
-| Vendor (all products) | `Optic Mărăşeşti` | `Optic Mărășești` (ș×2) | Confirmed |
+| Vendor (all products) | `Optic Mărăşeşti` | `Optivix` | Confirmed (brand rename) |
 
 ### 5. country_origin metafield value — VERIFY
 
