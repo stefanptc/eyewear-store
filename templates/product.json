@@ -52,15 +52,6 @@
             "frame_specs": "materials"
           }
         },
-        "collapsible-row-1": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Livrare și retur",
-            "icon": "truck",
-            "content": "",
-            "page": ""
-          }
-        },
         "collapsible-row-2": {
           "type": "collapsible_tab",
           "settings": {
@@ -76,7 +67,7 @@
           "settings": {
             "heading": "Întreținere",
             "icon": "heart",
-            "content": "",
+            "content": "<p>Curăță lentilele cu spray special și o lavetă din microfibră. Evită șervețelele de hârtie — zgârie stratul de acoperire.<\/p><p>Ține ramele într-un toc rigid când nu le porți și nu le așeza cu lentilele în jos. Căldura mare deformează acetatul, așa că nu le lăsa în mașină vara.<\/p>",
             "page": ""
           }
         },
@@ -97,7 +88,6 @@
         "buy_buttons",
         "description",
         "collapsible-row-0",
-        "collapsible-row-1",
         "collapsible-row-2",
         "collapsible-row-3",
         "share"
