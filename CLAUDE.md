@@ -659,57 +659,70 @@ acting. Don't quietly work around it.
 
 ## 11. Working memory — how a session should run
 
+Per-session state now lives in Notion, not in PLAN.md's change log. PLAN.md
+keeps the milestone skeleton + ✅/🟡 status; Notion holds the live picture.
+
 **At session start:**
 
-1. Read this file (`CLAUDE.md`) in full.
-2. Read `PLAN.md` for current milestone, current step, and any
-   carried-over blockers from the last session's change log.
-3. If anything in `PLAN.md` contradicts this file, this file wins —
-   then flag the contradiction so we reconcile.
-4. State current milestone and the next concrete step before doing
-   anything.
+1. Read this file (CLAUDE.md) in full.
+2. Read PLAN.md for the milestone skeleton, exit criteria, and ✅/🟡 status.
+3. Fetch the Notion Live State hub (ID in §12) for the live picture: current
+   focus, open Agenda items, recent Session log rows, locked Decisions.
+4. Source-of-truth rules: for milestone *structure*, CLAUDE.md > PLAN.md. For
+   live *session state* (focus, blockers, what shipped), Notion wins. If they
+   disagree, flag it and reconcile before working.
+5. State the current milestone and the next concrete step before doing anything.
 
 **During the session:**
 
-- **One step at a time.** Propose a single concrete action, wait for
-  Stefan's confirmation or result, then move on. Don't stack changes.
-- **Plan before doing** for any non-trivial decision (new section,
-  app install, integration choice, schema design). Options, trade-offs,
-  recommendation — then build.
-- **Research before deciding** for anything that may have changed
-  since training cutoff (Shopify features, app pricing, theme
-  capabilities). The Dev MCP is the first stop for Shopify-specific
-  facts; web search for the broader ecosystem.
-- **Ask when unsure** rather than guess. If a step depends on info
-  you don't have (Friend's pricing logic, brand assets, supplier
-  specs), ask before fabricating placeholders.
-- **Reference the project research PDF** (`Shopify_AI_Stack_Research_May2026.pdf`)
-  for tool/app/stack decisions. It captures decisions we don't want
-  to re-litigate.
-- **Label every task with ownership.** `[Me]` (Stefan), `[Friend]`,
-  or `[Together]`. When Friend's action is needed, pause and wait —
-  don't move on until he's done it and Stefan has confirmed.
+- One step at a time. Propose a single action, wait for confirmation, then move on.
+- Plan before doing for any non-trivial decision. Options, trade-offs, recommendation.
+- Research before deciding for anything that may have changed since cutoff. Dev MCP
+  first for Shopify facts; web search for the broader ecosystem.
+- Ask when unsure rather than guess.
+- Reference Shopify_AI_Stack_Research_May2026.pdf for tool/app/stack decisions.
+- Label every task [Me] / [Friend] / [Together]. When Friend's action is needed,
+  pause until it's done and confirmed.
 
 **At session end:**
 
-1. Report status in the form: `Mn — done X, blocked on Y` (where Mn
-   is the current milestone).
-2. Update `PLAN.md`:
-   - Flip completed items to ✅ with a note on what was actually done.
-   - Flip in-progress items to 🟡.
-   - Add a dated change-log entry at the bottom capturing decisions
-     made, scope changes, and the next concrete step.
-3. Commit any docs changes (`docs: update plan` or similar) before
-   the session closes.
+1. Report status: "Mn — done X, blocked on Y."
+2. Update Notion (by the §12 IDs, never by blind search):
+   - Add a row to Eyewear · Session log (S#, date, milestone, summary, shipped +
+     commit SHAs, blockers).
+   - Update Eyewear · Agenda card statuses (Todo / In progress / Blocked / Done).
+   - Add any newly locked or changed calls to Eyewear · Decision log.
+   - Update the hub's "Current state" block (milestone, focus, blockers, last session).
+3. Update PLAN.md only when a milestone gate moves: flip ✅/🟡 and keep a one-line
+   pointer. The per-session narrative is the Session log now, not PLAN.md.
+4. Commit repo/docs changes before closing (docs: ...). Notion is not git — writing
+   the session log is a separate act from committing code.
+
+**Secrets:** never write credentials, keys, or passwords to Notion. Repo / local env only.
 
 **Communication style Stefan expects:**
 
 - Concise. Skip preamble and recaps.
-- Show the "why" in one or two lines, not paragraphs.
-- Flag risks, gotchas, and reversibility (is this easy to undo?) when
-  relevant.
-- Push back on bad ideas rather than acquiesce. Stefan is building this
-  to learn; pretend-agreement isn't useful.
+- Show the "why" in one or two lines.
+- Flag risks, gotchas, reversibility.
+- Push back on bad ideas rather than acquiesce.
+
+---
+
+## 12. Shared state — Notion (pinned IDs)
+
+This project's Notion state lives ONLY under the IDs below. The workspace also
+contains an unrelated "Agency Platform" project with identically-structured
+databases — so NEVER address eyewear state by blind workspace search. Always
+fetch by these exact IDs:
+
+- Hub — 👓 Eyewear Store — Live State: 37a03b8f-ab62-81a5-98d2-e883d6d40769
+- Eyewear · Session log (data source): c2e27697-0e30-4115-aeeb-da197eca6f98
+- Eyewear · Decision log (data source): 785bf9e5-b3c0-49b6-a2fc-93bd4e030888
+- Eyewear · Agenda (data source): 2611f0a4-1b0e-4de4-b8f6-85ab82e57dd9
+
+If a Notion read ever returns Agency-Platform content, STOP — wrong ID or a
+blind search slipped through. Re-fetch by the IDs above.
 
 ---
 
