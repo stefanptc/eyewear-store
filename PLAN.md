@@ -131,8 +131,8 @@ Two-track view of *remaining* work (live summary; the milestone sections below s
 
 **Goal:** Customer enters prescription, sees correct lens + price — and the prescription gets validated before fulfillment (legal hard rule, CLAUDE.md §7).
 
-- ⬜ [Together] Friend documents pricing logic: which lens types, which coatings, how index/material affect price
-- ⬜ [Together] **Decide the lens product model** — how a frame + lens recipe becomes a cart line at the right price (Shopify variants vs line-item properties vs draft order). Open question in `docs/m3-data-model.md` §10; must be settled before the UI is built.
+- ✅ [Together] Friend documents pricing logic: which lens types, which coatings, how index/material affect price — **done 2026-06-10:** `docs/lens-pricing-matrix.md` v1 (30 priced rows, 4 non-blocking TBDs open)
+- ✅ [Together] **Decide the lens product model** — how a frame + lens recipe becomes a cart line at the right price (Shopify variants vs line-item properties vs draft order). **Locked 2026-06-10: (b) variant-per-matrix-row** — see `docs/m3-data-model.md` §10 (OQ1/OQ3/OQ5 resolved).
 - ⬜ [Me] Build calculator UI in a Liquid section + JS (or small React widget if logic gets complex)
 - ⬜ [Me] Wire to metafields, validate edge cases, handle invalid prescriptions
 - ⬜ [Me] Add to product page flow
