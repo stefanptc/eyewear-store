@@ -724,6 +724,15 @@ fetch by these exact IDs:
 If a Notion read ever returns Agency-Platform content, STOP — wrong ID or a
 blind search slipped through. Re-fetch by the IDs above.
 
+**Authority of state — snapshots are subordinate.** The live repo (git) and
+Notion are the only authoritative state. Snapshots — Claude.ai Project files,
+Claude Code auto-memory, chat summaries — are subordinate; on conflict, **git
+arbitrates first**, then Notion. Verify a snapshot claim against git/Notion
+before acting on it; never let a snapshot silently overwrite repo or Notion
+state. (2026-06-10 incident: a stale chat-side snapshot — project frozen at
+~session 4, brand shown as undecided — corrupted the Notion hub; the repo,
+1044 commits deep with Optivix locked at session 13, corrected it.)
+
 ---
 
 *End of CLAUDE.md. When this file gets out of sync with reality, fix the
