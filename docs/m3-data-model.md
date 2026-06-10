@@ -296,6 +296,10 @@ to accept placeholder products without rework.
 
 ## 10. Open questions (resolve before M4)
 
+**Status (2026-06-10):** OQ1, OQ3, OQ5 resolved + locked below; OQ2 resolved
+by `docs/lens-pricing-matrix.md` (v1). OQ4 stays open — [Friend], gates
+launch not build.
+
 **1. Lens product modeling — the architectural question of M4.**
 
 Lenses are the headline business product, sold via the prescription
@@ -327,10 +331,39 @@ But the choice depends on (i) whether Friend wants per-recipe inventory
 tracking and (ii) Romanian accounting/invoice requirements for SKU
 identifiers on receipts. Confirm with Friend's accountant before locking.
 
+**LOCKED 2026-06-10 — (b), implemented as variant-per-matrix-row.**
+Stefan's call (accounting questions answered on his authority, not the
+accountant's: an internal code on invoices suffices, no separate
+lens-stock requirement; residual risk accepted as SKU-naming-only). The
+model:
+
+  - **One product** „Lentile pe rețetă", **one variant per pricing-matrix
+    row** — M01–M22 + B01–B08 = **30 variants** — surfaced as a single
+    product option (e.g. „Cod") so Shopify's 3-option / 100-variant
+    limits never bind.
+  - **SKU = row ID** (`M01`…`B08`). **Variant price = matrix price.**
+  - **Availability** (`stoc` / `comandă` / `comandă 5–7 zile`) stored as a
+    **variant metafield**. `stoc` rows get **real inventory tracking**;
+    `comandă` rows stay **untracked** (always orderable).
+  - The per-eye **prescription** (SPH/CYL/AX per eye, PD) is **not** a
+    variant axis. The matrix already collapsed the dioptre ranges into 30
+    priced rows via its `cyl_tier` + range-validation design, so the
+    prescription rides in **`line_item.properties`** (see OQ3). This is
+    what preserves (b)'s "no variant explosion" while gaining (a)'s clean
+    inventory / analytics / refunds for the 30 canonical rows. Flow:
+    calculator validates a prescription → maps it to a matrix row →
+    adds that variant with the prescription as line-item properties.
+
 **2. Pricing logic.** Friend documents which lens indexes are offered,
 which coatings, the price delta per option, and which combinations are
 "recommended upgrades" the calculator should surface. Determines
 whether the `Combo` product type activates or stays reserved.
+
+**RESOLVED 2026-06-10** — documented in `docs/lens-pricing-matrix.md`
+(v1 locked): 30 priced rows across type × coating × light × index ×
+cyl_tier, with range validation, availability, and routing rules. 4 TBDs
+open (thinned sun, M18 price, per-eye rule, 1.56 high-CYL bound) — all
+non-blocking. `Combo` stays reserved.
 
 **3. Where the prescription lives.** Depending on (1):
   - Customer record metafield? (Persistent across orders.)
@@ -339,14 +372,31 @@ whether the `Combo` product type activates or stays reserved.
   - Uploaded file (PDF/image of the original Rx)? — separate storage
     decision regardless of where the parsed values go.
 
+**RESOLVED 2026-06-10** — parsed values (SPH/CYL/AX per eye, PD) live in
+**line-item properties** on the „Lentile pe rețetă" line (per-purchase,
+tied to the lens line), consistent with the OQ1 lock. The **Rx file
+upload** (PDF/image of the original) is **deferred** — it ships with the
+OQ4 optometrist-validation flow, not in the first calculator build.
+
 **4. Optometrist partnership for prescription validation** —
 regulatory requirement per CLAUDE.md §7. Affects what gets stored on
 the order, what triggers fulfillment (validated vs unvalidated state),
 and the email/handoff to the optometrist.
 
+**STILL OPEN — [Friend]. Gates launch, not the build.** The calculator,
+variant model, and prescription-in-properties all ship without it. What
+lands when the partnership is confirmed (M6 regulatory track): an
+order-hold / validation state and the optometrist handoff, before any
+fulfillment. No glasses ship without this step (CLAUDE.md §7).
+
 **5. "Recommended upgrades" UX.** Are coatings (anti-reflective,
 blue-light filter, photochromic) separate cart line items or attributes
 on the lens line? Affects refund granularity and analytics.
+
+**RESOLVED 2026-06-10 → attributes, not line items.** Each matrix row
+bakes its coating (HMC / Ultra Blue) into the single variant price, so a
+coating is an attribute of the chosen lens row, never a separate cart
+item. Refund granularity is per-lens-line; accepted.
 
 ---
 
