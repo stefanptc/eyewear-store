@@ -45,8 +45,11 @@ row's allowed ranges; CYL magnitude selects the tier.
   *"Pentru această dioptrie recomandăm lentile subțiate — mai estetice și
   mai ușoare."* Never block; never claim medical necessity.
 - **R4 — Bifocal cylinder routing:** bifocal HMC 1.5 rows accept CYL = 0
-  only. Any CYL ≠ 0 → auto-route to bifocal index 1.6 (650/750), which is
-  comandă. UI explains the jump.
+  only. Any CYL ≠ 0 → auto-route to the matching HMC index-1.6 row,
+  **preserving light behaviour and coating**: B01 (hmc clear 1.5) → B04
+  (hmc clear 1.6), B02 (hmc foto 1.5) → B06 (hmc foto 1.6). Both are
+  comandă. Do **not** route to B05 (ultra_blue) — that would flip the
+  coating. UI explains the jump.
 - **R5 — Bifocal scope:** bifocals exist only in `clear` and `foto`.
   No transitions, no sun.
 - **R6 — Prices are per pair.** Both lenses identical spec assumed for
