@@ -7,6 +7,12 @@ in Notion (Eyewear · Decision log), **never in this public repo**.
 
 Status: **LOCKED** except items marked `TBD` (see §6).
 
+> **Machine mirror:** `assets/lens-pricing-data.json` is the derived, code-readable
+> copy of this matrix. **This `.md` is the human source of truth; the JSON is
+> downstream.** Any change to a row, range, price, or TBD here requires the same
+> change in the JSON in the *same commit* (touch-both rule) — and the JSON's
+> `_source.matrix_commit` must be bumped to the new matrix commit.
+
 ---
 
 ## 1. Model
