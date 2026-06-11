@@ -288,8 +288,9 @@ settings — every section references variables, never raw values.
   --ink-muted:   #6a665a;  /* labels, specs, tertiary */
   --rule:        #d4cfc2;  /* hairlines, borders */
   --rule-faint:  #e8e3d6;  /* internal dividers, faint separators */
-  --accent:      #8c7a5c;  /* mushroom taupe — prices, italics, active */
+  --accent:      #8c7a5c;  /* mushroom taupe — non-text UI: borders, underlines, hover surfaces */
   --accent-soft: #b8aa8a;  /* hover surfaces, dark-mode contrast */
+  --accent-text: #6e5f45;  /* accent for TEXT — prices, italics, active link text (AA ~5.9:1 on --bg) */
 
   /* Type families */
   --serif: 'Source Serif 4', serif;
@@ -304,10 +305,10 @@ settings — every section references variables, never raw values.
   --t-body:      16px;     /* lh 1.55 — default body (sans) */
   --t-body-lg:   18px;     /* lh 1.55 — serif intro paragraphs */
   --t-h4:        22px;     /* lh 1.2  — product names, card titles */
-  --t-h3:        28px;     /* lh 1.15 — section subheads */
-  --t-h2:        40px;     /* lh 1.08 — section titles */
-  --t-h1:        56px;     /* lh 1.05 — page hero (non-display) */
-  --t-display:   88px;     /* lh 1.02 — brand hero only */
+  --t-h3:        clamp(22px, 2vw + 0.5rem, 28px);   /* lh 1.15 — section subheads (fluid) */
+  --t-h2:        clamp(28px, 3vw + 0.5rem, 40px);   /* lh 1.08 — section titles (fluid) */
+  --t-h1:        clamp(34px, 4.5vw + 0.5rem, 56px); /* lh 1.05 — page hero, non-display (fluid) */
+  --t-display:   clamp(44px, 6.5vw + 1rem, 88px);   /* lh 1.08 — brand hero only (fluid; diacritic-safe leading) */
 
   /* Spacing scale — 8px base, expanding ratio */
   --s-1:    4px;   /* micro */
@@ -337,15 +338,13 @@ settings — every section references variables, never raw values.
 }
 ```
 
-**Mobile scaling** (matches the kit page):
+**Mobile scaling:** the top of the type scale (`--t-display`/`--t-h1`/
+`--t-h2`/`--t-h3`) is fluid via `clamp()` above, so it scales continuously
+with viewport — no per-breakpoint type overrides. Only `--pad-x` steps down:
 
 ```css
-@media (max-width: 1024px) {
-  :root { --t-display: 64px; --t-h1: 44px; --t-h2: 32px; --pad-x: 32px; }
-}
-@media (max-width: 640px) {
-  :root { --t-display: 44px; --t-h1: 36px; --t-h2: 26px; --pad-x: 24px; }
-}
+@media (max-width: 1024px) { :root { --pad-x: 32px; } }
+@media (max-width: 640px)  { :root { --pad-x: 24px; } }
 ```
 
 **Font loading:** Source Serif 4 (variable, opsz 8–60, weights 300/400/500/600,
