@@ -91,12 +91,43 @@ no-mixed-AND/OR limitation. See §5 for the resulting collection rules.
 
 ---
 
-## 3. Lens metafields — `custom.lens_*` (reserved)
+## 3. Lens metafields — `custom.lens_*`
 
-Namespace claimed; no definitions in admin until M4. Anticipated
-fields (subject to Friend's pricing logic review):
+Namespace claimed in M3; **definitions land in M4** alongside the
+„Lentile pe rețetă" variant model (OQ1, §10). These are **variant-level**
+metafields — one value per matrix-row variant — so they are set via the
+**variant bulk editor**, not the product import CSV (Shopify doesn't
+support variant metafields in product CSV import/export; see
+`docs/m4-lens-variant-metafields.md`).
 
-- `custom.lens_index` — number_decimal (1.50, 1.56, 1.60, 1.67, 1.74)
+### 3a. M4 variant metafields (locked 2026-06-11)
+
+Backing the 30-variant lens product. Each maps 1:1 to a pricing-matrix
+axis / flag (`assets/lens-pricing-data.json`, matrix `docs/lens-pricing-matrix.md`).
+All are **Choice list** (single_line_text_field with a Shopify-native enum)
+except `lens_index` (number_decimal). Vocabularies are **closed** — adding
+a value is a schema change (edit this doc, the metafield definition in
+admin, **and** the matrix).
+
+| Key | Type | Required | Vocabulary (closed) |
+|-----|------|----------|---------------------|
+| `custom.lens_type`         | Choice list (single_line_text_field) | yes | `monofocal`, `bifocal` |
+| `custom.lens_coating`      | Choice list (single_line_text_field) | yes | `hmc`, `ultra_blue` |
+| `custom.lens_light`        | Choice list (single_line_text_field) | yes | `clear`, `foto`, `transitions`, `sun` |
+| `custom.lens_index`        | number_decimal                       | yes | `1.5`, `1.56`, `1.6`, `1.67` |
+| `custom.lens_availability` | Choice list (single_line_text_field) | yes | `stoc`, `comanda`, `comanda_5_7` |
+
+`lens_availability` stores the machine flag the calculator/theme renders
+as the Romanian label (`în stoc` / `comandă` / `comandă 5–7 zile
+lucrătoare`); it parallels the variant's inventory-tracking policy
+(`stoc` → tracked/deny, `comandă*` → untracked/continue) set in the import
+CSV. Both, by design — the flag drives display, the policy drives
+orderability.
+
+### 3b. Other anticipated lens fields (not yet needed)
+
+Reserved for later; no M4 definition, subject to Friend's review:
+
 - `custom.lens_material` — single_line_text_field
 - `custom.lens_coatings_available` — list.single_line_text_field
 - `custom.lens_prescription_range` — single_line_text_field
