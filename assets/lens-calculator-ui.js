@@ -12,9 +12,11 @@
  * and the result region shows a loading line. A fetch/engine failure
  * shows a quiet, visible "unavailable" alert and never a price.
  *
- * Step 4 scope: adds a decorative parametric SVG lens cross-section,
- * painted from the SAME render path as the price (see _recompute →
- * _renderPreview). No add-to-cart yet.
+ * Step 4 scope: a decorative parametric SVG lens preview, plus per-option
+ * availability — both driven from the SAME render path as the price (see
+ * _recompute → _renderPreview / _updateAvailability). Availability is probed
+ * via the engine's pure compute; the UI holds no pricing logic. No
+ * add-to-cart yet.
  * ============================================================= */
 (function () {
   'use strict';
@@ -265,6 +267,71 @@
       else this._renderResult(res);
       // Single state source: the preview is painted from the same input/result.
       this._renderPreview(input, res);
+      // …and every option button is probed against the same engine/state.
+      this._updateAvailability(input, res);
+    }
+
+    // ---- option availability (probe the engine; no pricing logic here) ----
+    // Per recompute this asks the engine ~12 times (one swap per option) over a
+    // ~30-row table — cheap pure calls, so no memoization is warranted.
+    _cloneInput(input) {
+      var c = {
+        type: input.type, coating: input.coating, light: input.light, index: input.index,
+        od: { sph: input.od.sph, cyl: input.od.cyl, ax: input.od.ax },
+        os: { sph: input.os.sph, cyl: input.os.cyl, ax: input.os.ax }
+      };
+      if (input.add != null) c.add = input.add;
+      return c;
+    }
+
+    // A "valid offer" = the engine returns a row with no blocking errors.
+    _probeValid(probe) {
+      try {
+        var r = this.engine.computeResult(probe);
+        return !!r && (!r.errors || r.errors.length === 0) && r.rowId != null;
+      } catch (e) {
+        return true; // never disable on an unexpected engine throw
+      }
+    }
+
+    _updateAvailability(input, res) {
+      if (!this.form) return;
+      var self = this;
+      // The selected combo's validity is just the current result.
+      var currentValid = !!res && (!res.errors || res.errors.length === 0) && res.rowId != null;
+      this.form.querySelectorAll('[data-control]').forEach(function (group) {
+        var name = group.getAttribute('data-control');
+        var opts = group.querySelectorAll('input[name="' + name + '"]');
+        var verdicts = [];
+        var anyValid = currentValid;
+        opts.forEach(function (opt) {
+          // Never disable (or probe) the currently selected option.
+          if (opt.checked) { verdicts.push({ opt: opt, selected: true, valid: true }); return; }
+          var probe = self._cloneInput(input);
+          probe[name] = opt.value;
+          var ok = self._probeValid(probe);
+          if (ok) anyValid = true;
+          verdicts.push({ opt: opt, selected: false, valid: ok });
+        });
+        // If nothing in the group is valid (incl. the selection), disable none
+        // and let the engine error surface instead.
+        verdicts.forEach(function (v) {
+          self._setOptionDisabled(v.opt, anyValid && !v.selected && !v.valid);
+        });
+      });
+    }
+
+    _setOptionDisabled(opt, disable) {
+      var label = opt.closest('.lens-seg__option');
+      var hint = label ? label.querySelector('[data-lens-hint]') : null;
+      opt.disabled = disable;
+      if (disable) {
+        opt.setAttribute('aria-disabled', 'true');
+        if (hint) hint.removeAttribute('hidden');
+      } else {
+        opt.removeAttribute('aria-disabled');
+        if (hint) hint.setAttribute('hidden', '');
+      }
     }
 
     // ---- rendering ----

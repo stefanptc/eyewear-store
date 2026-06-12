@@ -172,10 +172,18 @@ access patterns at a meaningful rate. The MCP exists to eliminate that.
 
 **Before writing any Liquid:**
 
-1. Call `search_docs_chunks` for the object, filter, or tag you're about to use.
-2. Call `validate_theme_codeblocks` on the generated Liquid before saving.
+1. Call `learn_shopify_api` once per session first — it returns a
+   `conversationId` that **every** other Dev MCP tool requires. Then call
+   `search_docs_chunks` for the object, filter, or tag you're about to use.
+2. Call `validate_theme` on the generated Liquid before saving. (This is the
+   current name of the Liquid/theme validator — it replaced the old
+   `validate_theme_codeblocks`; it takes the `conversationId` plus the list
+   of changed file paths.)
 3. If validation fails, fix and re-validate. Do not commit Liquid that
    hasn't been validated this session.
+4. **Fallback gate:** when the Dev MCP is unavailable,
+   `shopify theme check --fail-level=error` must pass — that is the
+   standing gate either way.
 
 **Before writing any GraphQL (Admin or Storefront API):**
 
@@ -560,8 +568,8 @@ template change, every Romanian copy pass goes through these.
 - `shopify theme check --fail-level=error` passes.
 - `AssetSizeCSS` and `ParserBlocking` rules at error severity in
   `.theme-check.yml`.
-- Every Liquid snippet validated via MCP (`validate_theme_codeblocks`)
-  before commit.
+- Every Liquid snippet validated via MCP (`validate_theme`, after
+  `learn_shopify_api` for the `conversationId`) before commit.
 - Every GraphQL query validated via MCP (`validate_graphql_codeblocks`).
 
 **Performance (mobile, dev-store conditions):**

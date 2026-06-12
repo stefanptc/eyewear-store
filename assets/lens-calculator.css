@@ -111,6 +111,34 @@
   outline-offset: 2px;
 }
 
+/* Probe-unavailable option: muted, not interactive. Higher specificity than
+   the :hover rule so a disabled segment never picks up the accent border. */
+.lens-seg__option input:disabled + .lens-seg__segment {
+  opacity: 0.4;
+  color: var(--ink-muted);
+  border-color: var(--rule-faint);
+  cursor: not-allowed;
+}
+
+.lens-seg__option input:disabled {
+  cursor: not-allowed;
+}
+
+/* Screen-reader-only "unavailable" hint, surfaced (via the [hidden] toggle in
+   JS) only while the option is disabled. */
+.lens-seg__hint {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---- Rx steppers ---- */
 .lens-rx {
   display: flex;
@@ -447,7 +475,7 @@
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: var(--s-3);
+  gap: var(--s-2);
   margin: 0;
 }
 
@@ -462,8 +490,10 @@
 .lens-calc__provisional {
   font-family: var(--mono);
   font-size: var(--t-mono-xs);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   color: var(--ink-muted);
+  align-self: baseline;
+  white-space: nowrap;
 }
 
 .lens-calc__tva {

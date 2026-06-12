@@ -66,6 +66,7 @@
             <label class="lens-seg__option">
               <input type="radio" name="type" value="{{ opt }}"{% if opt == 'monofocal' %} checked{% endif %}>
               <span class="lens-seg__segment">{{ optlabel }}</span>
+              <span class="lens-seg__hint" data-lens-hint hidden>{{ 'lens_calculator.option_unavailable' | t }}</span>
             </label>
           {%- endfor -%}
         </div>
@@ -82,6 +83,7 @@
             <label class="lens-seg__option">
               <input type="radio" name="coating" value="{{ opt }}"{% if opt == 'hmc' %} checked{% endif %}>
               <span class="lens-seg__segment">{{ optlabel }}</span>
+              <span class="lens-seg__hint" data-lens-hint hidden>{{ 'lens_calculator.option_unavailable' | t }}</span>
             </label>
           {%- endfor -%}
         </div>
@@ -100,6 +102,7 @@
             <label class="lens-seg__option">
               <input type="radio" name="light" value="{{ opt }}"{% if opt == 'clear' %} checked{% endif %}>
               <span class="lens-seg__segment">{{ optlabel }}</span>
+              <span class="lens-seg__hint" data-lens-hint hidden>{{ 'lens_calculator.option_unavailable' | t }}</span>
             </label>
           {%- endfor -%}
         </div>
@@ -112,6 +115,7 @@
             <label class="lens-seg__option">
               <input type="radio" name="index" value="{{ opt }}"{% if opt == '1.56' %} checked{% endif %}>
               <span class="lens-seg__segment">{{ opt }}</span>
+              <span class="lens-seg__hint" data-lens-hint hidden>{{ 'lens_calculator.option_unavailable' | t }}</span>
             </label>
           {%- endfor -%}
         </div>

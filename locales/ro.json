@@ -549,6 +549,7 @@
     "preview_caption": "Ilustrație orientativă — nu reprezintă lentila reală",
     "preview_front": "din față",
     "preview_side": "profil",
+    "option_unavailable": "indisponibil pentru selecția curentă",
     "controls": {
       "type": "Tip lentilă",
       "coating": "Tratament",

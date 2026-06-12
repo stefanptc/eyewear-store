@@ -127,13 +127,14 @@ Two-track view of *remaining* work (live summary; the milestone sections below s
 ---
 
 ## M4 — Custom feature: lens recipe calculator
-*Size: ~6–8 sessions · Status: 🟡 in progress (Steps 0–3 shipped) · Hardest milestone*
+*Size: ~6–8 sessions · Status: 🟡 in progress (Steps 0–4 shipped; S18) · Hardest milestone*
 
 **Goal:** Customer enters prescription, sees correct lens + price — and the prescription gets validated before fulfillment (legal hard rule, CLAUDE.md §7).
 
 - ✅ [Together] Friend documents pricing logic: which lens types, which coatings, how index/material affect price — **done 2026-06-10:** `docs/lens-pricing-matrix.md` v1 (30 priced rows, 4 non-blocking TBDs open)
 - ✅ [Together] **Decide the lens product model** — how a frame + lens recipe becomes a cart line at the right price (Shopify variants vs line-item properties vs draft order). **Locked 2026-06-10: (b) variant-per-matrix-row** — see `docs/m3-data-model.md` §10 (OQ1/OQ3/OQ5 resolved).
 - ✅ [Me] Build calculator UI in a Liquid section + JS — **done 2026-06-12 (S17):** `sections/lens-calculator.liquid` + `lens-calculator-ui.js` + `lens-calculator.css`, a `<lens-calculator>` web component rendering the proven engine's result object; on `/pages/lentile`. UI shell only (no SVG preview / add-to-cart — Steps 4–5). Acceptance-tested S17.
+- ✅ [Me] **Step 4 — lens preview + combo-disabling** (S18). Two-panel parametric SVG preview (front view + side cross-section) painted from the calculator's **single render path**, tokens-only, reduced-motion-safe, with try/catch degradation so the preview can never break the calculator. Added under the same render path: **combo-disabling** — every segmented option (type/coating/light/index) is probed against the pricing engine each recompute and disabled when it yields no offer; it **never disables the current selection**, and disables **none** when a whole group would go dark (the engine error surfaces instead). SR hint (`option_unavailable`) on disabled options. Plus the **provisional-price marker** ("preț provizoriu") restyled down to mono microcopy scale. All gates green (`theme check --fail-level=error` + Dev MCP `validate_theme` on every changed file). **Acceptance checks pending S19:** Rx-driven disable/re-enable, no-yank (a selection is never disabled out from under the user), provisional-marker visual. Infra this session: `.shopifyignore` added — ignores `*.tmp.*`, killing the S17/S18 theme-dev watcher-race incident class; Shopify Dev MCP is now project-scoped via `.mcp.json`.
 - ⬜ [Me] Wire to metafields, validate edge cases, handle invalid prescriptions
 - ⬜ [Me] Add to product page flow
 - ⬜ [Together] **Prescription upload + optometrist validation flow** — customer attaches their actual prescription (file upload / line-item property), and Friend's licensed optometrist validates it **before** the order is fulfilled. CLAUDE.md §7 hard rule: no glasses ship without this step. Build = the upload mechanism + an order-hold/validation status; Friend = the optician partnership that does the validating (the M1 regulatory track lands here).

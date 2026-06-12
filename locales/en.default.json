@@ -538,6 +538,7 @@
     "preview_caption": "Indicative illustration — not the actual lens",
     "preview_front": "front",
     "preview_side": "profile",
+    "option_unavailable": "unavailable for the current selection",
     "controls": {
       "type": "Lens type",
       "coating": "Coating",
