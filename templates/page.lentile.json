@@ -190,6 +190,17 @@
         "padding_bottom": 60
       }
     },
+    "lens_calculator": {
+      "type": "lens-calculator",
+      "settings": {
+        "heading": "Calculator lentile",
+        "intro": "<p>Alege tipul de lentilă și introdu rețeta ta. Prețul se actualizează pe măsură ce completezi.</p>",
+        "footnote": "Toate prețurile includ TVA.",
+        "color_scheme": "scheme-2",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
     "faq": {
       "type": "collapsible-content",
       "blocks": {
@@ -289,6 +300,7 @@
     "process",
     "index_explainer",
     "treatments",
+    "lens_calculator",
     "faq",
     "cta"
   ]
