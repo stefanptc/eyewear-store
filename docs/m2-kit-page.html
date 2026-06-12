@@ -24,8 +24,10 @@
     --ink-muted:   #6a665a;  /* tertiary, labels */
     --rule:        #d4cfc2;  /* hairlines */
     --rule-faint:  #e8e3d6;  /* internal dividers */
-    --accent:      #8c7a5c;  /* mushroom taupe */
+    --accent:      #8c7a5c;  /* mushroom taupe — non-text UI only */
     --accent-soft: #b8aa8a;  /* hover surfaces */
+    --accent-text: #6e5f45;  /* accent for TEXT (AA) */
+    /* 2026-06-11: --accent-text added for all accent-coloured text (AA); --accent is non-text UI only. */
 
     /* Type families */
     --serif: 'Source Serif 4', serif;
@@ -174,7 +176,7 @@
   }
 
   .nav-link:hover, .nav-link.active {
-    color: var(--accent);
+    color: var(--accent-text);
     border-bottom-color: var(--accent);
   }
 
@@ -189,7 +191,7 @@
   }
 
   .nav-meta a { transition: color 120ms ease; }
-  .nav-meta a:hover { color: var(--accent); }
+  .nav-meta a:hover { color: var(--accent-text); }
 
   /* ============================
      HERO — type-led
@@ -223,7 +225,7 @@
   .hero-display em {
     font-style: italic;
     font-weight: 400;
-    color: var(--accent);
+    color: var(--accent-text);
   }
 
   .hero-lede {
@@ -256,7 +258,7 @@
   }
 
   .text-link:hover {
-    color: var(--accent);
+    color: var(--accent-text);
     border-bottom-color: var(--accent);
   }
 
@@ -299,7 +301,7 @@
 
   .editorial h2 em {
     font-style: italic;
-    color: var(--accent);
+    color: var(--accent-text);
   }
 
   .editorial-body p {
@@ -415,7 +417,7 @@
   .product-price {
     font-family: var(--serif);
     font-size: var(--t-body-lg);
-    color: var(--accent);
+    color: var(--accent-text);
     font-weight: 500;
     margin: var(--s-2) 0 0;
     letter-spacing: -0.005em;
@@ -449,7 +451,7 @@
     font-variation-settings: "opsz" 60;
   }
 
-  .values h2 em { font-style: italic; color: var(--accent); }
+  .values h2 em { font-style: italic; color: var(--accent-text); }
 
   .values-grid {
     display: grid;
@@ -469,7 +471,7 @@
     font-family: var(--mono);
     font-size: var(--t-mono-xs);
     letter-spacing: 0.16em;
-    color: var(--accent);
+    color: var(--accent-text);
   }
 
   .value-title {
@@ -543,7 +545,7 @@
     transition: color 120ms ease;
   }
 
-  .footer-col a:hover { color: var(--accent); }
+  .footer-col a:hover { color: var(--accent-text); }
 
   .footer-meta {
     padding-top: var(--s-5);
