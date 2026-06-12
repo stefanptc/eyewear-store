@@ -3688,20 +3688,30 @@ details-disclosure > details {
 }
 
 /* M2 product-card polish — match docs/m2-kit-page.html .product-card.
-   Italic Source Serif 4 product names, mushroom-muted IBM Plex Mono spec line
+   Roman Source Serif 4 product names, mushroom-muted IBM Plex Mono spec line
    (driven by custom.frame_material / frame_lens_width / frame_colour_finish
-   metafields, rendered by snippets/card-product.liquid), and IBM Plex Mono
+   metafields, rendered by snippets/card-product.liquid), and serif accent-text
    prices. Targets the product card only — generic h-classes elsewhere unaffected. */
+
+/* Card column rhythm — flex gap per kit .product-card. */
+.card-wrapper.product-card-wrapper .card__information {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+/* Product name — roman serif per kit .product-name (the title is wrapped in
+   <em> by card-product.liquid, so the em is forced roman here too). */
 .card-wrapper.product-card-wrapper .card__heading,
-.card-wrapper.product-card-wrapper .card__heading a {
+.card-wrapper.product-card-wrapper .card__heading a,
+.card-wrapper.product-card-wrapper .card__heading em {
   font-family: var(--serif);
+  font-size: var(--t-h4);
+  line-height: 1.1;
   font-weight: 400;
   font-style: normal;
   letter-spacing: -0.005em;
-}
-
-.card-wrapper.product-card-wrapper .card__heading em {
-  font-style: italic;
+  font-variation-settings: "opsz" 22;
 }
 
 .card-wrapper.product-card-wrapper .product-spec {
@@ -3709,7 +3719,7 @@ details-disclosure > details {
   font-size: var(--t-mono-sm);
   color: var(--ink-muted);
   letter-spacing: 0.04em;
-  margin: var(--s-2) 0 0;
+  margin: 0;
   text-transform: lowercase;
 }
 
@@ -3718,19 +3728,24 @@ details-disclosure > details {
 .card-wrapper.product-card-wrapper .price,
 .card-wrapper.product-card-wrapper .price .price-item {
   font-family: var(--serif);
-  font-size: var(--t-body-sm);
+  font-size: var(--t-body-lg);
   color: var(--accent-text);
   font-weight: 500;
   letter-spacing: -0.005em;
   font-variation-settings: "opsz" 18;
 }
 
-/* M2 product page title — same editorial italic Source Serif 4 as the cards,
-   so a product reads consistently across grid and PDP. */
+.card-wrapper.product-card-wrapper .price {
+  margin: var(--s-2) 0 0;
+}
+
+/* M2 product page title — roman Source Serif 4, matching the kit and the
+   card names, so a product reads consistently across grid and PDP. Sized by
+   its existing Dawn token. */
 .product__title,
 .product__title > * {
   font-family: var(--serif);
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
   letter-spacing: -0.005em;
 }
