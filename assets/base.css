@@ -3713,12 +3713,16 @@ details-disclosure > details {
   text-transform: lowercase;
 }
 
+/* Card price — serif + accent-text per docs/m2-kit-page.html .product-price.
+   Accent on TEXT uses --accent-text (#6e5f45), never --accent (2026-06-11). */
 .card-wrapper.product-card-wrapper .price,
 .card-wrapper.product-card-wrapper .price .price-item {
-  font-family: var(--mono);
+  font-family: var(--serif);
   font-size: var(--t-body-sm);
-  letter-spacing: 0;
-  color: var(--ink);
+  color: var(--accent-text);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  font-variation-settings: "opsz" 18;
 }
 
 /* M2 product page title — same editorial italic Source Serif 4 as the cards,
@@ -3731,11 +3735,14 @@ details-disclosure > details {
   letter-spacing: -0.005em;
 }
 
-/* PDP price — mono treatment matches the card. */
+/* PDP price — serif + accent-text, matching the card and kit .product-price. */
 .product .price,
 .product .price .price-item {
-  font-family: var(--mono);
-  letter-spacing: 0;
+  font-family: var(--serif);
+  color: var(--accent-text);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  font-variation-settings: "opsz" 18;
 }
 
 /* M2 rich-text hero — render Dawn's "caption-with-letter-spacing" block as
