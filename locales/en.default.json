@@ -536,6 +536,8 @@
     "errors_intro": "Check your prescription:",
     "routing_note": "Configuration adjusted automatically for your prescription.",
     "preview_caption": "Indicative illustration — not the actual lens",
+    "preview_front": "front",
+    "preview_side": "profile",
     "controls": {
       "type": "Lens type",
       "coating": "Coating",

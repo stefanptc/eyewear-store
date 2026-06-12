@@ -36,9 +36,9 @@
    */
   var GEO = {
     cx: 60, cy: 100, topY: 20, botY: 180, halfH: 80,
-    t0: 9,            // base (flat) thickness in px
+    t0: 16,           // base (flat) thickness in px — a thin lens, not a sliver
     k: 3.4,           // power → bulge scale
-    bMin: 0, bMax: 39, // bulge clamp (keeps max half-thickness inside the box)
+    bMin: 0, bMax: 39, // bulge clamp (max thickness t0+bMax=55 stays inside the 120 box)
     segY: 145         // D-segment y, lower third
   };
 
@@ -336,9 +336,13 @@
 
     _initPreview() {
       this.figure = this.querySelector('[data-lens-preview]');
+      // The side cross-section is the parametric panel (data-lens-svg).
       this.svg = this.figure ? this.figure.querySelector('[data-lens-svg]') : null;
       this.shapeEls = this.svg ? this.svg.querySelectorAll('[data-lens-shape]') : null;
       this.segEl = this.svg ? this.svg.querySelector('[data-lens-seg]') : null;
+      // Front-view bifocal D-region (static shape, toggled only) lives in the
+      // other panel, so query it from the whole figure.
+      this.frontSegEl = this.figure ? this.figure.querySelector('[data-lens-front-seg]') : null;
       this.previewBroken = false;
     }
 
@@ -359,6 +363,7 @@
         for (var i = 0; i < this.shapeEls.length; i++) {
           this.shapeEls[i].setAttribute('d', geo.bodyPath);
         }
+        // Bifocal segment shows in both panels: a line in the cross-section…
         if (this.segEl) {
           if (geo.seg) {
             this.segEl.setAttribute('x1', geo.seg.x1);
@@ -369,6 +374,11 @@
           } else {
             this.segEl.setAttribute('hidden', '');
           }
+        }
+        // …and the static D-region in the front view.
+        if (this.frontSegEl) {
+          if (geo.seg) this.frontSegEl.removeAttribute('hidden');
+          else this.frontSegEl.setAttribute('hidden', '');
         }
 
         // Appearance: only vocabulary present in the pricing data drives tint/

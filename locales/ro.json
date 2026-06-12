@@ -547,6 +547,8 @@
     "errors_intro": "Verifică rețeta:",
     "routing_note": "Configurație ajustată automat pentru rețeta ta.",
     "preview_caption": "Ilustrație orientativă — nu reprezintă lentila reală",
+    "preview_front": "din față",
+    "preview_side": "profil",
     "controls": {
       "type": "Tip lentilă",
       "coating": "Tratament",

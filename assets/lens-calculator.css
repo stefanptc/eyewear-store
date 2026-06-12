@@ -224,8 +224,9 @@
    ultra_blue coating is rendered as a faint cool accent highlight rather
    than a literal blue — token discipline wins over the colour name. */
 .lens-preview {
-  --lens-glass:         var(--bg-shaded);   /* lens body fill */
-  --lens-stroke:        var(--rule);        /* defining outline */
+  --lens-glass:         var(--ink-muted);   /* lens body fill — distinct from the section --bg; held faint via fill-opacity to read as glass */
+  --lens-glass-opacity: 0.12;
+  --lens-stroke:        var(--ink-muted);   /* §5 spec/illustration outline (tertiary ink), not a hairline */
   --lens-tint:          var(--ink);         /* sun / photochromic darkening */
   --lens-tint-opacity:  0;
   --lens-photo-opacity: 0;                  /* photochromic gradient layer on/off */
@@ -243,16 +244,48 @@
   margin: 0;
 }
 
+.lens-preview__panels {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-4);
+}
+
+.lens-preview__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+}
+
 .lens-preview__svg {
-  inline-size: 8.5rem;
   block-size: auto;
   display: block;
 }
 
+/* viewBox widths are 2:1 (front 240, side 120), so 2:1 inline-sizes give the
+   panels equal height and the front view its dominant ~2/3 share. */
+.lens-preview__svg--front {
+  inline-size: 12rem;
+}
+
+.lens-preview__svg--side {
+  inline-size: 6rem;
+}
+
+.lens-preview__label {
+  font-family: var(--mono);
+  font-size: var(--t-mono-xs);
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+}
+
 .lens-preview__body {
   fill: var(--lens-glass);
+  fill-opacity: var(--lens-glass-opacity);
   stroke: var(--lens-stroke);
-  stroke-width: 1;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
 }
 
 .lens-preview__tint {
@@ -284,6 +317,59 @@
   stroke: var(--lens-spec);
   stroke-width: 1.5;
   stroke-opacity: var(--lens-spec-opacity);
+}
+
+/* ---- front view (static silhouette; only overlays are token-driven) ---- */
+.lens-preview__face {
+  fill: var(--lens-glass);
+  fill-opacity: var(--lens-glass-opacity);
+  stroke: var(--lens-stroke);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.lens-preview__front-tint {
+  fill: var(--lens-tint);
+  opacity: var(--lens-tint-opacity);
+}
+
+.lens-preview__front-photo {
+  opacity: var(--lens-photo-opacity);
+}
+
+.lens-preview__front-sheen {
+  opacity: var(--lens-sheen-opacity);
+}
+
+.lens-preview__sheen-stop--a {
+  stop-color: var(--lens-sheen);
+  stop-opacity: 0.5;
+}
+
+.lens-preview__sheen-stop--b {
+  stop-color: var(--lens-sheen);
+  stop-opacity: 0;
+}
+
+.lens-preview__front-spec {
+  fill: none;
+  stroke: var(--lens-spec);
+  stroke-width: 1.5;
+  stroke-opacity: var(--lens-spec-opacity);
+  vector-effect: non-scaling-stroke;
+}
+
+/* bifocal D-region: faint flat-topped fill + hairline boundary */
+.lens-preview__dseg {
+  fill: var(--lens-seg-color);
+  fill-opacity: 0.09;
+  stroke: var(--lens-seg-color);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.lens-preview__dseg[hidden] {
+  display: none;
 }
 
 .lens-preview__seg {
@@ -326,7 +412,13 @@
   .lens-preview__tint,
   .lens-preview__photo,
   .lens-preview__sheen,
-  .lens-preview__spec {
+  .lens-preview__spec,
+  .lens-preview__face,
+  .lens-preview__front-tint,
+  .lens-preview__front-photo,
+  .lens-preview__front-sheen,
+  .lens-preview__front-spec,
+  .lens-preview__dseg {
     transition: opacity var(--duration) var(--easing), fill var(--duration) var(--easing);
   }
 }
@@ -451,6 +543,13 @@
   }
   .lens-stepper {
     flex-basis: auto;
+  }
+  /* Panels stay side by side, scaled down (2:1 ratio preserved). */
+  .lens-preview__svg--front {
+    inline-size: 9rem;
+  }
+  .lens-preview__svg--side {
+    inline-size: 4.5rem;
   }
 }
 
