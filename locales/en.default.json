@@ -527,5 +527,61 @@
       "send_on": "YYYY-MM-DD",
       "send_on_label": "Send on (optional)"
     }
+  },
+  "lens_calculator": {
+    "loading": "Loading prices…",
+    "unavailable": "The calculator is unavailable right now. Please try again later.",
+    "tva_included": "VAT included",
+    "price_provisional": "provisional price",
+    "errors_intro": "Check your prescription:",
+    "routing_note": "Configuration adjusted automatically for your prescription.",
+    "controls": {
+      "type": "Lens type",
+      "coating": "Coating",
+      "light": "Light filter",
+      "index": "Index"
+    },
+    "type": {
+      "monofocal": "Single vision",
+      "bifocal": "Bifocal"
+    },
+    "coating": {
+      "hmc": "Anti-reflective (HMC)",
+      "ultra_blue": "Ultra Blue"
+    },
+    "light": {
+      "clear": "Clear",
+      "foto": "Photochromic",
+      "transitions": "Transitions",
+      "sun": "Sun"
+    },
+    "eye": {
+      "od": "OD — right eye",
+      "os": "OS — left eye"
+    },
+    "field": {
+      "sph": "Sphere",
+      "cyl": "Cylinder",
+      "axis": "Axis",
+      "add": "Addition"
+    },
+    "field_short": {
+      "sph": "sphere",
+      "cyl": "cylinder",
+      "axis": "axis",
+      "add": "addition"
+    },
+    "stepper": {
+      "decrease": "Decrease",
+      "increase": "Increase"
+    },
+    "availability": {
+      "stoc": "In stock",
+      "comanda": "Made to order",
+      "comanda_5_7": "Made to order, 5–7 business days"
+    },
+    "nudge": {
+      "recommend_thinning": "At this prescription, a higher index would be thinner. Ask us what suits you."
+    }
   }
 }

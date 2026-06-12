@@ -1,0 +1,349 @@
+/* =============================================================
+ * Optivix — lens calculator section (Step 3 shell).
+ * Tokens only (CLAUDE.md §5): no raw hex, no magic px, radius 0,
+ * hairlines via --rule / --rule-faint, motion ≤120ms colour/opacity only.
+ * Mobile-first; single column at ≤640px. 44px minimum touch targets.
+ * ============================================================= */
+
+.lens-calc {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-7);
+  max-width: 760px;
+}
+
+.lens-calc__heading {
+  font-family: var(--serif);
+  font-size: var(--t-h2);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  margin: 0 0 var(--s-3);
+}
+
+.lens-calc__intro {
+  color: var(--ink-soft);
+  font-family: var(--serif);
+  font-size: var(--t-body-lg);
+  margin: 0;
+}
+
+.lens-calc__intro > * {
+  margin: 0;
+}
+
+/* ---- form layout ---- */
+.lens-calc__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+}
+
+/* ---- segmented controls ---- */
+.lens-seg {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-inline-size: 0;
+}
+
+.lens-seg__legend {
+  font-family: var(--mono);
+  font-size: var(--t-mono-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 var(--s-3);
+  padding: 0;
+}
+
+.lens-seg__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.lens-seg__option {
+  position: relative;
+  display: inline-flex;
+}
+
+/* Native radio: kept in the DOM for free keyboard/a11y, visually replaced
+   by the styled segment. Not display:none — must stay focusable. */
+.lens-seg__option input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.lens-seg__segment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--s-2) var(--s-4);
+  border: var(--border-thin) solid var(--rule);
+  background: var(--bg-card);
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: var(--t-ui-sm);
+  letter-spacing: 0.02em;
+  border-radius: var(--radius);
+  transition: background-color var(--duration) var(--easing), color var(--duration) var(--easing),
+    border-color var(--duration) var(--easing);
+}
+
+.lens-seg__option:hover .lens-seg__segment {
+  border-color: var(--accent);
+}
+
+.lens-seg__option input:checked + .lens-seg__segment {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+
+.lens-seg__option input:focus-visible + .lens-seg__segment {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---- Rx steppers ---- */
+.lens-rx {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.lens-rx__eye,
+.lens-rx__add {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-inline-size: 0;
+}
+
+.lens-rx__legend {
+  font-family: var(--mono);
+  font-size: var(--t-mono-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 var(--s-3);
+  padding: 0;
+}
+
+.lens-rx__fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+}
+
+.lens-stepper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  flex: 1 1 8rem;
+  min-width: 0;
+}
+
+.lens-stepper__label {
+  font-family: var(--mono);
+  font-size: var(--t-mono-sm);
+  color: var(--ink-muted);
+  letter-spacing: 0.02em;
+}
+
+.lens-stepper__controls {
+  display: flex;
+  align-items: stretch;
+  border: var(--border-thin) solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.lens-stepper__btn {
+  flex: 0 0 44px;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: var(--bg-card);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: var(--t-body);
+  line-height: 1;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: background-color var(--duration) var(--easing), color var(--duration) var(--easing);
+}
+
+.lens-stepper__btn:hover {
+  background: var(--bg-shaded);
+}
+
+.lens-stepper__btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.lens-stepper__btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.lens-stepper__input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  text-align: center;
+  border: 0;
+  border-inline: var(--border-thin) solid var(--rule);
+  background: var(--bg-card);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: var(--t-body);
+  font-variant-numeric: tabular-nums;
+  border-radius: var(--radius);
+  -moz-appearance: textfield;
+}
+
+.lens-stepper__input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* ---- output region ---- */
+.lens-calc__output {
+  border-top: var(--border-thin) solid var(--rule);
+  padding-top: var(--s-6);
+}
+
+/* Collapse the result region when errors replace the price (no empty box). */
+.lens-calc__output:empty {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.lens-calc__loading {
+  font-family: var(--mono);
+  font-size: var(--t-mono-xs);
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  margin: 0;
+}
+
+.lens-calc__price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin: 0;
+}
+
+.lens-calc__amount {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--t-h2);
+  letter-spacing: -0.01em;
+  color: var(--accent-text);
+}
+
+.lens-calc__provisional {
+  font-family: var(--mono);
+  font-size: var(--t-mono-xs);
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+}
+
+.lens-calc__tva {
+  font-family: var(--mono);
+  font-size: var(--t-mono-sm);
+  color: var(--ink-muted);
+  margin: var(--s-2) 0 0;
+}
+
+.lens-calc__slot {
+  margin: var(--s-4) 0 0;
+  font-size: var(--t-body-sm);
+}
+
+.lens-calc__avail {
+  font-family: var(--mono);
+  font-size: var(--t-mono-sm);
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+}
+
+.lens-calc__nudge {
+  color: var(--ink-soft);
+}
+
+.lens-calc__routing {
+  font-family: var(--mono);
+  font-size: var(--t-mono-xs);
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+}
+
+/* ---- errors (role=alert) ---- */
+.lens-calc__errors {
+  border-top: var(--border-thin) solid var(--rule);
+  padding-top: var(--s-6);
+}
+
+.lens-calc__errors-intro {
+  font-family: var(--mono);
+  font-size: var(--t-mono-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 var(--s-3);
+}
+
+.lens-calc__error-list {
+  margin: 0;
+  padding-left: var(--s-5);
+  color: var(--ink-soft);
+  font-size: var(--t-body-sm);
+}
+
+.lens-calc__error-list li + li {
+  margin-top: var(--s-2);
+}
+
+.lens-calc__alert {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--t-body-sm);
+}
+
+.lens-calc__footnote {
+  font-family: var(--mono);
+  font-size: var(--t-mono-xs);
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+  margin: 0;
+}
+
+/* ---- mobile: single column, segments wrap, steppers stack full-width ---- */
+@media screen and (max-width: 640px) {
+  .lens-rx__fields {
+    flex-direction: column;
+  }
+  .lens-stepper {
+    flex-basis: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lens-seg__segment,
+  .lens-stepper__btn {
+    transition: none;
+  }
+}

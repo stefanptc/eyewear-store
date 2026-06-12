@@ -1,0 +1,301 @@
+{{ 'lens-calculator.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign coating_opts = 'hmc,ultra_blue' | split: ','
+  assign light_opts = 'clear,foto,transitions,sun' | split: ','
+  assign type_opts = 'monofocal,bifocal' | split: ','
+  assign index_opts = '1.5,1.56,1.6,1.67' | split: ','
+  assign eye_opts = 'od,os' | split: ','
+  assign rx_fields = 'sph,cyl,axis' | split: ','
+-%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <lens-calculator
+    class="lens-calc page-width section-{{ section.id }}-padding"
+    data-pricing-url="{{ 'lens-pricing-data.json' | asset_url }}"
+  >
+    <script type="application/json" data-lens-i18n>
+      {
+        "loading": {{ 'lens_calculator.loading' | t | json }},
+        "unavailable": {{ 'lens_calculator.unavailable' | t | json }},
+        "tva_included": {{ 'lens_calculator.tva_included' | t | json }},
+        "price_provisional": {{ 'lens_calculator.price_provisional' | t | json }},
+        "errors_intro": {{ 'lens_calculator.errors_intro' | t | json }},
+        "routing_note": {{ 'lens_calculator.routing_note' | t | json }},
+        "availability": {
+          "stoc": {{ 'lens_calculator.availability.stoc' | t | json }},
+          "comanda": {{ 'lens_calculator.availability.comanda' | t | json }},
+          "comanda_5_7": {{ 'lens_calculator.availability.comanda_5_7' | t | json }}
+        },
+        "nudge": {
+          "recommend_thinning": {{ 'lens_calculator.nudge.recommend_thinning' | t | json }}
+        }
+      }
+    </script>
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="lens-calc__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.intro != blank -%}
+      <div class="lens-calc__intro rte">{{ section.settings.intro }}</div>
+    {%- endif -%}
+
+    <form class="lens-calc__form" data-lens-form novalidate>
+      {%- comment -%} Segmented controls — option vocabularies match the engine data. {%- endcomment -%}
+      <fieldset class="lens-seg" data-control="type">
+        <legend class="lens-seg__legend">{{ 'lens_calculator.controls.type' | t }}</legend>
+        <div class="lens-seg__options">
+          {%- for opt in type_opts -%}
+            {%- case opt -%}
+              {%- when 'monofocal' -%}{%- assign optlabel = 'lens_calculator.type.monofocal' | t -%}
+              {%- when 'bifocal' -%}{%- assign optlabel = 'lens_calculator.type.bifocal' | t -%}
+            {%- endcase -%}
+            <label class="lens-seg__option">
+              <input type="radio" name="type" value="{{ opt }}"{% if opt == 'monofocal' %} checked{% endif %}>
+              <span class="lens-seg__segment">{{ optlabel }}</span>
+            </label>
+          {%- endfor -%}
+        </div>
+      </fieldset>
+
+      <fieldset class="lens-seg" data-control="coating">
+        <legend class="lens-seg__legend">{{ 'lens_calculator.controls.coating' | t }}</legend>
+        <div class="lens-seg__options">
+          {%- for opt in coating_opts -%}
+            {%- case opt -%}
+              {%- when 'hmc' -%}{%- assign optlabel = 'lens_calculator.coating.hmc' | t -%}
+              {%- when 'ultra_blue' -%}{%- assign optlabel = 'lens_calculator.coating.ultra_blue' | t -%}
+            {%- endcase -%}
+            <label class="lens-seg__option">
+              <input type="radio" name="coating" value="{{ opt }}"{% if opt == 'hmc' %} checked{% endif %}>
+              <span class="lens-seg__segment">{{ optlabel }}</span>
+            </label>
+          {%- endfor -%}
+        </div>
+      </fieldset>
+
+      <fieldset class="lens-seg" data-control="light">
+        <legend class="lens-seg__legend">{{ 'lens_calculator.controls.light' | t }}</legend>
+        <div class="lens-seg__options">
+          {%- for opt in light_opts -%}
+            {%- case opt -%}
+              {%- when 'clear' -%}{%- assign optlabel = 'lens_calculator.light.clear' | t -%}
+              {%- when 'foto' -%}{%- assign optlabel = 'lens_calculator.light.foto' | t -%}
+              {%- when 'transitions' -%}{%- assign optlabel = 'lens_calculator.light.transitions' | t -%}
+              {%- when 'sun' -%}{%- assign optlabel = 'lens_calculator.light.sun' | t -%}
+            {%- endcase -%}
+            <label class="lens-seg__option">
+              <input type="radio" name="light" value="{{ opt }}"{% if opt == 'clear' %} checked{% endif %}>
+              <span class="lens-seg__segment">{{ optlabel }}</span>
+            </label>
+          {%- endfor -%}
+        </div>
+      </fieldset>
+
+      <fieldset class="lens-seg" data-control="index">
+        <legend class="lens-seg__legend">{{ 'lens_calculator.controls.index' | t }}</legend>
+        <div class="lens-seg__options">
+          {%- for opt in index_opts -%}
+            <label class="lens-seg__option">
+              <input type="radio" name="index" value="{{ opt }}"{% if opt == '1.56' %} checked{% endif %}>
+              <span class="lens-seg__segment">{{ opt }}</span>
+            </label>
+          {%- endfor -%}
+        </div>
+      </fieldset>
+
+      {%- comment -%} Per-eye Rx steppers: SPH / CYL / AXIS. {%- endcomment -%}
+      <div class="lens-rx">
+        {%- for eye in eye_opts -%}
+          {%- assign eye_short = eye | upcase -%}
+          {%- case eye -%}
+            {%- when 'od' -%}{%- assign eye_label = 'lens_calculator.eye.od' | t -%}
+            {%- when 'os' -%}{%- assign eye_label = 'lens_calculator.eye.os' | t -%}
+          {%- endcase -%}
+          <fieldset class="lens-rx__eye">
+            <legend class="lens-rx__legend">{{ eye_label }}</legend>
+            <div class="lens-rx__fields">
+              {%- for field in rx_fields -%}
+                {%- liquid
+                  case field
+                    when 'sph'
+                      assign fstep = '0.25'
+                      assign fdefault = '0.00'
+                      assign flabel = 'lens_calculator.field.sph' | t
+                      assign fshort = 'lens_calculator.field_short.sph' | t
+                    when 'cyl'
+                      assign fstep = '0.25'
+                      assign fdefault = '0.00'
+                      assign flabel = 'lens_calculator.field.cyl' | t
+                      assign fshort = 'lens_calculator.field_short.cyl' | t
+                    when 'axis'
+                      assign fstep = '1'
+                      assign fdefault = '0'
+                      assign flabel = 'lens_calculator.field.axis' | t
+                      assign fshort = 'lens_calculator.field_short.axis' | t
+                  endcase
+                  assign fid = eye | append: '-' | append: field
+                -%}
+                <div class="lens-stepper">
+                  <label class="lens-stepper__label" for="{{ fid }}">{{ flabel }}</label>
+                  <div class="lens-stepper__controls">
+                    <button
+                      type="button"
+                      class="lens-stepper__btn"
+                      data-step="-{{ fstep }}"
+                      data-target="{{ fid }}"
+                      aria-label="{{ 'lens_calculator.stepper.decrease' | t }} {{ fshort }} {{ eye_short }}"
+                    >−</button>
+                    <input
+                      id="{{ fid }}"
+                      class="lens-stepper__input"
+                      type="text"
+                      inputmode="decimal"
+                      autocomplete="off"
+                      data-field="{{ field }}"
+                      value="{{ fdefault }}"
+                      aria-label="{{ eye_short }} {{ fshort }}"
+                    >
+                    <button
+                      type="button"
+                      class="lens-stepper__btn"
+                      data-step="{{ fstep }}"
+                      data-target="{{ fid }}"
+                      aria-label="{{ 'lens_calculator.stepper.increase' | t }} {{ fshort }} {{ eye_short }}"
+                    >+</button>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          </fieldset>
+        {%- endfor -%}
+
+        {%- comment -%} Shared ADD (bifocal only; engine applies one value to both eyes). {%- endcomment -%}
+        <fieldset class="lens-rx__add" data-add hidden>
+          <legend class="lens-rx__legend">{{ 'lens_calculator.field.add' | t }}</legend>
+          <div class="lens-rx__fields">
+            <div class="lens-stepper">
+              <label class="lens-stepper__label" for="add-add">{{ 'lens_calculator.field.add' | t }}</label>
+              <div class="lens-stepper__controls">
+                <button
+                  type="button"
+                  class="lens-stepper__btn"
+                  data-step="-0.25"
+                  data-target="add-add"
+                  aria-label="{{ 'lens_calculator.stepper.decrease' | t }} {{ 'lens_calculator.field_short.add' | t }}"
+                  disabled
+                >−</button>
+                <input
+                  id="add-add"
+                  class="lens-stepper__input"
+                  type="text"
+                  inputmode="decimal"
+                  autocomplete="off"
+                  data-field="add"
+                  value="2.00"
+                  aria-label="{{ 'lens_calculator.field.add' | t }}"
+                  disabled
+                >
+                <button
+                  type="button"
+                  class="lens-stepper__btn"
+                  data-step="0.25"
+                  data-target="add-add"
+                  aria-label="{{ 'lens_calculator.stepper.increase' | t }} {{ 'lens_calculator.field_short.add' | t }}"
+                  disabled
+                >+</button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </form>
+
+    {%- comment -%} Result (polite) + errors (alert) live regions. {%- endcomment -%}
+    <div class="lens-calc__output" data-result aria-live="polite"></div>
+    <div class="lens-calc__errors" data-errors role="alert" hidden></div>
+
+    {%- if section.settings.footnote != blank -%}
+      <p class="lens-calc__footnote">{{ section.settings.footnote | escape }}</p>
+    {%- endif -%}
+  </lens-calculator>
+</div>
+
+<script src="{{ 'lens-calculator-engine.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'lens-calculator-ui.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Calculator lentile",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titlu",
+      "default": "Calculator lentile"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Text introductiv",
+      "default": "<p>Alege tipul de lentilă și introdu rețeta ta. Prețul se actualizează pe măsură ce completezi.</p>"
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Notă de subsol",
+      "default": "Toate prețurile includ TVA."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Schemă de culori",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Spațiere"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Spațiere sus",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Spațiere jos",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Calculator lentile"
+    }
+  ]
+}
+{% endschema %}
