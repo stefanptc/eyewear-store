@@ -12,12 +12,89 @@
  * and the result region shows a loading line. A fetch/engine failure
  * shows a quiet, visible "unavailable" alert and never a price.
  *
- * Step 3 scope: UI only. No SVG preview, no add-to-cart.
+ * Step 4 scope: adds a decorative parametric SVG lens cross-section,
+ * painted from the SAME render path as the price (see _recompute →
+ * _renderPreview). No add-to-cart yet.
  * ============================================================= */
 (function () {
   'use strict';
 
   if (window.customElements && customElements.get('lens-calculator')) return;
+
+  /* ---- lens geometry (pure; no DOM, never throws on numbers) ----------
+   * Side cross-section of a single lens in a 120×200 viewBox. The lens is
+   * drawn vertical (diameter on Y, thickness on X) and symmetric about the
+   * centre axis. Two quadratic surfaces meet flat top/bottom edges; the
+   * control point of each surface is derived so the curve passes exactly
+   * through the centre thickness.
+   *   maxPower = max over OD/OS of (|SPH| + |CYL|/2)
+   *   bulge    ∝ maxPower / index, clamped
+   *   SPH < 0  → concave (thin centre, thick edges)
+   *   SPH > 0  → convex  (thick centre, thin edges)
+   *   SPH = 0  → near-flat
+   *   bifocal  → a D-segment line across the lower third
+   */
+  var GEO = {
+    cx: 60, cy: 100, topY: 20, botY: 180, halfH: 80,
+    t0: 9,            // base (flat) thickness in px
+    k: 3.4,           // power → bulge scale
+    bMin: 0, bMax: 39, // bulge clamp (keeps max half-thickness inside the box)
+    segY: 145         // D-segment y, lower third
+  };
+
+  function geoNum(v) { return typeof v === 'number' && isFinite(v) ? v : 0; }
+  function geoClamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+  function geoRound(n) { return Math.round(n * 10) / 10; }
+
+  function thicknessAt(y, tc, te) {
+    var r = (y - GEO.cy) / GEO.halfH;
+    return tc + (te - tc) * r * r;
+  }
+
+  function lensPath(tc, te) {
+    var cx = GEO.cx, top = GEO.topY, bot = GEO.botY, cy = GEO.cy;
+    var leftEdge = cx - te / 2;          // x at top/bottom, left surface
+    var rightEdge = cx + te / 2;
+    var leftCtrl = cx - tc + te / 2;     // makes the curve pass cx - tc/2 at centre
+    var rightCtrl = cx + tc - te / 2;
+    return 'M ' + geoRound(leftEdge) + ' ' + top +
+      ' Q ' + geoRound(leftCtrl) + ' ' + cy + ' ' + geoRound(leftEdge) + ' ' + bot +
+      ' L ' + geoRound(rightEdge) + ' ' + bot +
+      ' Q ' + geoRound(rightCtrl) + ' ' + cy + ' ' + geoRound(rightEdge) + ' ' + top +
+      ' Z';
+  }
+
+  function geometryFrom(state) {
+    var od = state && state.od ? state.od : {};
+    var os = state && state.os ? state.os : {};
+    var odSph = geoNum(od.sph), odCyl = geoNum(od.cyl);
+    var osSph = geoNum(os.sph), osCyl = geoNum(os.cyl);
+    var indexNum = parseFloat(state && state.index) || 1.5;
+
+    var odPower = Math.abs(odSph) + Math.abs(odCyl) / 2;
+    var osPower = Math.abs(osSph) + Math.abs(osCyl) / 2;
+    var maxPower = Math.max(odPower, osPower);
+
+    // Sign comes from the eye with the larger |SPH| — drives concave vs convex.
+    var signSph = Math.abs(osSph) > Math.abs(odSph) ? osSph : odSph;
+    var bulge = geoClamp(GEO.k * maxPower / indexNum, GEO.bMin, GEO.bMax);
+
+    var tc, te;
+    if (signSph < -0.001) { tc = GEO.t0; te = GEO.t0 + bulge; }        // concave
+    else if (signSph > 0.001) { tc = GEO.t0 + bulge; te = GEO.t0; }    // convex
+    else { tc = GEO.t0; te = GEO.t0; }                                 // flat
+
+    var seg = null;
+    if (state && state.type === 'bifocal') {
+      var halfT = thicknessAt(GEO.segY, tc, te) / 2;
+      var inset = 1.5;
+      seg = {
+        x1: geoRound(GEO.cx - halfT + inset), y1: GEO.segY,
+        x2: geoRound(GEO.cx + halfT - inset), y2: GEO.segY
+      };
+    }
+    return { bodyPath: lensPath(tc, te), seg: seg };
+  }
 
   // Romanian price format: 1.234,00 (dot thousands, comma decimal).
   var PRICE_FMT = new Intl.NumberFormat('ro-RO', {
@@ -63,10 +140,16 @@
       this.addFieldset = this.querySelector('[data-add]');
       this.engine = null;
       this.ready = false;
+      // Vocabulary is read from the pricing data once it loads (never hardcoded).
+      this.vocab = { type: {}, coating: {}, light: {}, index: {} };
 
       this._showLoading();
+      this._initPreview();
       this._bind();
       this._toggleAdd();
+      // Paint a neutral default lens immediately (null result → flat lens),
+      // so the figure isn't empty during the data fetch.
+      this._renderPreview(this._buildInput(), null);
       this._loadData();
     }
 
@@ -91,6 +174,7 @@
             throw new Error('lens engine not loaded');
           }
           self.engine = window.createLensEngine(data);
+          self.vocab = self._buildVocab(data);
           self.ready = true;
           self._recompute();
         })
@@ -175,9 +259,12 @@
 
     _recompute() {
       if (!this.ready || !this.engine) return;
-      var res = this.engine.computeResult(this._buildInput());
+      var input = this._buildInput();
+      var res = this.engine.computeResult(input);
       if (res.errors && res.errors.length) this._renderErrors(res.errors);
       else this._renderResult(res);
+      // Single state source: the preview is painted from the same input/result.
+      this._renderPreview(input, res);
     }
 
     // ---- rendering ----
@@ -233,6 +320,70 @@
         html.push('<p class="lens-calc__slot lens-calc__routing">' + escapeHtml(t.routing_note) + '</p>');
       }
       this.resultEl.innerHTML = html.join('');
+    }
+
+    // ---- preview (decorative SVG; never breaks the calculator) ----
+    _buildVocab(data) {
+      var v = { type: {}, coating: {}, light: {}, index: {} };
+      (data && data.rows ? data.rows : []).forEach(function (r) {
+        if (r.type) v.type[r.type] = true;
+        if (r.coating) v.coating[r.coating] = true;
+        if (r.light) v.light[r.light] = true;
+        if (r.index) v.index[r.index] = true;
+      });
+      return v;
+    }
+
+    _initPreview() {
+      this.figure = this.querySelector('[data-lens-preview]');
+      this.svg = this.figure ? this.figure.querySelector('[data-lens-svg]') : null;
+      this.shapeEls = this.svg ? this.svg.querySelectorAll('[data-lens-shape]') : null;
+      this.segEl = this.svg ? this.svg.querySelector('[data-lens-seg]') : null;
+      this.previewBroken = false;
+    }
+
+    _renderPreview(input, res) {
+      // Missing figure/SVG → skip silently; the calculator works without it.
+      if (!this.figure || !this.svg || !this.shapeEls || this.previewBroken) return;
+      try {
+        // Invalid Rx / null result → neutral default lens (flat), not an error state.
+        var valid = res && (!res.errors || res.errors.length === 0);
+        var state = valid ? input : {
+          type: 'monofocal',
+          index: input && input.index,
+          od: { sph: 0, cyl: 0 },
+          os: { sph: 0, cyl: 0 }
+        };
+        var geo = geometryFrom(state);
+
+        for (var i = 0; i < this.shapeEls.length; i++) {
+          this.shapeEls[i].setAttribute('d', geo.bodyPath);
+        }
+        if (this.segEl) {
+          if (geo.seg) {
+            this.segEl.setAttribute('x1', geo.seg.x1);
+            this.segEl.setAttribute('y1', geo.seg.y1);
+            this.segEl.setAttribute('x2', geo.seg.x2);
+            this.segEl.setAttribute('y2', geo.seg.y2);
+            this.segEl.removeAttribute('hidden');
+          } else {
+            this.segEl.setAttribute('hidden', '');
+          }
+        }
+
+        // Appearance: only vocabulary present in the pricing data drives tint/
+        // sheen; anything unrecognised falls back to a neutral clear lens.
+        var light = input && this.vocab.light[input.light] ? input.light : 'clear';
+        var coating = input && this.vocab.coating[input.coating] ? input.coating : '';
+        this.figure.setAttribute('data-light', light);
+        this.figure.setAttribute('data-coating', coating);
+        this.figure.removeAttribute('hidden');
+      } catch (e) {
+        // Log once, hide the figure, leave the calculator untouched.
+        this.previewBroken = true;
+        this.figure.setAttribute('hidden', '');
+        if (window.console && console.warn) console.warn('[lens-preview] disabled:', e);
+      }
     }
   }
 

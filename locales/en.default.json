@@ -535,6 +535,7 @@
     "price_provisional": "provisional price",
     "errors_intro": "Check your prescription:",
     "routing_note": "Configuration adjusted automatically for your prescription.",
+    "preview_caption": "Indicative illustration — not the actual lens",
     "controls": {
       "type": "Lens type",
       "coating": "Coating",

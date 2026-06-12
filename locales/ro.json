@@ -546,6 +546,7 @@
     "price_provisional": "preț provizoriu",
     "errors_intro": "Verifică rețeta:",
     "routing_note": "Configurație ajustată automat pentru rețeta ta.",
+    "preview_caption": "Ilustrație orientativă — nu reprezintă lentila reală",
     "controls": {
       "type": "Tip lentilă",
       "coating": "Tratament",

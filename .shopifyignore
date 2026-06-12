@@ -1,0 +1,2 @@
+# editor/Claude Code atomic-write temp files — never sync (S17 + S18 incidents)
+*.tmp.*

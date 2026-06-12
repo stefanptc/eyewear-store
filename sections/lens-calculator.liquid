@@ -224,6 +224,37 @@
       </div>
     </form>
 
+    {%- comment -%}
+      Parametric lens cross-section. Decorative only: aria-hidden + role
+      presentation — the polite [data-result] region already announces every
+      price/spec change, so the SVG adds no second live region. The gradient
+      id is namespaced to section.id to stay unique if the section repeats.
+    {%- endcomment -%}
+    <figure class="lens-preview" data-lens-preview hidden>
+      <svg
+        class="lens-preview__svg"
+        viewBox="0 0 120 200"
+        aria-hidden="true"
+        role="presentation"
+        focusable="false"
+        data-lens-svg
+      >
+        <defs>
+          <linearGradient id="lens-photo-{{ section.id }}" x1="0" y1="0" x2="0" y2="1">
+            <stop class="lens-preview__photo-stop lens-preview__photo-stop--top" offset="0"></stop>
+            <stop class="lens-preview__photo-stop lens-preview__photo-stop--bot" offset="1"></stop>
+          </linearGradient>
+        </defs>
+        <path class="lens-preview__body" data-lens-shape></path>
+        <path class="lens-preview__tint" data-lens-shape></path>
+        <path class="lens-preview__photo" data-lens-shape fill="url(#lens-photo-{{ section.id }})"></path>
+        <path class="lens-preview__sheen" data-lens-shape></path>
+        <path class="lens-preview__spec" data-lens-shape></path>
+        <line class="lens-preview__seg" data-lens-seg hidden></line>
+      </svg>
+      <figcaption class="lens-preview__caption">{{ 'lens_calculator.preview_caption' | t }}</figcaption>
+    </figure>
+
     {%- comment -%} Result (polite) + errors (alert) live regions. {%- endcomment -%}
     <div class="lens-calc__output" data-result aria-live="polite"></div>
     <div class="lens-calc__errors" data-errors role="alert" hidden></div>

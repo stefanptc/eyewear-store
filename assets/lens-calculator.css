@@ -218,6 +218,119 @@
   outline-offset: -2px;
 }
 
+/* ---- parametric lens preview (decorative SVG) ----
+   All appearance derives from global design tokens (CLAUDE.md §5); no raw
+   hex. The mushroom palette has no blue, so the "blue sheen" of the
+   ultra_blue coating is rendered as a faint cool accent highlight rather
+   than a literal blue — token discipline wins over the colour name. */
+.lens-preview {
+  --lens-glass:         var(--bg-shaded);   /* lens body fill */
+  --lens-stroke:        var(--rule);        /* defining outline */
+  --lens-tint:          var(--ink);         /* sun / photochromic darkening */
+  --lens-tint-opacity:  0;
+  --lens-photo-opacity: 0;                  /* photochromic gradient layer on/off */
+  --lens-photo-top:     0.34;               /* gradient top stop-opacity */
+  --lens-sheen:         var(--accent-soft); /* ultra_blue cool sheen */
+  --lens-sheen-opacity: 0;
+  --lens-spec:          var(--bg-card);      /* specular rim highlight */
+  --lens-spec-opacity:  0.22;               /* coating tier raises this */
+  --lens-seg-color:     var(--ink-muted);   /* bifocal D-segment */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-3);
+  margin: 0;
+}
+
+.lens-preview__svg {
+  inline-size: 8.5rem;
+  block-size: auto;
+  display: block;
+}
+
+.lens-preview__body {
+  fill: var(--lens-glass);
+  stroke: var(--lens-stroke);
+  stroke-width: 1;
+}
+
+.lens-preview__tint {
+  fill: var(--lens-tint);
+  opacity: var(--lens-tint-opacity);
+}
+
+.lens-preview__photo {
+  opacity: var(--lens-photo-opacity);
+}
+
+.lens-preview__photo-stop--top {
+  stop-color: var(--lens-tint);
+  stop-opacity: var(--lens-photo-top);
+}
+
+.lens-preview__photo-stop--bot {
+  stop-color: var(--lens-tint);
+  stop-opacity: 0;
+}
+
+.lens-preview__sheen {
+  fill: var(--lens-sheen);
+  opacity: var(--lens-sheen-opacity);
+}
+
+.lens-preview__spec {
+  fill: none;
+  stroke: var(--lens-spec);
+  stroke-width: 1.5;
+  stroke-opacity: var(--lens-spec-opacity);
+}
+
+.lens-preview__seg {
+  stroke: var(--lens-seg-color);
+  stroke-width: 1.5;
+}
+
+.lens-preview__seg[hidden] {
+  display: none;
+}
+
+.lens-preview__caption {
+  font-family: var(--mono);
+  font-size: var(--t-mono-xs);
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+  text-align: center;
+  max-width: 30ch;
+  margin: 0;
+}
+
+/* light filter → tint treatment */
+.lens-preview[data-light="sun"] {
+  --lens-tint-opacity: 0.45;
+}
+.lens-preview[data-light="foto"],
+.lens-preview[data-light="transitions"] {
+  --lens-photo-opacity: 1;
+}
+
+/* coating tier → sheen + specular highlight intensity */
+.lens-preview[data-coating="ultra_blue"] {
+  --lens-sheen-opacity: 0.16;
+  --lens-spec-opacity: 0.5;
+}
+
+/* Appearance transitions only; geometry (path d / line coords) snaps. */
+@media (prefers-reduced-motion: no-preference) {
+  .lens-preview__body,
+  .lens-preview__tint,
+  .lens-preview__photo,
+  .lens-preview__sheen,
+  .lens-preview__spec {
+    transition: opacity var(--duration) var(--easing), fill var(--duration) var(--easing);
+  }
+}
+
 /* ---- output region ---- */
 .lens-calc__output {
   border-top: var(--border-thin) solid var(--rule);
