@@ -114,8 +114,8 @@
 /* Probe-unavailable option: muted, not interactive. Higher specificity than
    the :hover rule so a disabled segment never picks up the accent border. */
 .lens-seg__option input:disabled + .lens-seg__segment {
-  opacity: 0.4;
-  color: var(--ink-muted);
+  background-color: var(--fill-disabled);
+  color: var(--ink-disabled);
   border-color: var(--rule-faint);
   cursor: not-allowed;
 }
@@ -220,7 +220,7 @@
 }
 
 .lens-stepper__btn:disabled {
-  opacity: 0.4;
+  color: var(--ink-disabled);
   cursor: default;
 }
 
