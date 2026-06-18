@@ -597,6 +597,66 @@
     },
     "nudge": {
       "recommend_thinning": "La această dioptrie, o lentilă cu indice mai mare ar fi mai subțire. Întreabă-ne ce se potrivește."
+    },
+    "guided": {
+      "reset": "Resetează",
+      "edit": "schimbă",
+      "step": {
+        "type": { "num": "1", "label": "Tip lentilă" },
+        "use": { "num": "2", "label": "Utilizare", "hint": "pentru ce le folosești" },
+        "coat": { "num": "3", "label": "Tratament" },
+        "idx": { "num": "4", "label": "Indice", "hint": "grosimea lentilei" },
+        "foto_kind": { "num": "4", "label": "Tip fotocromatic", "hint": "aceeași lentilă, viteză diferită" },
+        "rx": { "num": "5", "label": "Rețeta ta", "hint": "din rețeta de la oftalmolog" }
+      },
+      "type_caption": {
+        "monofocal": "o singură distanță (aproape sau departe)",
+        "bifocal": "două zone: aproape și departe"
+      },
+      "use_caption": {
+        "clear": "lentile transparente, vedere zilnică",
+        "foto": "se întunecă la soare, se limpezesc în casă",
+        "sun": "tentă fixă, ca ochelarii de soare"
+      },
+      "coat_caption": {
+        "hmc": "reduce reflexiile · pentru lumină artificială",
+        "ultra_blue": "filtru lumină albastră · pentru ecrane"
+      },
+      "idx_caption": {
+        "1_5": "standard",
+        "1_56": "standard, ușor subțiat",
+        "1_6": "subțiat",
+        "1_67": "foarte subțiat"
+      },
+      "idx_standard_label": "Standard (1.56)",
+      "foto_kind": {
+        "foto": { "label": "Fotocromatic standard", "caption": "viteză standard de întunecare" },
+        "transitions": { "label": "Transitions", "caption": "se întunecă și se limpezește mai repede" }
+      },
+      "chip": {
+        "type": "Tip",
+        "use": "Utilizare",
+        "coat": "Tratament",
+        "idx": "Indice",
+        "foto_kind": "Tip foto"
+      },
+      "foto_kind_value": {
+        "foto": "Standard",
+        "transitions": "Transitions"
+      },
+      "add_legend": "Adiție (ADD) — comună ambilor ochi",
+      "result": {
+        "tva": "TVA inclus · preț pe pereche",
+        "product_tmpl": "Lentile {type} {light} · {coat} · indice {index}",
+        "type_noun": { "monofocal": "monofocale", "bifocal": "bifocale" },
+        "light_noun": { "clear": "clare", "foto": "fotocromatice", "transitions": "Transitions", "sun": "de soare" }
+      },
+      "note": {
+        "routing_title": "Ajustare automată",
+        "routing_body": "Pentru cilindru diferit de 0, lentilele bifocale se realizează pe indice 1.6 — păstrând tratamentul și filtrul ales.",
+        "thinning_title": "Recomandare",
+        "error_title": "Verifică rețeta"
+      }
     }
   }
 }

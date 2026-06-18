@@ -586,6 +586,66 @@
     },
     "nudge": {
       "recommend_thinning": "At this prescription, a higher index would be thinner. Ask us what suits you."
+    },
+    "guided": {
+      "reset": "Reset",
+      "edit": "edit",
+      "step": {
+        "type": { "num": "1", "label": "Lens type" },
+        "use": { "num": "2", "label": "Usage", "hint": "what you'll use them for" },
+        "coat": { "num": "3", "label": "Coating" },
+        "idx": { "num": "4", "label": "Index", "hint": "lens thickness" },
+        "foto_kind": { "num": "4", "label": "Photochromic type", "hint": "same lens, different speed" },
+        "rx": { "num": "5", "label": "Your prescription", "hint": "from your eye doctor" }
+      },
+      "type_caption": {
+        "monofocal": "one distance (near or far)",
+        "bifocal": "two zones: near and far"
+      },
+      "use_caption": {
+        "clear": "clear lenses, everyday vision",
+        "foto": "darken in the sun, clear indoors",
+        "sun": "fixed tint, like sunglasses"
+      },
+      "coat_caption": {
+        "hmc": "cuts reflections · for artificial light",
+        "ultra_blue": "blue-light filter · for screens"
+      },
+      "idx_caption": {
+        "1_5": "standard",
+        "1_56": "standard, slightly thinned",
+        "1_6": "thinned",
+        "1_67": "extra thin"
+      },
+      "idx_standard_label": "Standard (1.56)",
+      "foto_kind": {
+        "foto": { "label": "Standard photochromic", "caption": "standard darkening speed" },
+        "transitions": { "label": "Transitions", "caption": "darkens and clears faster" }
+      },
+      "chip": {
+        "type": "Type",
+        "use": "Usage",
+        "coat": "Coating",
+        "idx": "Index",
+        "foto_kind": "Photo type"
+      },
+      "foto_kind_value": {
+        "foto": "Standard",
+        "transitions": "Transitions"
+      },
+      "add_legend": "Addition (ADD) — shared by both eyes",
+      "result": {
+        "tva": "VAT included · price per pair",
+        "product_tmpl": "{type} {light} lenses · {coat} · index {index}",
+        "type_noun": { "monofocal": "single vision", "bifocal": "bifocal" },
+        "light_noun": { "clear": "clear", "foto": "photochromic", "transitions": "Transitions", "sun": "sun" }
+      },
+      "note": {
+        "routing_title": "Automatic adjustment",
+        "routing_body": "For a cylinder other than 0, bifocal lenses are made on index 1.6 — keeping your chosen coating and filter.",
+        "thinning_title": "Recommendation",
+        "error_title": "Check your prescription"
+      }
     }
   }
 }
