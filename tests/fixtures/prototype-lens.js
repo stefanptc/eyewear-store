@@ -13,18 +13,16 @@
 var MONO = [
   { id: 'M01', coating: 'hmc', light: 'clear', index: '1.56', sph: [-6, 6], cylTier: 'base', price: 100, avail: 'stoc' },
   { id: 'M02', coating: 'hmc', light: 'clear', index: '1.56', sph: [-6, 6], cylTier: 'high', price: 150, avail: 'comanda' },
-  { id: 'M03', coating: 'hmc', light: 'clear', index: '1.6', sph: [-10, 6], cylTier: 'base', price: 180, avail: 'comanda57' },
-  { id: 'M04', coating: 'hmc', light: 'clear', index: '1.6', sph: [-10, 6], cylTier: 'high', price: 220, avail: 'comanda57' },
+  { id: 'M03', coating: 'hmc', light: 'clear', index: '1.6', sph: [-10, 6], cylTier: 'base', price: 250, avail: 'comanda57' },
+  { id: 'M04', coating: 'hmc', light: 'clear', index: '1.6', sph: [-10, 6], cylTier: 'high', price: 350, avail: 'comanda57' },
   { id: 'M05', coating: 'hmc', light: 'clear', index: '1.67', sph: [-10, 10], cylTier: 'base', price: 380, avail: 'comanda57' },
   { id: 'M06', coating: 'hmc', light: 'clear', index: '1.67', sph: [-6, 6], cylTier: 'high', price: 450, avail: 'comanda57' },
-  { id: 'M07', coating: 'ultra_blue', light: 'clear', index: '1.56', sph: [-10, 6], cylTier: 'base', price: 350, avail: 'stoc' },
-  { id: 'M08', coating: 'ultra_blue', light: 'clear', index: '1.56', sph: [-10, 6], cylTier: 'high', price: 450, avail: 'comanda' },
   { id: 'M09', coating: 'ultra_blue', light: 'clear', index: '1.6', sph: [-12, 6], cylTier: 'base', price: 400, avail: 'comanda57' },
   { id: 'M10', coating: 'ultra_blue', light: 'clear', index: '1.6', sph: [-12, 6], cylTier: 'high', price: 650, avail: 'comanda57' },
   { id: 'M11', coating: 'ultra_blue', light: 'clear', index: '1.67', sph: [-17, 12], cylTier: 'any', price: 800, avail: 'comanda57' },
   { id: 'M12', coating: 'hmc', light: 'foto', index: '1.56', sph: [-8, 6], cylTier: 'base', price: 350, avail: 'stoc' },
   { id: 'M13', coating: 'hmc', light: 'foto', index: '1.56', sph: [-6, 6], cylTier: 'high', price: 480, avail: 'comanda' },
-  { id: 'M14', coating: 'ultra_blue', light: 'foto', index: '1.56', sph: [-9, 8], cylTier: 'any', price: 650, avail: 'comanda' },
+  { id: 'M14', coating: 'ultra_blue', light: 'foto', index: '1.56', sph: [-9, 8], cylTier: 'base', price: 650, avail: 'comanda' },
   { id: 'M15', coating: 'hmc', light: 'foto', index: '1.67', sph: [-10, 10], cylTier: 'any', price: 850, avail: 'comanda57' },
   { id: 'M16', coating: 'ultra_blue', light: 'foto', index: '1.67', sph: [-10, 10], cylTier: 'any', price: 900, avail: 'comanda57' },
   { id: 'M17', coating: 'hmc', light: 'transitions', index: '1.6', sph: [-12, 8], cylTier: 'any', price: 800, avail: 'comanda57' },
@@ -32,18 +30,24 @@ var MONO = [
   { id: 'M19', coating: 'hmc', light: 'transitions', index: '1.67', sph: [-12, 8], cylTier: 'any', price: 1200, avail: 'comanda57' },
   { id: 'M20', coating: 'ultra_blue', light: 'transitions', index: '1.67', sph: [-12, 8], cylTier: 'any', price: 1400, avail: 'comanda57' },
   { id: 'M21', coating: 'hmc', light: 'sun', index: '1.5', sph: [-6, 4], cylTier: 'base', price: 350, avail: 'stoc' },
-  { id: 'M22', coating: 'hmc', light: 'sun', index: '1.5', sph: [-6, 4], cylTier: 'high', price: 500, avail: 'comanda' }
+  { id: 'M22', coating: 'hmc', light: 'sun', index: '1.5', sph: [-6, 4], cylTier: 'high', price: 500, avail: 'comanda' },
+  { id: 'M24', coating: 'ultra_blue', light: 'clear', index: '1.5', sph: [-10, 6], cylTier: 'base', price: 300, avail: 'comanda' },
+  { id: 'M25', coating: 'ultra_blue', light: 'clear', index: '1.5', sph: [-10, 6], cylTier: 'high', price: 600, avail: 'comanda' },
+  { id: 'M26', coating: 'ultra_blue', light: 'foto', index: '1.56', sph: [-9, 8], cylTier: 'high', price: 900, avail: 'comanda' }
 ];
 
 var BI = [
   { id: 'B01', coating: 'hmc', light: 'clear', index: '1.5', sph: [-2, 3], cyl: 'zero', add: [1.0, 3.5], price: 350, avail: 'stoc' },
   { id: 'B02', coating: 'hmc', light: 'foto', index: '1.5', sph: [-2, 3], cyl: 'zero', add: [1.0, 3.5], price: 450, avail: 'stoc' },
   { id: 'B03', coating: 'ultra_blue', light: 'clear', index: '1.5', sph: [-9, 10], cyl: 'upto6', add: [0.75, 4.0], price: 600, avail: 'comanda' },
-  { id: 'B04', coating: 'hmc', light: 'clear', index: '1.6', sph: [-9, 7], cyl: 'upto6', add: [1.0, 3.0], price: 650, avail: 'comanda57' },
-  { id: 'B05', coating: 'ultra_blue', light: 'clear', index: '1.6', sph: [-9, 7], cyl: 'upto6', add: [1.0, 3.0], price: 750, avail: 'comanda57' },
+  { id: 'B04', coating: 'hmc', light: 'clear', index: '1.6', sph: [-9, 7], cyl: 'upto6', add: [1.0, 3.0], price: 750, avail: 'comanda57' },
+  { id: 'B05', coating: 'ultra_blue', light: 'clear', index: '1.6', sph: [-9, 7], cyl: 'upto6', add: [1.0, 3.0], price: 850, avail: 'comanda57' },
   { id: 'B06', coating: 'hmc', light: 'foto', index: '1.6', sph: [-8, 6], cyl: 'upto6', add: [1.0, 3.0], price: 850, avail: 'comanda57' },
   { id: 'B07', coating: 'hmc', light: 'clear', index: '1.67', sph: [-15, 6], cyl: 'upto6', add: [1.0, 3.0], price: 1200, avail: 'comanda57' },
-  { id: 'B08', coating: 'ultra_blue', light: 'clear', index: '1.67', sph: [-15, 6], cyl: 'upto6', add: [1.0, 3.0], price: 1300, avail: 'comanda57' }
+  { id: 'B08', coating: 'ultra_blue', light: 'clear', index: '1.67', sph: [-15, 6], cyl: 'upto6', add: [1.0, 3.0], price: 1300, avail: 'comanda57' },
+  { id: 'B09', coating: 'ultra_blue', light: 'foto', index: '1.6', sph: [-8, 6], cyl: 'upto6', add: [1.0, 3.0], price: 900, avail: 'comanda57' },
+  { id: 'B10', coating: 'hmc', light: 'foto', index: '1.67', sph: [-12, 7], cyl: 'upto6', add: [1.0, 3.0], price: 1400, avail: 'comanda57' },
+  { id: 'B11', coating: 'ultra_blue', light: 'foto', index: '1.67', sph: [-12, 7], cyl: 'upto6', add: [1.0, 3.0], price: 1500, avail: 'comanda57' }
 ];
 
 function strongerEye(od, os) {

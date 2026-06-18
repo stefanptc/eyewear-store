@@ -1,4 +1,4 @@
-# Lens pricing matrix — v1 (2026-06-10)
+# Lens pricing matrix — v1.1 (2026-06-18)
 
 Source of truth for the M4 lens calculator. Derived from supplier spec
 (Rareș, WhatsApp 2026-06-09/10). Retail prices in RON, **per pereche**
@@ -32,7 +32,9 @@ price = lookup(type, coating, light, index, cyl_tier)
 - **index** — `1.56` | `1.6` | `1.67`. Higher = thinner = pricier.
   Note: the "standard" tier is physically 1.56 ("ușor subțiat") for
   HMC/foto-coated lenses; label it **"Standard (1.56)"** in UI.
-  Sun lenses are true 1.5.
+  Sun lenses are true 1.5. As of v1.1, 1.5 is also a selectable monofocal
+  index for ultra_blue·clear (M24/M25), in addition to sun (previously 1.5
+  was sun-only).
 - **cyl_tier** — `base` (|CYL| ≤ 2.00) | `high` (2.00 < |CYL| ≤ 6.00)
 
 The prescription (SPH, CYL, ADD for bifocals) is validated against the
@@ -69,18 +71,16 @@ row's allowed ranges; CYL magnitude selects the tier.
 |---|---|---|---|---|---|---|---|---|
 | M01 | hmc | clear | 1.56 | −6.00 | +6.00 | base | 100 | stoc |
 | M02 | hmc | clear | 1.56 | −6.00 | +6.00 | high | 150 | comandă |
-| M03 | hmc | clear | 1.6 | −10.00 | +6.00 | base | 180 | comandă 5–7 z.l. |
-| M04 | hmc | clear | 1.6 | −10.00 | +6.00 | high | 220 | comandă 5–7 z.l. |
+| M03 | hmc | clear | 1.6 | −10.00 | +6.00 | base | 250 | comandă 5–7 z.l. |
+| M04 | hmc | clear | 1.6 | −10.00 | +6.00 | high | 350 | comandă 5–7 z.l. |
 | M05 | hmc | clear | 1.67 | −10.00 | +10.00 | base | 380 | comandă 5–7 z.l. |
 | M06 | hmc | clear | 1.67 | −6.00 | +6.00 | high | 450 | comandă 5–7 z.l. |
-| M07 | ultra_blue | clear | 1.56 | −10.00 | +6.00 | base | 350 | stoc |
-| M08 | ultra_blue | clear | 1.56 | −10.00 | +6.00 | high | 450 | comandă |
 | M09 | ultra_blue | clear | 1.6 | −12.00 | +6.00 | base | 400 | comandă 5–7 z.l. |
 | M10 | ultra_blue | clear | 1.6 | −12.00 | +6.00 | high | 650 | comandă 5–7 z.l. |
 | M11 | ultra_blue | clear | 1.67 | −17.00 | +12.00 | base+high (≤±6) | 800 | comandă 5–7 z.l. |
 | M12 | hmc | foto | 1.56 | −8.00 | +6.00 | base | 350 | stoc |
 | M13 | hmc | foto | 1.56 | −6.00 | +6.00 | high | 480 | comandă |
-| M14 | ultra_blue | foto | 1.56 | −9.00 | +8.00 | base+high (≤±6) | 650 | comandă |
+| M14 | ultra_blue | foto | 1.56 | −9.00 | +8.00 | base | 650 | comandă |
 | M15 | hmc | foto | 1.67 | −10.00 | +10.00 | base+high (≤±6) | 850 | comandă 5–7 z.l. |
 | M16 | ultra_blue | foto | 1.67 | −10.00 | +10.00 | base+high (≤±6) | 900 | comandă 5–7 z.l. |
 | M17 | hmc | transitions | 1.6 | −12.00 | +8.00 | base+high (≤±6) | 800 | comandă 5–7 z.l. |
@@ -90,6 +90,9 @@ row's allowed ranges; CYL magnitude selects the tier.
 | M21 | hmc | sun | 1.5 | −6.00 | +4.00 | base | 350 | stoc |
 | M22 | hmc | sun | 1.5 | −6.00 | +4.00 | high | 500 | comandă |
 | M23 | — | sun | thinned | *TBD-1* | *TBD-1* | *TBD-1* | *TBD-1* | comandă |
+| M24 | ultra_blue | clear | 1.5 | −10.00 | +6.00 | base | 300 | comandă *(TBD-5)* |
+| M25 | ultra_blue | clear | 1.5 | −10.00 | +6.00 | high | 600 | comandă |
+| M26 | ultra_blue | foto | 1.56 | −9.00 | +8.00 | high | 900 | comandă |
 
 Notes:
 - M06: SPH range deliberately **narrows** to −6…+6 in the high-CYL tier
@@ -103,6 +106,10 @@ Notes:
   −6…+4 / ±2" message was superseded; lenses with no stated index are
   the standard 1.56 tier; `foto` and `transitions` are distinct
   customer-facing options, not synonyms.
+- M14/M26: ultra_blue·foto·1.56 split into base (M14, 650) and high
+  (M26, 900) at v1.1.
+- M07/M08 retired at v1.1; ultra_blue·clear standard moved to index 1.5
+  (M24/M25) per supplier.
 
 ## 4. Bifocale
 
@@ -111,16 +118,21 @@ Notes:
 | B01 | hmc | clear | 1.5 | −2.00 | +3.00 | **0 only** | +1.00 | +3.50 | 350 | stoc |
 | B02 | hmc | foto | 1.5 | −2.00 | +3.00 | **0 only** | +1.00 | +3.50 | 450 | stoc |
 | B03 | ultra_blue | clear | 1.5 | −9.00 | +10.00 | ≤±6 | +0.75 | +4.00 | 600 | comandă |
-| B04 | hmc | clear | 1.6 | −9.00 | +7.00 | ≤±6 | +1.00 | +3.00 | 650 | comandă 5–7 z.l. |
-| B05 | ultra_blue | clear | 1.6 | −9.00 | +7.00 | ≤±6 | +1.00 | +3.00 | 750 | comandă 5–7 z.l. |
+| B04 | hmc | clear | 1.6 | −9.00 | +7.00 | ≤±6 | +1.00 | +3.00 | 750 | comandă 5–7 z.l. |
+| B05 | ultra_blue | clear | 1.6 | −9.00 | +7.00 | ≤±6 | +1.00 | +3.00 | 850 | comandă 5–7 z.l. |
 | B06 | hmc | foto | 1.6 | −8.00 | +6.00 | ≤±6 | +1.00 | +3.00 | 850 | comandă 5–7 z.l. |
 | B07 | hmc | clear | 1.67 | −15.00 | +6.00 | ≤±6 | +1.00 | +3.00 | 1200 | comandă 5–7 z.l. |
 | B08 | ultra_blue | clear | 1.67 | −15.00 | +6.00 | ≤±6 | +1.00 | +3.00 | 1300 | comandă 5–7 z.l. |
+| B09 | ultra_blue | foto | 1.6 | −8.00 | +6.00 | ≤±6 | +1.00 | +3.00 | 900 | comandă 5–7 z.l. |
+| B10 | hmc | foto | 1.67 | −12.00 | +7.00 | ≤±6 | +1.00 | +3.00 | 1400 | comandă 5–7 z.l. |
+| B11 | ultra_blue | foto | 1.67 | −12.00 | +7.00 | ≤±6 | +1.00 | +3.00 | 1500 | comandă 5–7 z.l. |
 
 Notes:
 - B01/B02 are stock *because* CYL = 0; any cylinder routes to B04/B05 (R4).
 - B03's wide range vs B01 is supplier-confirmed: ultra_blue bifocals are
   comandă-made, hence the larger envelope.
+- B09–B11 are foto bifocals added at v1.1; this is the first 1.67 foto
+  bifocal pair.
 
 ## 5. Calculator output contract
 
@@ -139,6 +151,7 @@ can say *what* to change, not just "indisponibil".
 | TBD-2 | 1.56 high-CYL upper bound: assumed ±6 via comandă; supplier hinted high CYL belongs on thinned lenses | Confirm; if forced to thinned, cap M02/M08/M13 at ±4 and route ±4–6 to 1.6 |
 | TBD-3 | M18 price: 950 set before M17's 900→800 correction; costs "destul de apropiate" | Confirm 950 vs ~850 |
 | TBD-4 | Per-eye differing prescriptions: priced by stronger eye? | Confirm rule with supplier |
+| TBD-5 | v1.1 availability: M24 (ub·clear 1.5 base) is stoc-vs-comandă unconfirmed; all other v1.1 rows follow R2 deterministically | Confirm with supplier |
 
 ---
 

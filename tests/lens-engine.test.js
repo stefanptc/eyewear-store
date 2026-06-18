@@ -76,7 +76,7 @@ function noThrow(fn) { try { return { ok: true, val: fn() }; } catch (e) { retur
 var selectable = data.rows.filter(function (r) { return r.price_ron != null; });
 
 // =================== (a) JSON parity ===================
-check('a/30 priced rows', selectable.length === 30, 'got ' + selectable.length);
+check('a/34 priced rows', selectable.length === 34, 'got ' + selectable.length);
 selectable.forEach(function (row) {
   var res = eng.computeResult(validInputForRow(row));
   check('a/' + row.id + ' rowId', res.rowId === row.id, 'got ' + res.rowId);
@@ -107,7 +107,7 @@ parityInputs.forEach(function (inp, i) {
 });
 // explicit routing assertions (decision visible, not just parity)
 var rB01 = eng.computeResult(bi('hmc', 'clear', '1.5', -1, 2, 2.0));
-check('b/route B01->B04', rB01.rowId === 'B04' && rB01.routedFrom === 'B01' && rB01.priceRon === 650, JSON.stringify(rB01));
+check('b/route B01->B04', rB01.rowId === 'B04' && rB01.routedFrom === 'B01' && rB01.priceRon === 750, JSON.stringify(rB01));
 var rB02 = eng.computeResult(bi('hmc', 'foto', '1.5', -1, 2, 2.0));
 check('b/route B02->B06 (preserve light)', rB02.rowId === 'B06' && rB02.routedFrom === 'B02', JSON.stringify(rB02));
 var rNudge = eng.computeResult(mono('hmc', 'clear', '1.56', -4, 0, -4, 0));
@@ -120,6 +120,10 @@ check('c/2.00 -> base M01 (|CYL|<=2.00)', tierRow(2.00) === 'M01');
 check('c/2.01 -> high M02', tierRow(2.01) === 'M02');
 check('c/-2.00 -> base M01', tierRow(-2.00) === 'M01');
 check('c/-2.01 -> high M02', tierRow(-2.01) === 'M02');
+// v1.1: ultra_blue·foto·1.56 cyl-tier split (M14 base 650 / M26 high 900)
+function ubFoto156(cyl) { return eng.computeResult(mono('ultra_blue', 'foto', '1.56', -1, cyl, -1, cyl)); }
+check('c/ub·foto·1.56 |CYL|<=2.00 -> M14 (650)', ubFoto156(2.00).rowId === 'M14' && ubFoto156(2.00).priceRon === 650, JSON.stringify(ubFoto156(2.00)));
+check('c/ub·foto·1.56 |CYL|>2.00 -> M26 (900)', ubFoto156(2.01).rowId === 'M26' && ubFoto156(2.01).priceRon === 900, JSON.stringify(ubFoto156(2.01)));
 
 // =================== (d) M23 unreachable ===================
 var reachedM23 = false;
