@@ -448,6 +448,60 @@
   margin: 0;
 }
 
+/* ---- PD fieldset (single field, matches the ADD row reset) ---- */
+.lens-rx__pd {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-inline-size: 0;
+}
+
+/* ---- add to cart ---- */
+.lens-calc__cart {
+  margin-top: var(--s-6);
+}
+
+.lens-calc__add {
+  font-family: var(--mono);
+  font-size: var(--t-ui-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--ink);
+  border: var(--border-thin) solid var(--ink);
+  padding: var(--s-4) var(--s-7);
+  cursor: pointer;
+  transition: background var(--duration) var(--easing), color var(--duration) var(--easing);
+}
+
+.lens-calc__add:hover {
+  background: var(--ink-soft);
+  border-color: var(--ink-soft);
+}
+
+.lens-calc__add:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.lens-calc__add[disabled] {
+  background: var(--fill-disabled);
+  color: var(--ink-disabled);
+  border-color: var(--rule);
+  cursor: not-allowed;
+}
+
+.lens-calc__add.is-loading {
+  cursor: progress;
+}
+
+.lens-calc__cart-msg {
+  font-family: var(--mono);
+  font-size: var(--t-mono-sm);
+  color: var(--ink-soft);
+  margin: var(--s-3) 0 0;
+}
+
 /* ---- mobile: single column, segments wrap, steppers stack full-width ---- */
 @media screen and (max-width: 640px) {
   .lens-rx__fields {

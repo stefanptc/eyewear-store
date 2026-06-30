@@ -17,6 +17,8 @@
   <lens-calculator
     class="lens-calc page-width section-{{ section.id }}-padding"
     data-pricing-url="{{ 'lens-pricing-data.json' | asset_url }}"
+    data-cart-add-url="{{ routes.cart_add_url }}"
+    data-cart-url="{{ routes.cart_url }}"
   >
     {%- comment -%}
       All user-facing copy is injected here as a JSON island and consumed by
@@ -61,13 +63,28 @@
           "sph": {{ 'lens_calculator.field.sph' | t | json }},
           "cyl": {{ 'lens_calculator.field.cyl' | t | json }},
           "axis": {{ 'lens_calculator.field.axis' | t | json }},
-          "add": {{ 'lens_calculator.field.add' | t | json }}
+          "add": {{ 'lens_calculator.field.add' | t | json }},
+          "pd": {{ 'lens_calculator.field.pd' | t | json }}
         },
         "field_short": {
           "sph": {{ 'lens_calculator.field_short.sph' | t | json }},
           "cyl": {{ 'lens_calculator.field_short.cyl' | t | json }},
           "axis": {{ 'lens_calculator.field_short.axis' | t | json }},
-          "add": {{ 'lens_calculator.field_short.add' | t | json }}
+          "add": {{ 'lens_calculator.field_short.add' | t | json }},
+          "pd": {{ 'lens_calculator.field_short.pd' | t | json }}
+        },
+        "cart": {
+          "add": {{ 'lens_calculator.cart.add' | t | json }},
+          "adding": {{ 'lens_calculator.cart.adding' | t | json }},
+          "unconfigured": {{ 'lens_calculator.cart.unconfigured' | t | json }},
+          "error": {{ 'lens_calculator.cart.error' | t | json }},
+          "pd_legend": {{ 'lens_calculator.cart.pd_legend' | t | json }},
+          "prop": {
+            "od": {{ 'lens_calculator.cart.prop.od' | t | json }},
+            "os": {{ 'lens_calculator.cart.prop.os' | t | json }},
+            "pd": {{ 'lens_calculator.cart.prop.pd' | t | json }},
+            "add": {{ 'lens_calculator.cart.prop.add' | t | json }}
+          }
         },
         "stepper": {
           "decrease": {{ 'lens_calculator.stepper.decrease' | t | json }},
@@ -141,6 +158,30 @@
             "error_title": {{ 'lens_calculator.guided.note.error_title' | t | json }}
           }
         }
+      }
+    </script>
+
+    {%- comment -%}
+      rowId → variant id map. The lens product carries one variant per
+      pricing-matrix row, joined by SKU = row id (e.g. M01 … B08; see
+      docs/m4-lens-variant-metafields.md). The renderer looks up the chosen
+      result's rowId here to POST the correct variant to /cart/add.js. Empty
+      until the lens product is selected in the section settings (and is
+      Active + on the Online Store channel) — the add button degrades to a
+      "not yet available" message until then.
+    {%- endcomment -%}
+    <script type="application/json" data-lens-variant-map>
+      {
+        {%- assign lens_product = section.settings.lens_product -%}
+        {%- if lens_product != blank -%}
+          {%- assign sep = '' -%}
+          {%- for variant in lens_product.variants -%}
+            {%- if variant.sku != blank -%}
+              {{ sep }}{{ variant.sku | json }}: {{ variant.id | json }}
+              {%- assign sep = ',' -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
       }
     </script>
 
@@ -285,6 +326,16 @@
       "id": "color_scheme",
       "label": "Schemă de culori",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Produs lentile"
+    },
+    {
+      "type": "product",
+      "id": "lens_product",
+      "label": "Produsul de lentile",
+      "info": "Produsul cu o variantă per rând din matricea de prețuri (SKU = codul rândului, ex. M01). Calculatorul adaugă în coș varianta cu SKU-ul corespunzător rezultatului."
     },
     {
       "type": "header",

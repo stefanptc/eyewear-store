@@ -119,10 +119,14 @@
     sph:  { min: -20, max: 20,  step: 0.25, dp: 2 },
     cyl:  { min: -6,  max: 6,   step: 0.25, dp: 2 },
     axis: { min: 0,   max: 180, step: 1,    dp: 0 },
-    add:  { min: 0,   max: 4,   step: 0.25, dp: 2 }
+    add:  { min: 0,   max: 4,   step: 0.25, dp: 2 },
+    // PD (pupillary distance) is fulfillment data only — it never enters the
+    // pricing engine (engine input shape stays frozen); it rides along as a
+    // cart line-item property.
+    pd:   { min: 40,  max: 80,  step: 0.5,  dp: 1 }
   };
   // Default value shown when a fresh prescription step is revealed.
-  var FIELD_DEFAULT = { sph: 0, cyl: 0, axis: 0, add: 2 };
+  var FIELD_DEFAULT = { sph: 0, cyl: 0, axis: 0, add: 2, pd: 63 };
 
   function parseNum(str) {
     return parseFloat(String(str).replace(',', '.'));
@@ -168,6 +172,11 @@
       this.S = {};                       // {type, use, coat, idx, foto_kind}
       this.vocab = { type: {}, coating: {}, light: {}, index: {} };
 
+      // Cart wiring: locale-safe routes from Liquid + the rowId→variant map.
+      this.cartAddUrl = this.dataset.cartAddUrl || '/cart/add.js';
+      this.cartUrl = this.dataset.cartUrl || '/cart';
+      this.variantMap = this._readVariantMap();
+
       if (this.resetEl) {
         this.resetEl.textContent = this.g.reset || 'Reset';
         var self = this;
@@ -181,6 +190,14 @@
 
     _readI18n() {
       var el = this.querySelector('[data-lens-i18n]');
+      if (!el) return {};
+      try { return JSON.parse(el.textContent) || {}; } catch (e) { return {}; }
+    }
+
+    // rowId (== variant SKU) → numeric variant id, emitted by the section.
+    // Empty {} until the lens product is wired in section settings.
+    _readVariantMap() {
+      var el = this.querySelector('[data-lens-variant-map]');
       if (!el) return {};
       try { return JSON.parse(el.textContent) || {}; } catch (e) { return {}; }
     }
@@ -440,6 +457,20 @@
         wrap.appendChild(addFs);
       }
 
+      // PD — fulfillment data, shown for every lens type (not an engine input).
+      var cart = this.i18n.cart || {};
+      var pdFs = document.createElement('fieldset');
+      pdFs.className = 'lens-rx__pd';
+      var pdLegend = document.createElement('legend');
+      pdLegend.className = 'lens-rx__legend';
+      pdLegend.textContent = cart.pd_legend || (i18n.field && i18n.field.pd) || 'DP';
+      pdFs.appendChild(pdLegend);
+      var pdFields = document.createElement('div');
+      pdFields.className = 'lens-rx__fields';
+      pdFields.appendChild(this._stepper('pd-pd', 'pd', (i18n.field && i18n.field.pd) || 'DP', ''));
+      pdFs.appendChild(pdFields);
+      wrap.appendChild(pdFs);
+
       sec.appendChild(wrap);
       this.stepsEl.appendChild(sec);
       this._bindRx();
@@ -556,7 +587,125 @@
       if (res.nudge === 'recommend_thinning' && g.note) {
         html.push(this._noteHtml(g.note.thinning_title, (t.nudge && t.nudge.recommend_thinning) || '', false));
       }
+      html.push(this._addToCartHtml(res));
       this.resultEl.innerHTML = html.join('');
+
+      var addBtn = this.resultEl.querySelector('[data-lens-add]');
+      if (addBtn && !addBtn.disabled) {
+        var self = this;
+        addBtn.addEventListener('click', function () { self._addToCart(addBtn); });
+      }
+    }
+
+    // ---- add to cart ----
+    _addToCartHtml(res) {
+      var cart = this.i18n.cart || {};
+      var hasVariant = !!(res && res.rowId && this.variantMap[res.rowId]);
+      var html = '<div class="lens-calc__cart">';
+      html += '<button type="button" class="lens-calc__add" data-lens-add' +
+        (hasVariant ? '' : ' disabled aria-disabled="true"') + '>' +
+        escapeHtml(cart.add || 'Adaugă în coș') + '</button>';
+      html += '<p class="lens-calc__cart-msg" data-lens-cart-msg' + (hasVariant ? ' hidden' : '') + '>' +
+        escapeHtml(hasVariant ? '' : (cart.unconfigured || '')) + '</p>';
+      html += '</div>';
+      return html;
+    }
+
+    _addToCart(btn) {
+      if (!this.ready || !this.engine) return;
+      var self = this, cart = this.i18n.cart || {};
+      // Recompute fresh so the cart line always matches the current fields.
+      var input = this._buildInput();
+      var res = this.engine.computeResult(input);
+      if (res.errors && res.errors.length) { this._recompute(); return; }
+      var variantId = res.rowId && this.variantMap[res.rowId];
+      if (!variantId) { this._setCartMsg(cart.unconfigured || ''); return; }
+
+      var body = new FormData();
+      body.append('id', String(variantId));
+      body.append('quantity', '1');
+      var props = this._cartProperties(input);
+      Object.keys(props).forEach(function (k) { body.append('properties[' + k + ']', props[k]); });
+
+      // Mirror Dawn's product-form: pass the cart UI the sections it renders so
+      // it can repaint the notification/drawer in place.
+      var cartEl = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+      if (cartEl && typeof cartEl.getSectionsToRender === 'function') {
+        body.append('sections', cartEl.getSectionsToRender().map(function (s) { return s.id; }).join(','));
+        body.append('sections_url', window.location.pathname);
+        if (typeof cartEl.setActiveElement === 'function') cartEl.setActiveElement(document.activeElement);
+      }
+
+      this._setCartLoading(btn, true);
+      this._setCartMsg('');
+      fetch(this.cartAddUrl, {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/javascript' },
+        body: body
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (response) {
+          if (response.status) { self._setCartMsg(response.description || cart.error || ''); return; }
+          if (cartEl && typeof cartEl.renderContents === 'function') {
+            if (cartEl.classList.contains('is-empty')) cartEl.classList.remove('is-empty');
+            cartEl.renderContents(response);
+          } else {
+            window.location = self.cartUrl;
+          }
+        })
+        .catch(function () { self._setCartMsg(cart.error || ''); })
+        .finally(function () { self._setCartLoading(btn, false); });
+    }
+
+    _setCartLoading(btn, on) {
+      if (!btn) return;
+      var cart = this.i18n.cart || {};
+      if (on) {
+        btn.classList.add('is-loading');
+        btn.setAttribute('aria-disabled', 'true');
+        btn.disabled = true;
+        btn.dataset.label = btn.textContent;
+        if (cart.adding) btn.textContent = cart.adding;
+      } else {
+        btn.classList.remove('is-loading');
+        btn.removeAttribute('aria-disabled');
+        btn.disabled = false;
+        if (btn.dataset.label) { btn.textContent = btn.dataset.label; delete btn.dataset.label; }
+      }
+    }
+
+    _setCartMsg(msg) {
+      var el = this.resultEl.querySelector('[data-lens-cart-msg]');
+      if (!el) return;
+      el.textContent = msg || '';
+      el.hidden = !msg;
+    }
+
+    // Romanian-labelled, grouped per-eye Rx + PD (+ ADD) line-item properties.
+    // No leading underscore → visible in cart and at checkout.
+    _signed(v, dp) {
+      if (typeof v !== 'number' || !isFinite(v)) v = 0;
+      var s = v.toFixed(dp);
+      return v > 0 ? '+' + s : s;
+    }
+    _eyeValue(eye, input) {
+      var f = this.i18n.field || {};
+      var e = input[eye] || {};
+      return (f.sph || 'SPH') + ' ' + this._signed(e.sph, 2) + ' · ' +
+        (f.cyl || 'CYL') + ' ' + this._signed(e.cyl, 2) + ' · ' +
+        (f.axis || 'AX') + ' ' + Math.round(isFinite(e.ax) ? e.ax : 0) + '°';
+    }
+    _cartProperties(input) {
+      var p = {}, prop = (this.i18n.cart && this.i18n.cart.prop) || {};
+      p[prop.od || 'OD'] = this._eyeValue('od', input);
+      p[prop.os || 'OS'] = this._eyeValue('os', input);
+      var pd = this._field('pd-pd');
+      if (!isFinite(pd)) pd = FIELD_DEFAULT.pd;
+      p[prop.pd || 'PD'] = (pd % 1 === 0 ? String(pd) : pd.toFixed(1)) + ' mm';
+      if (input.type === 'bifocal' && isFinite(input.add)) {
+        p[prop.add || 'ADD'] = this._signed(input.add, 2);
+      }
+      return p;
     }
 
     _renderErrors(errors) {

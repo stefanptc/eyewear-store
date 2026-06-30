@@ -274,7 +274,6 @@
       "announcement": "Announcement",
       "announcement_bar": "Announcement bar"
     },
-
     "header": {
       "announcement": "Announcement",
       "menu": "Menu",
@@ -567,13 +566,15 @@
       "sph": "Sphere",
       "cyl": "Cylinder",
       "axis": "Axis",
-      "add": "Addition"
+      "add": "Addition",
+      "pd": "Pupillary distance"
     },
     "field_short": {
       "sph": "sphere",
       "cyl": "cylinder",
       "axis": "axis",
-      "add": "addition"
+      "add": "addition",
+      "pd": "PD"
     },
     "stepper": {
       "decrease": "Decrease",
@@ -591,12 +592,34 @@
       "reset": "Reset",
       "edit": "edit",
       "step": {
-        "type": { "num": "1", "label": "Lens type" },
-        "use": { "num": "2", "label": "Usage", "hint": "what you'll use them for" },
-        "coat": { "num": "3", "label": "Coating" },
-        "idx": { "num": "4", "label": "Index", "hint": "lens thickness" },
-        "foto_kind": { "num": "4", "label": "Photochromic type", "hint": "same lens, different speed" },
-        "rx": { "num": "5", "label": "Your prescription", "hint": "from your eye doctor" }
+        "type": {
+          "num": "1",
+          "label": "Lens type"
+        },
+        "use": {
+          "num": "2",
+          "label": "Usage",
+          "hint": "what you'll use them for"
+        },
+        "coat": {
+          "num": "3",
+          "label": "Coating"
+        },
+        "idx": {
+          "num": "4",
+          "label": "Index",
+          "hint": "lens thickness"
+        },
+        "foto_kind": {
+          "num": "4",
+          "label": "Photochromic type",
+          "hint": "same lens, different speed"
+        },
+        "rx": {
+          "num": "5",
+          "label": "Your prescription",
+          "hint": "from your eye doctor"
+        }
       },
       "type_caption": {
         "monofocal": "one distance (near or far)",
@@ -619,8 +642,14 @@
       },
       "idx_standard_label": "Standard (1.56)",
       "foto_kind": {
-        "foto": { "label": "Standard photochromic", "caption": "standard darkening speed" },
-        "transitions": { "label": "Transitions", "caption": "darkens and clears faster" }
+        "foto": {
+          "label": "Standard photochromic",
+          "caption": "standard darkening speed"
+        },
+        "transitions": {
+          "label": "Transitions",
+          "caption": "darkens and clears faster"
+        }
       },
       "chip": {
         "type": "Type",
@@ -637,14 +666,35 @@
       "result": {
         "tva": "VAT included · price per pair",
         "product_tmpl": "{type} {light} lenses · {coat} · index {index}",
-        "type_noun": { "monofocal": "single vision", "bifocal": "bifocal" },
-        "light_noun": { "clear": "clear", "foto": "photochromic", "transitions": "Transitions", "sun": "sun" }
+        "type_noun": {
+          "monofocal": "single vision",
+          "bifocal": "bifocal"
+        },
+        "light_noun": {
+          "clear": "clear",
+          "foto": "photochromic",
+          "transitions": "Transitions",
+          "sun": "sun"
+        }
       },
       "note": {
         "routing_title": "Automatic adjustment",
         "routing_body": "For a cylinder other than 0, bifocal lenses are made on index 1.6 — keeping your chosen coating and filter.",
         "thinning_title": "Recommendation",
         "error_title": "Check your prescription"
+      }
+    },
+    "cart": {
+      "add": "Add to cart",
+      "adding": "Adding…",
+      "unconfigured": "Lenses aren't available to order yet. Please contact us.",
+      "error": "Couldn't add to cart. Please try again.",
+      "pd_legend": "Pupillary distance (PD)",
+      "prop": {
+        "od": "OD (right eye)",
+        "os": "OS (left eye)",
+        "pd": "Pupillary distance (PD)",
+        "add": "Add power (ADD)"
       }
     }
   }

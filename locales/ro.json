@@ -578,13 +578,15 @@
       "sph": "Sferă",
       "cyl": "Cilindru",
       "axis": "Axă",
-      "add": "Adiție"
+      "add": "Adiție",
+      "pd": "Distanță pupilară"
     },
     "field_short": {
       "sph": "sferă",
       "cyl": "cilindru",
       "axis": "ax",
-      "add": "adiție"
+      "add": "adiție",
+      "pd": "DP"
     },
     "stepper": {
       "decrease": "Scade",
@@ -602,12 +604,34 @@
       "reset": "Resetează",
       "edit": "schimbă",
       "step": {
-        "type": { "num": "1", "label": "Tip lentilă" },
-        "use": { "num": "2", "label": "Utilizare", "hint": "pentru ce le folosești" },
-        "coat": { "num": "3", "label": "Tratament" },
-        "idx": { "num": "4", "label": "Indice", "hint": "grosimea lentilei" },
-        "foto_kind": { "num": "4", "label": "Tip fotocromatic", "hint": "aceeași lentilă, viteză diferită" },
-        "rx": { "num": "5", "label": "Rețeta ta", "hint": "din rețeta de la oftalmolog" }
+        "type": {
+          "num": "1",
+          "label": "Tip lentilă"
+        },
+        "use": {
+          "num": "2",
+          "label": "Utilizare",
+          "hint": "pentru ce le folosești"
+        },
+        "coat": {
+          "num": "3",
+          "label": "Tratament"
+        },
+        "idx": {
+          "num": "4",
+          "label": "Indice",
+          "hint": "grosimea lentilei"
+        },
+        "foto_kind": {
+          "num": "4",
+          "label": "Tip fotocromatic",
+          "hint": "aceeași lentilă, viteză diferită"
+        },
+        "rx": {
+          "num": "5",
+          "label": "Rețeta ta",
+          "hint": "din rețeta de la oftalmolog"
+        }
       },
       "type_caption": {
         "monofocal": "o singură distanță (aproape sau departe)",
@@ -630,8 +654,14 @@
       },
       "idx_standard_label": "Standard (1.56)",
       "foto_kind": {
-        "foto": { "label": "Fotocromatic standard", "caption": "viteză standard de întunecare" },
-        "transitions": { "label": "Transitions", "caption": "se întunecă și se limpezește mai repede" }
+        "foto": {
+          "label": "Fotocromatic standard",
+          "caption": "viteză standard de întunecare"
+        },
+        "transitions": {
+          "label": "Transitions",
+          "caption": "se întunecă și se limpezește mai repede"
+        }
       },
       "chip": {
         "type": "Tip",
@@ -648,14 +678,35 @@
       "result": {
         "tva": "TVA inclus · preț pe pereche",
         "product_tmpl": "Lentile {type} {light} · {coat} · indice {index}",
-        "type_noun": { "monofocal": "monofocale", "bifocal": "bifocale" },
-        "light_noun": { "clear": "clare", "foto": "fotocromatice", "transitions": "Transitions", "sun": "de soare" }
+        "type_noun": {
+          "monofocal": "monofocale",
+          "bifocal": "bifocale"
+        },
+        "light_noun": {
+          "clear": "clare",
+          "foto": "fotocromatice",
+          "transitions": "Transitions",
+          "sun": "de soare"
+        }
       },
       "note": {
         "routing_title": "Ajustare automată",
         "routing_body": "Pentru cilindru diferit de 0, lentilele bifocale se realizează pe indice 1.6 — păstrând tratamentul și filtrul ales.",
         "thinning_title": "Recomandare",
         "error_title": "Verifică rețeta"
+      }
+    },
+    "cart": {
+      "add": "Adaugă în coș",
+      "adding": "Se adaugă…",
+      "unconfigured": "Lentilele nu sunt încă disponibile pentru comandă. Te rugăm să ne contactezi.",
+      "error": "Nu am putut adăuga în coș. Încearcă din nou.",
+      "pd_legend": "Distanță pupilară (DP)",
+      "prop": {
+        "od": "OD (ochi drept)",
+        "os": "OS (ochi stâng)",
+        "pd": "Distanță pupilară (DP)",
+        "add": "Adiție (ADD)"
       }
     }
   }
