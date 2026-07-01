@@ -196,6 +196,7 @@
         "heading": "Calculator lentile",
         "intro": "<p>Alege tipul de lentilă și introdu rețeta ta. Prețul se actualizează pe măsură ce completezi.</p>",
         "footnote": "Toate prețurile includ TVA.",
+        "lens_product": "configurator-lentile",
         "color_scheme": "scheme-2",
         "padding_top": 80,
         "padding_bottom": 80
